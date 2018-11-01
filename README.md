@@ -9,13 +9,15 @@ Though it is not there yet, that project should produce
 a Quality Assurance (QA) dashboard, much like
 [Geonames' one](http://qa.geonames.org/qa/).
 
-And, hopefully, that dashboard will be powered by a Docker image
+And, hopefully, that dashboard will be powered by
+a [Docker image](https://hub.docker.com/r/opentraveldata/quality-assurance/builds/)
 generated thanks to that repository as well.
 
 ## See also
 * [Service Delivery Quality (SDQ) GitHub organization](https://github.com/service-delivery-quality)
   + [Quality Assurance samples](https://github.com/service-delivery-quality/quality-assurance)
 * [Geonames' QA dashboard](http://qa.geonames.org/qa/)
+* [Quality Assurance (QA) images on Docker Hub](https://hub.docker.com/r/opentraveldata/quality-assurance)
 
 # Checks
 ## Airlines - Airport Bases / Hubs
