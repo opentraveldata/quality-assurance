@@ -1,0 +1,25 @@
+
+# Language
+export LANG=en_US.UTF-8
+
+# Prompt
+source /usr/share/git-core/contrib/completion/git-prompt.sh # From Fedora 18+
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# Aliases
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias dir='ls -laFh --color'
+alias grep='grep --color'
+
+# Open Travel Data (OPTD)
+alias cdopentraveldataqa='cd ~/dev/geo/opentraveldata-qa'
+

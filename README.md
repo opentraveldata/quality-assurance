@@ -18,6 +18,55 @@ generated thanks to that repository as well.
   + [Quality Assurance samples](https://github.com/service-delivery-quality/quality-assurance)
 * [Geonames' QA dashboard](http://qa.geonames.org/qa/)
 * [Quality Assurance (QA) images on Docker Hub](https://hub.docker.com/r/opentraveldata/quality-assurance)
+* [How to set up a Python virtual environment](http://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
+
+# Installation
+
+## Through a pre-built Docker image
+* Retrieve the Docker image:
+```bash
+$ docker pull opentraveldata/quality-assurance
+```
+
+* Launch the Docker-powered scripts:
+```bash
+$ docker run --rm -it opentraveldata/quality-assurance:latest bash
+$ mkdir -p to_be_checked
+$ ./checker/checkers/check-por-cmp-optd-unlc.py
+```
+
+### Docker image manual build
+* If, for some reason (for instance to customize the Docker image),
+  the Docker image needs to be manually rebuilt:
+```bash
+$ docker build -t opentraveldata/quality-assurance:myownimg .
+```
+
+## Through a local cloned Git repository
+* Clone the [OpenTravelData (OPTD) Quality Assurance (QA) Git repository](https://github.com/opentraveldata/quality-assurance)
+```bash
+$ mkdir -p ~/dev/geo && cd ~/dev/geo
+$ git clone https://github.com/opentraveldata/quality-assurance.git opentraveldata-qa
+$ cd opentraveldata-qa
+$ ./mkLocalDir.sh
+```
+
+* Install supplementary Python packages through ``pipenv``:
+```bash
+$ pipenv install numpy networkx
+```
+
+## Launch the Python checkers
+* Use ``pipenv`` to launch the Python scripts. For instance:
+```bash
+$ pipenv run python ./checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
+$ wc -l results/optd-qa-por-optd-vs-unlc.json 
+110001 results/optd-qa-por-optd-vs-unlc.json
+$ ls -lFh to_be_checked/
+total 14M
+-rw-r--r-- 1 root root 4.7M Nov  2 14:02 optd_por_unlc.csv
+-rw-r--r-- 1 root root 8.6M Nov  2 14:02 unlocode-code-list-latest.csv
+```
 
 # Checks
 ## Airlines - Airport Bases / Hubs
@@ -36,7 +85,8 @@ and stored again).
 
 * The following script displays all the missing airport bases/hubs:
 ```bash
-$ ./check-airline-bases.py
+$ ./mkLocalDir.sh
+$ pipenv run python checkers/check-airline-bases.py | tee results/optd-qa-airline-bases.json
 ```
 
 If the script does not return anything, then the check (successfully) passes.
