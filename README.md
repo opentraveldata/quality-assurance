@@ -52,9 +52,13 @@ $ cd opentraveldata-qa
 $ ./mkLocalDir.sh
 ```
 
-* Install supplementary Python packages through ``pipenv``:
+* Install supplementary Python packages through ``pipenv``.
+  References:
+  + [``pyproj`` compilation](https://stackoverflow.com/questions/51963619/pyproj-fails-to-compile-when-i-pip-install-it-and-its-not-about-gcc)
 ```bash
-$ pipenv install numpy matplotlib networkx https://github.com/matplotlib/basemap/archive/v1.2.0rel.tar.gz
+$ pipenv install numpy matplotlib networkx cython \
+         git+https://github.com/jswhit/pyproj.git#egg=pyproj \
+         git+https://github.com/matplotlib/basemap.git
 ```
 
 ## Launch the Python checkers
