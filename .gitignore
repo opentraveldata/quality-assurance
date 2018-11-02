@@ -1,2 +1,5 @@
 /to_be_checked/
+/results/
 __pycache__/
+/Pipfile
+/Pipfile.lock
