@@ -1,6 +1,10 @@
 
-# Language
-export LANG=en_US.UTF-8
+# Locale
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+# History
+export HISTTIMEFORMAT="%d/%m/%y %T "
 
 # Prompt
 source /usr/share/git-core/contrib/completion/git-prompt.sh # From Fedora 18+

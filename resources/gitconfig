@@ -1,0 +1,25 @@
+[user]
+	name = Firstname Lastname
+        email = john.doe@gmail.com
+[alias]
+        st = status
+        co = checkout
+        ci = commit
+        cl = clone
+        br = branch
+        fe = fetch
+        pl = pull
+        ps = push
+	rt = remote
+	lognice = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	pushforce = push --force-with-lease
+	branchmerged = branch --merged
+	diff2months = diff HEAD@{'2 months ago'}
+	diffyesterday = diff HEAD@{yesterday}
+	diff2018 = git diff HEAD@{'2018-01-01 12:00:00'}
+[push]
+        default = tracking
+[color]
+        ui = auto
+[merge]
+        tool = meld

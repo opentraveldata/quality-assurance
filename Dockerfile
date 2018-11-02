@@ -10,9 +10,12 @@ LABEL version="0.1"
 # Docker build time environment variables
 ENV HOME /root
 ENV OPTDQA_DIR ${HOME}/dev/geo/opentraveldata-qa
+ENV LANG en_US.UTF-8
+ENV LC_ALL ${LANG}
 
 # Set up of the user environment
-ADD resources/bashrc $HOME/.bashrc
+ADD resources/bashrc ${HOME}/.bashrc
+ADD resources/gitconfig ${HOME}/.gitconfig
 
 # Import the Centos-7 GPG key to prevent warnings
 RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
