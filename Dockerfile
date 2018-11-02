@@ -28,9 +28,9 @@ RUN yum -y clean all && \
 # Supplementary software packages
 RUN yum -y install git-all bzip2 gzip tar wget curl which \
                    python34 python34-pip python34-devel \
-                   python2-django mod_wsgi
+                   python2-django mod_wsgi \
+                   geos-devel geos-python
 RUN pip3 install -U pip pipenv
-RUN pip3 install -U networkx
 
 # Clone the Open Travel Data (OPTD) Quality Assurance (QA) Git repository
 RUN mkdir -p ${HOME}/dev/geo && cd ${HOME}/dev/geo && \
@@ -39,12 +39,12 @@ WORKDIR ${OPTDQA_DIR}
 RUN ./mkLocalDir.sh
 
 # Install supplementary Python packages
-RUN pipenv install numpy networkx 
+RUN pipenv install numpy matplotlib networkx https://github.com/matplotlib/basemap/archive/v1.2.0rel.tar.gz
 
 # Tell Docker that about the Web application
 #EXPOSE 8888
 
-# Launch Django
+# Launch a Bash Shell
 CMD ["bash"]
 
 

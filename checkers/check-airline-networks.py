@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import csv, re
-import numpy as np
 import networkx as nx
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import DeliveryQuality as dq

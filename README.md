@@ -31,7 +31,7 @@ $ docker pull opentraveldata/quality-assurance
 * Launch the Docker-powered scripts:
 ```bash
 $ docker run --rm -it opentraveldata/quality-assurance:latest bash
-$ pipenv run checker/checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
+$ pipenv run checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
 ```
 
 ### Docker image manual build
@@ -40,7 +40,7 @@ $ pipenv run checker/checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-o
 ```bash
 $ docker build -t opentraveldata/quality-assurance:myownimg .
 $ docker run --rm -it opentraveldata/quality-assurance:myownimg bash
-$ pipenv run checker/checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
+$ pipenv run checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
 ```
 
 ## Through a local cloned Git repository
@@ -54,13 +54,13 @@ $ ./mkLocalDir.sh
 
 * Install supplementary Python packages through ``pipenv``:
 ```bash
-$ pipenv install numpy networkx
+$ pipenv install numpy matplotlib networkx https://github.com/matplotlib/basemap/archive/v1.2.0rel.tar.gz
 ```
 
 ## Launch the Python checkers
 * Use ``pipenv`` to launch the Python scripts. For instance:
 ```bash
-$ pipenv run python ./checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
+$ pipenv run checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
 $ wc -l results/optd-qa-por-optd-vs-unlc.json 
 110001 results/optd-qa-por-optd-vs-unlc.json
 $ ls -lFh to_be_checked/
@@ -70,7 +70,10 @@ total 14M
 ```
 
 # Checks
-## Airlines - Airport Bases / Hubs
+
+## Airlines
+
+### Airport Bases / Hubs
 Check, for every airline of the
 [optd_airlines.csv file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
 that the airport bases/hubs are appearing in the
@@ -80,16 +83,25 @@ Note that both files ([optd_airlines.csv](http://github.com/opentraveldata/opent
 and [optd_airline_por.csv](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv))
 will be downloaded from the
 [OpenTravelData project](http://github.com/opentraveldata/opentraveldata)
-and stored within the 'to_be_checked' directory. If those files are too old,
+and stored within the ``to_be_checked`` directory. If those files are too old,
 they should be removed (a newer version will be automatically downloaded
 and stored again).
 
 * The following script displays all the missing airport bases/hubs:
 ```bash
 $ ./mkLocalDir.sh
-$ pipenv run python checkers/check-airline-bases.py | tee results/optd-qa-airline-bases.json
+$ pipenv run checkers/check-airline-bases.py | tee results/optd-qa-airline-bases.json
 ```
 
 If the script does not return anything, then the check (successfully) passes.
+
+### Airline networks
+* For every airline of the
+  [optd_airlines.csv file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
+  perform some basic statistics on their network, modelled as graph (where
+  POR are nodes and flight segments/legs are edges):  
+```bash
+$ pipenv run checkers/check-airline-networks.py > results/optd-qa-airline-networks.json
+```
 
 
