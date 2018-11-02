@@ -31,8 +31,7 @@ $ docker pull opentraveldata/quality-assurance
 * Launch the Docker-powered scripts:
 ```bash
 $ docker run --rm -it opentraveldata/quality-assurance:latest bash
-$ mkdir -p to_be_checked
-$ ./checker/checkers/check-por-cmp-optd-unlc.py
+$ pipenv run checker/checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
 ```
 
 ### Docker image manual build
@@ -40,6 +39,8 @@ $ ./checker/checkers/check-por-cmp-optd-unlc.py
   the Docker image needs to be manually rebuilt:
 ```bash
 $ docker build -t opentraveldata/quality-assurance:myownimg .
+$ docker run --rm -it opentraveldata/quality-assurance:myownimg bash
+$ pipenv run checker/checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
 ```
 
 ## Through a local cloned Git repository
