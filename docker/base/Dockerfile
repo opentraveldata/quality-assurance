@@ -1,7 +1,7 @@
 # Quality Assurance (QA) dashboard for Open Travel Data (OPTD)
 # Reference:
 # * https://hub.docker.com/r/opentraveldata/quality-assurance/
-# * https://github.com/opentraveldata/quality-assurance
+# * https://github.com/opentraveldata/quality-assurance/tree/master/docker
 #
 FROM centos:centos7
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
@@ -42,9 +42,6 @@ RUN ./mkLocalDir.sh
 RUN pipenv install numpy matplotlib networkx cython \
            git+https://github.com/jswhit/pyproj.git#egg=pyproj \
            git+https://github.com/matplotlib/basemap.git
-
-# Tell Docker that about the Web application
-#EXPOSE 8888
 
 # Launch a Bash Shell
 CMD ["bash"]

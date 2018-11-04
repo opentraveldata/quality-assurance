@@ -9,8 +9,7 @@ Though it is not there yet, that project should produce
 a Quality Assurance (QA) dashboard, much like
 [Geonames' one](http://qa.geonames.org/qa/).
 
-And, hopefully, that dashboard will be powered by
-a [Docker image](https://hub.docker.com/r/opentraveldata/quality-assurance/builds/)
+And, hopefully, that dashboard will be powered by [Docker images](docker/)
 generated thanks to that repository as well.
 
 ## See also
@@ -25,23 +24,17 @@ generated thanks to that repository as well.
 ## Through a pre-built Docker image
 * Retrieve the Docker image:
 ```bash
-$ docker pull opentraveldata/quality-assurance
+$ docker pull opentraveldata/quality-assurance:base
 ```
 
 * Launch the Docker-powered scripts:
 ```bash
-$ docker run --rm -it opentraveldata/quality-assurance:latest bash
+$ docker run --rm -it opentraveldata/quality-assurance:base bash
 $ pipenv run checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
 ```
 
 ### Docker image manual build
-* If, for some reason (for instance to customize the Docker image),
-  the Docker image needs to be manually rebuilt:
-```bash
-$ docker build -t opentraveldata/quality-assurance:myownimg .
-$ docker run --rm -it opentraveldata/quality-assurance:myownimg bash
-$ pipenv run checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
-```
+* See [the Docker section for more details](docker/)
 
 ## Through a local cloned Git repository
 * Clone the [OpenTravelData (OPTD) Quality Assurance (QA) Git repository](https://github.com/opentraveldata/quality-assurance)
