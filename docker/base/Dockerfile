@@ -39,9 +39,9 @@ WORKDIR ${OPTDQA_DIR}
 RUN ./mkLocalDir.sh
 
 # Install supplementary Python packages
-RUN pipenv install numpy matplotlib networkx cython \
-           git+https://github.com/jswhit/pyproj.git#egg=pyproj \
-           git+https://github.com/matplotlib/basemap.git#egg=basemap
+RUN pipenv install numpy matplotlib networkx cython 
+#           git+https://github.com/jswhit/pyproj.git#egg=pyproj \
+#           git+https://github.com/matplotlib/basemap.git#egg=basemap
 
 # Launch a Bash Shell
 CMD ["bash"]
