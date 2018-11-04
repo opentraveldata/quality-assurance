@@ -12,6 +12,12 @@ a Quality Assurance (QA) dashboard, much like
 And, hopefully, that dashboard will be powered by [Docker images](docker/)
 generated thanks to that repository as well.
 
+The scripts should generate CSV data files, which can then be uploaded
+in databases, or served through standard Web applications.
+For historical reasons, however, most of the scripts still generate JSON
+structures on the standard output. JSON should be used only for metadata,
+not for the data itself.
+
 ## See also
 * [Service Delivery Quality (SDQ) GitHub organization](https://github.com/service-delivery-quality)
   + [Quality Assurance samples](https://github.com/service-delivery-quality/quality-assurance)
@@ -30,7 +36,7 @@ $ docker pull opentraveldata/quality-assurance:base
 * Launch the Docker-powered scripts:
 ```bash
 $ docker run --rm -it opentraveldata/quality-assurance:base bash
-$ pipenv run checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
+[root@8ce25cc20a10 opentraveldata-qa (master)] exit
 ```
 
 ### Docker image manual build
@@ -51,22 +57,43 @@ $ ./mkLocalDir.sh
 ```bash
 $ pipenv install numpy matplotlib networkx cython \
          git+https://github.com/jswhit/pyproj.git#egg=pyproj \
-         git+https://github.com/matplotlib/basemap.git
+         git+https://github.com/matplotlib/basemap.git#egg=basemap
 ```
 
 ## Launch the Python checkers
 * Use ``pipenv`` to launch the Python scripts. For instance:
 ```bash
-$ pipenv run checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
-$ wc -l results/optd-qa-por-optd-vs-unlc.json 
-110001 results/optd-qa-por-optd-vs-unlc.json
-$ ls -lFh to_be_checked/
-total 14M
--rw-r--r-- 1 root root 4.7M Nov  2 14:02 optd_por_unlc.csv
--rw-r--r-- 1 root root 8.6M Nov  2 14:02 unlocode-code-list-latest.csv
+$ pipenv run checkers/check-por-cmp-optd-unlc.py
 ```
 
 # Checks
+
+## Points of Reference (POR)
+
+### OPTD vs UN/LOCODE
+* That script compares the
+  [OPTD-referenced POR](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_unlc.csv)
+  with the ones referenced by
+  [UN/LOCODE](http://github.com/opentraveldata/opentraveldata/blob/master/data/unlocode).
+  It generates two CSV files:
+  + ``results/optd-qa-por-optd-not-in-unlc.csv``, exhibiting the POR
+    referenced by OPTD but not by UN/LOCODE
+  + ``iresults/optd-qa-por-unlc-not-in-optd.csv``, exhibiting the POR
+    referenced by UN/LOCODE but not by OPTD
+```bash
+$ pipenv run checkers/check-por-cmp-optd-unlc.py
+$ wc -l results/optd-qa-por-unlc-not-in-optd.csv
+10351 results/optd-qa-por-unlc-not-in-optd.csv
+$ ls -lFh results/optd-qa-por-*.csv
+-rw-r--r-- 1 root root 4.7M Nov  4 18:22 results/optd-qa-por-optd-not-in-unlc.csv
+-rw-r--r-- 1 root root 763K Nov  4 18:22 results/optd-qa-por-unlc-not-in-optd.csv
+```
+
+* In order to get the IATA-referenced POR out of UN/LOCODE-referenced ones:
+```bash
+$ awk -F'^' '{if ($2 != "") {print $0}}' results/optd-qa-por-unlc-not-in-optd.csv | wc -l
+22
+```
 
 ## Airlines
 

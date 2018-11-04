@@ -29,13 +29,13 @@ and generated thanks to that repository.
 
 ## Base image
 ```bash
-$ docker build -t opentraveldata/quality-assurance:mybaseimg base/
+$ docker build -t opentraveldata/quality-assurance:mybaseimg docker/base/
 $ docker run --rm -it opentraveldata/quality-assurance:mybaseimg bash
 ```
 
-## Checker runner
+## Checker runner (not existing yet)
 ```bash
-$ docker build -t opentraveldata/quality-assurance:mycheckerrunnerimg run-checkers/
-$ docker run --rm -it -v ${PWD}/notebook/induction:/notebook -v ${PWD}/data/induction:/data opentraveldata/quality-assurance:mycheckerrunnerimg bash
+$ docker build -t opentraveldata/quality-assurance:mycheckerrunnerimg docker/run-checkers/
+$ docker run --rm -it -v ${PWD}/to_be_checked:/root/dev/geo/opentraveldata-qa/to_be_checked -v ${PWD}/results:/root/dev/geo/opentraveldata-qa/results opentraveldata/quality-assurance:mycheckerrunnerimg bash
 ```
 

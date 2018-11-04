@@ -9,6 +9,7 @@ if __name__ == '__main__':
   usageStr = "That script downloads OpenTravelData (OPTD) airline-related CSV files\nand check that the UN/LOCODE POR are present in Geonames (and in the OPTD POR file)"
   verboseFlag = dq.handle_opt(usageStr)
 
+  ## Input
   # OPTD-maintained list of UN/LOCODE-referenced POR
   optd_por_extd_unlc_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_unlc.csv?raw=true'
   optd_por_extd_unlc_file = 'to_be_checked/optd_por_unlc.csv'
@@ -16,6 +17,25 @@ if __name__ == '__main__':
   # UN/LOCODE derived list of POR
   optd_por_unlc_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/data/unlocode/archives/unlocode-code-list-2018-1.csv?raw=true'
   optd_por_unlc_file = 'to_be_checked/unlocode-code-list-latest.csv'
+
+  ## Output
+  # UN/LOCODE points of reference (POR) not referenced by OPTD
+  output_por_unlc_not_in_optd_file = 'results/optd-qa-por-unlc-not-in-optd.csv'
+  por_unlc_not_in_optd_list = [('por_code', 'unlc_iata_code', 'unlc_ctry_code',
+                                'unlc_state_code', 'unlc_short_code',
+                                'unlc_name_utf8', 'unlc_name_ascii',
+                                'unlc_coord_lat', 'unlc_coord_lon',
+                                'unlc_change_code', 'unlc_status',
+                                'unlc_is_port', 'unlc_is_rail', 'unlc_is_road',
+                                'unlc_is_apt', 'unlc_is_postoff',
+                                'unlc_is_icd', 'unlc_is_fxtpt',
+                                'unlc_is_brdxing', 'unlc_is_unkwn')]
+  
+  # OPTD points of reference (POR) not referenced by UN/LOCODE
+  output_por_optd_not_in_unlc_file = 'results/optd-qa-por-optd-not-in-unlc.csv'
+  por_optd_not_in_unlc_list = [('unlc_code', 'geo_id', 'fclass', 'fcode',
+                                'geo_lat', 'geo_lon', 'iso31662_code',
+                                'iso31662_name')]
 
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_por_extd_unlc_url, optd_por_extd_unlc_file, verboseFlag)
@@ -85,14 +105,21 @@ if __name__ == '__main__':
 
       # Check whether the UN/LOCODE referenced POR is in the list of OPTD POR
       if not unlc_por_code in optd_por_dict:
-        # The OPTD POR cannot be found in the list of UN/LOCODE derived POR
-        reasonStr = "UN/LOCODE derived POR not in OpenTravelData"
-        reportStruct = {'por_code': unlc_por_code, 'in_optd': 0, 'in_unlc': 1,
-                        'reason': reasonStr}
-        print (str(reportStruct))
+        # The UN/LOCODE-referenced POR is not referenced by OPTD
+        reportStruct = (unlc_por_code, unlc_iata_code, unlc_ctry_code,
+                        unlc_state_code, unlc_short_code, unlc_name_utf8,
+                        unlc_name_ascii, unlc_coord_lat, unlc_coord_lon,
+                        unlc_change_code, unlc_status, unlc_is_port,
+                        unlc_is_rail, unlc_is_road, unlc_is_apt, unlc_is_postoff,
+                        unlc_is_icd, unlc_is_fxtpt, unlc_is_brdxing,
+                        unlc_is_unkwn)
+
+        # UN/LOCODE not referenced by OPTD
+        por_unlc_not_in_optd_list.append (reportStruct)
 
   # Search for OPTD POR not, or no longer, referenced by UN/LOCODE
   for optd_unlc_code in optd_por_dict:
+    # The OPTD-referenced POR is not referenced by UN/LOCODE
     optd_por_list = optd_por_dict[optd_unlc_code]
     optd_fcode = next(iter(optd_por_list))
     optd_por_details = optd_por_list[optd_fcode]
@@ -106,20 +133,27 @@ if __name__ == '__main__':
       optd_iso31662_code = optd_por_details['iso31662_code']
       optd_iso31662_name = optd_por_details['iso31662_name']
 
-      reasonStr = "OPTD POR not/no longer referenced by UN/LOCODE"
-      reportStruct = {
-        'unlc_code': optd_unlc_code,
-        'geo_id': optd_geo_id,
-        'fclass': optd_fclass,
-        'fcode': optd_fcode,
-        'geo_lat': optd_coord_lat,
-        'geo_lon': optd_coord_lon,
-        'iso31662_code': optd_iso31662_code,
-        'iso31662_name': optd_iso31662_name,
-        'reason': reasonStr
-      }
-      print (str(reportStruct))
+      reportStruct = (optd_unlc_code, optd_geo_id, optd_fclass, optd_fcode,
+                      optd_coord_lat, optd_coord_lon, optd_iso31662_code,
+                      optd_iso31662_name)
 
+      # OPTD POR not referenced by UN/LOCODE
+      por_optd_not_in_unlc_list.append (reportStruct)
+
+  ## Write the output lists into CSV files
+  # UN/LOCODE not referenced by OPTD
+  with open (output_por_unlc_not_in_optd_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in por_unlc_not_in_optd_list:
+      file_writer.writerow (record)
+    
+  # OPTD POR not referenced by UN/LOCODE
+  with open (output_por_optd_not_in_unlc_file, 'w', newline='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in por_optd_not_in_unlc_list:
+      file_writer.writerow (record)
+  
+  
   # DEBUG
   if verboseFlag:
     print ("OPTD POR data full dictionary:\n" + str(optd_por_dict))
