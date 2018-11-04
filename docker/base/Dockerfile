@@ -28,7 +28,7 @@ RUN yum -y clean all && \
 # Supplementary software packages
 RUN yum -y install git-all bzip2 gzip tar wget curl which \
                    python34 python34-pip python34-devel \
-                   python2-django mod_wsgi cython \
+                   python2-django mod_wsgi Cython \
                    geos-devel geos-python
 RUN pip3 install -U pip pipenv
 
@@ -41,7 +41,7 @@ RUN ./mkLocalDir.sh
 # Install supplementary Python packages
 RUN pipenv install numpy matplotlib networkx cython \
            git+https://github.com/jswhit/pyproj.git#egg=pyproj \
-           git+https://github.com/matplotlib/basemap.git
+           git+https://github.com/matplotlib/basemap.git#egg=basemap
 
 # Launch a Bash Shell
 CMD ["bash"]
