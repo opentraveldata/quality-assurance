@@ -51,6 +51,33 @@ $ cd opentraveldata-qa
 $ ./mkLocalDir.sh
 ```
 
+### Python dependencies
+
+#### Operating System dependencies
+
+##### Fedora
+```bash
+$ sudo dnf -y install git-all bzip2 gzip tar wget curl which geos-devel geos-python \
+      gcc python34 python34-pip python34-devel python2-django mod_wsgi Cython
+$ sudo pip install -U pip
+$ pip install --user pipenv
+```
+
+##### CentOS 7
+* On CentOS, replace potentially ``yum`` by ``dnf``
+```bash
+$ sudo yum -y install git-all bzip2 gzip tar wget curl which geos-devel geos-python \
+      gcc python34 python34-pip python34-devel python2-django mod_wsgi Cython
+$ sudo pip3 install -U pip
+$ pip install --user pipenv
+```
+
+##### MacOS
+```bash
+$ brew install gawk gcc geos python pipenv
+```
+
+#### Installation within the ``pipenv`` virtual environment
 * Install supplementary Python packages through ``pipenv``.
   References:
   + [``pyproj`` compilation](https://stackoverflow.com/questions/51963619/pyproj-fails-to-compile-when-i-pip-install-it-and-its-not-about-gcc)
