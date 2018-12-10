@@ -81,7 +81,7 @@ $ pipenv update
 ## Launch the Python checkers
 * Use ``pipenv`` to launch the Python scripts. For instance:
 ```bash
-$ pipenv run checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
+$ pipenv run checkers/check-por-cmp-optd-unlc.py
 ```
 
 # Checks
