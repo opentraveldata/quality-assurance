@@ -51,46 +51,37 @@ $ cd opentraveldata-qa
 $ ./mkLocalDir.sh
 ```
 
-### Python dependencies
+## On the local environment (without Docker)
+As detailed in the [online guide on how to set up a Python virtual environment](http://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env),
+[Pyenv](https://github.com/pyenv/pyenv) and
+[`pipenv`](http://pypi.org/project/pipenv) should be installed,
+and Python 3.7 installed thanks to Pyenv.
+Then all the Python scripts will be run thanks to `pipenv`.
 
-#### Operating System dependencies
-
-##### Fedora
+### Pyenv and `pipenv`
+* As a summary of what has been detailed in above-mentioned how-to (and which
+  only be done once and for all):
 ```bash
-$ sudo dnf -y install git-all bzip2 gzip tar wget curl which geos-devel geos-python \
-      gcc python34 python34-pip python34-devel python2-django mod_wsgi Cython
-$ sudo pip install -U pip
-$ pip install --user pipenv
+$ if [ ! -d ${HOME}/.pyenv ]; then pushd ${HOME} && git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv && popd; fi
+$ export PYENV_ROOT="${HOME}/.pyenv"; export PATH="${PYENV_ROOT}/bin:${PATH}"; if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
+$ pyenv install 3.7.1
+$ cd ~/dev/geo/opentraveldata-qa
+$ pip install --user -U pipenv
+$ type pipenv
+pipenv is ~/.local/bin/pipenv
+$ pipenv --python 3.7 install
 ```
 
-##### CentOS 7
-* On CentOS, replace potentially ``yum`` by ``dnf``
+* To update the Python environment:
 ```bash
-$ sudo yum -y install git-all bzip2 gzip tar wget curl which geos-devel geos-python \
-      gcc python34 python34-pip python34-devel python2-django mod_wsgi Cython
-$ sudo pip3 install -U pip
-$ pip install --user pipenv
-```
-
-##### MacOS
-```bash
-$ brew install gawk gcc geos python pipenv
-```
-
-#### Installation within the ``pipenv`` virtual environment
-* Install supplementary Python packages through ``pipenv``.
-  References:
-  + [``pyproj`` compilation](https://stackoverflow.com/questions/51963619/pyproj-fails-to-compile-when-i-pip-install-it-and-its-not-about-gcc)
-```bash
-$ pipenv install numpy matplotlib networkx cython \
-         git+https://github.com/jswhit/pyproj.git#egg=pyproj \
-         git+https://github.com/matplotlib/basemap.git#egg=basemap
+$ cd ~/dev/geo/opentraveldata-qa
+$ pipenv update
 ```
 
 ## Launch the Python checkers
 * Use ``pipenv`` to launch the Python scripts. For instance:
 ```bash
-$ pipenv run checkers/check-por-cmp-optd-unlc.py
+$ pipenv run checkers/check-por-cmp-optd-unlc.py > results/optd-qa-por-optd-vs-unlc.json
 ```
 
 # Checks
