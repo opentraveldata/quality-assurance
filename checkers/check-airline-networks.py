@@ -18,9 +18,10 @@ if __name__ == '__main__':
   usageStr = "That script downloads OpenTravelData (OPTD) airline-related CSV files\nand check outliers within airline networks"
   verboseFlag = dq.handle_opt(usageStr)
 
+  ## Input
   # OPTD-maintained list of POR
-  optd_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv?raw=true'
-  optd_por_file = 'to_be_checked/optd_por_public.csv'
+  optd_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public_all.csv?raw=true'
+  optd_por_file = 'to_be_checked/optd_por_public_all.csv'
 
   # Airline details
   optd_airline_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv?raw=true'
@@ -30,6 +31,33 @@ if __name__ == '__main__':
   optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv?raw=true'
   optd_airline_por_file = 'to_be_checked/optd_airline_por_rcld.csv'
 
+  ## Output
+  # Zero-length edges on airline networks
+  output_arln_net_zero_edge_file = 'results/optd-qa-airline-network-zero-edges.csv'
+  arln_net_zero_edge_list = [('airline_code', 'apt_org', 'apt_dst', 'flt_freq')]
+
+  # Nodes not in OpenTravelData (OPTD)
+  output_arln_por_not_in_optd_file = 'results/optd-qa-airline-por-not-in-optd.csv'
+  arln_por_not_in_optd_list = [('airline_code', 'airline_name', 'center',
+                                'node') ]
+
+  # Nodes referenced with no coordinates in OpenTravelData (OPTD)
+  output_arln_zero_coord_por_in_optd_file = 'results/optd-qa-airline-zero-coord-por-in-optd.csv'
+  arln_zero_coord_por_in_optd_list = [('iata_code', 'icao_code', 'geoname_id',
+                                       'latitude', 'longitude') ]
+
+  # Global airline network distance is zero
+  output_arln_net_zero_distance_file = 'results/optd-qa-airline-network-zero-distance.csv'
+  arln_net_zero_distance_list = [('airline_code', 'airline_name', 'center')]
+
+  # Nodes far away from the center of the airline network
+  output_arln_net_far_node_file = 'results/optd-qa-airline-network-far-nodes.csv'
+  arln_net_far_node_list = [('airline_code', 'airline_name', 'subnetwork_id',
+                             'center_list', 'center', 'order', 'size',
+                             'avg degree', 'density', 'degree_list',
+                             'degree_centrality', 'max_node', 'max_dist',
+                             'avg_dist', 'ratio_dist')]
+  
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_por_url, optd_por_file, verboseFlag)
   dq.downloadFileIfNeeded (optd_airline_url, optd_airline_file, verboseFlag)
@@ -45,7 +73,7 @@ if __name__ == '__main__':
   basemap = Basemap(projection='robin',lon_0=0,resolution='l')
 
   #
-  # OpenTravelData file of the POR details (optd_por_public.csv)
+  # OpenTravelData (OPTD) file of the POR details (optd_por_public.csv)
   #
   # iata_code^icao_code^geoname_id^envelope_id^latitude^longitude^date_from^city_code_list
   optd_por_map_dict = dict()
@@ -67,9 +95,20 @@ if __name__ == '__main__':
       optd_por_coord_lon = row['longitude']
       optd_por_date_from = row['date_from']
 
-      # Derive a unique code
+      # Derive a unique code, to be either IATA or ICAO
       optd_por_code = optd_por_iata_code
-      if (optd_por_code == "ZZZ"): optd_por_code = optd_por_icao_code
+      if (optd_por_code == ""):
+        optd_por_code = optd_por_icao_code
+
+      # There are many POR with no IATA or ICAO code. They are not relevant here
+      if (optd_por_code == ""): continue
+
+      # Report and skip the POR having no geographical coordinates specified
+      if (optd_por_coord_lat == "" or optd_por_coord_lon == ""):
+        reportStruct = (optd_por_iata_code, optd_por_icao_code, optd_por_geo_id,
+                        optd_por_coord_lat, optd_por_coord_lon)
+        arln_zero_coord_por_in_optd_list.append (reportStruct)
+        continue
       
       # Register the POR coordinates, if it is seen for the first time
       if not optd_por_code in optd_por_map_dict:
@@ -104,11 +143,8 @@ if __name__ == '__main__':
       # Nevertheless, networkx.degree_centrality() would fail
       # on such a loop edge; so, we do not add it to the network.
       if apt_org == apt_dst:
-        reportStruct = {'reporting_reason': "The edge is a loop",
-                        'airline_code': airline_code, 'apt_org': apt_org,
-                        'apt_dst': apt_dst, 'flt_freq': flt_freq}
-        if verboseFlag:
-          print (str(reportStruct))
+        reportStruct = (airline_code, apt_org, apt_dst, flt_freq)
+        arln_net_zero_edge_list.append (reportStruct)
 
       # Register the flight leg as an edge into a NetworkX graph
       #idx_orig = getIdx(apt_org); idx_dest = getIdx(apt_dst)
@@ -214,9 +250,9 @@ if __name__ == '__main__':
               nx.draw_networkx (graph_comp, optd_por_map_dict,
                                 node_color = 'green', label = labelStr)
               # Draw the geographical features
-              basemap.drawcountries(linewidth = 0.5)
-              basemap.fillcontinents(color='white',lake_color='white')
-              basemap.drawcoastlines(linewidth=0.5)
+              basemap.drawcountries (linewidth = 0.5)
+              basemap.fillcontinents (color = 'white', lake_color = 'white')
+              basemap.drawcoastlines (linewidth = 0.5)
 
           #
           center_node = graph_comp_center[0]
@@ -231,13 +267,9 @@ if __name__ == '__main__':
               # Check whether the current node is referenced by OPTD
               if not idx_node in optd_por_map_dict:
                 airline_name = airline_dict[airline_code]['airline_name']
-                reasonStr = "The current node (" + idx_node + ") is not referenced by the OpenTravelData project"
-                reportStruct = {'reporting_reason': reasonStr,
-                                'airline_code': airline_code,
-                                'airline_name': airline_name,
-                                'center': center_node,
-                                'node': idx_node}
-                print (str(reportStruct))
+                reportStruct = (airline_code, airline_name, center_node,
+                                idx_node)
+                arln_por_not_in_optd_list.append (reportStruct)
                 break
               
               # Calculate the geographical distance between the current POR
@@ -254,6 +286,12 @@ if __name__ == '__main__':
                   max_dist_node = idx_node
 
 
+          # Check that the network is not empty
+          if sum_dist_km == 0.0:
+            reportStruct = (airline_code, airline_name, center_node)
+            arln_net_zero_distance_list.append (reportStruct)
+            continue
+          
           # Calculate the geographical distance statistics (average and max)
           # The number of nodes on which the average is calculated is:
           #  * The number of nodes of the network
@@ -271,25 +309,15 @@ if __name__ == '__main__':
 
           # Reporting
           airline_name = airline_dict[airline_code]['airline_name']
-          reasonStr = "The 'max_node' is far away (" + str(int(k_dist_ratio)) + "x the average distance) from the 'center'"
-          reportStruct = {'reporting_reason': reasonStr,
-                          'airline_code': airline_code,
-                          'airline_name': airline_name,
-                          'subnetwork_id': graph_comp_idx,
-                          'center_list': graph_comp_center,
-                          'center': center_node,
-                          'order': graph_order, 'size': graph_size,
-                          'avg degree': graph_avg_deg,
-                          'density': graph_density,
-                          'degree_list': graph_degree,
-                          'degree_centrality': graph_centrality,
-                          'max_node': max_dist_node,
-                          'max_dist': max_dist_to_center_km,
-                          'avg_dist': avg_dist_to_center_km,
-                          'ratio_dist': ratio_dist}
+          reportStruct = (airline_code, airline_name, graph_comp_idx,
+                          graph_comp_center, center_node, graph_order,
+                          graph_size, graph_avg_deg, graph_density,
+                          graph_degree, graph_centrality, max_dist_node,
+                          max_dist_to_center_km, avg_dist_to_center_km,
+                          ratio_dist)
 
-          if ratio_dist >= k_dist_ratio or verboseFlag:
-              print (str(reportStruct))
+          if ratio_dist >= k_dist_ratio:
+              arln_net_far_node_list.append (reportStruct)
 
           # Iteration on the sub-networks
           graph_comp_idx += 1
@@ -301,3 +329,35 @@ if __name__ == '__main__':
       if verboseFlag:
         a = 1
         #plt.show()
+
+  ## Write the output lists into CSV files
+  # Zero-length edges on airline networks
+  with open (output_arln_net_zero_edge_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in arln_net_zero_edge_list:
+      file_writer.writerow (record)
+    
+  # Nodes not in OpenTravelData (OPTD)
+  with open (output_arln_por_not_in_optd_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in arln_por_not_in_optd_list:
+      file_writer.writerow (record)
+
+  # Nodes referenced with no coordinates in OpenTravelData (OPTD)
+  with open (output_arln_zero_coord_por_in_optd_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in arln_zero_coord_por_in_optd_list:
+      file_writer.writerow (record)
+  
+  # Global airline network distance is zero
+  with open (output_arln_net_zero_distance_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in arln_net_zero_distance_list:
+      file_writer.writerow (record)
+
+  # Nodes far away from the center of the airline network
+  with open (output_arln_net_far_node_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in arln_net_far_node_list:
+      file_writer.writerow (record)
+

@@ -23,7 +23,7 @@ not for the data itself.
   + [Quality Assurance samples](https://github.com/service-delivery-quality/quality-assurance)
 * [Geonames' QA dashboard](http://qa.geonames.org/qa/)
 * [Quality Assurance (QA) images on Docker Hub](https://hub.docker.com/r/opentraveldata/quality-assurance)
-* [How to set up a Python virtual environment](http://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
+* [How to set up a Python virtual environment](https://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
 
 # Installation
 
@@ -42,13 +42,14 @@ $ docker run --rm -it opentraveldata/quality-assurance:base bash
 ### Docker image manual build
 * See [the Docker section for more details](docker/)
 
-## Through a local cloned Git repository
-* Clone the [OpenTravelData (OPTD) Quality Assurance (QA) Git repository](https://github.com/opentraveldata/quality-assurance)
+## Through a local cloned Git repository (without Docker)
+* Clone the [OpenTravelData (OPTD) Quality Assurance (QA) Git repository](https://github.com/opentraveldata/quality-assurance):
 ```bash
-$ mkdir -p ~/dev/geo && cd ~/dev/geo
-$ git clone https://github.com/opentraveldata/quality-assurance.git opentraveldata-qa
-$ cd opentraveldata-qa
+$ mkdir -p ~/dev/geo
+$ git clone https://github.com/opentraveldata/quality-assurance.git ~/dev/geo/opentraveldata-qa
+$ pushd ~/dev/geo/opentraveldata-qa
 $ ./mkLocalDir.sh
+$ popd
 ```
 
 ## On the local environment (without Docker)
@@ -65,17 +66,16 @@ Then all the Python scripts will be run thanks to `pipenv`.
 $ if [ ! -d ${HOME}/.pyenv ]; then pushd ${HOME} && git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv && popd; fi
 $ export PYENV_ROOT="${HOME}/.pyenv"; export PATH="${PYENV_ROOT}/bin:${PATH}"; if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
 $ pyenv install 3.7.1
-$ cd ~/dev/geo/opentraveldata-qa
-$ pip install --user -U pipenv
-$ type pipenv
-pipenv is ~/.local/bin/pipenv
-$ pipenv --python 3.7 install
+$ pushd ~/dev/geo/opentraveldata-qa
+$ pipenv install
+$ popd
 ```
 
-* To update the Python environment:
+* To update the Python dependencies:
 ```bash
-$ cd ~/dev/geo/opentraveldata-qa
+$ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv update
+$ popd
 ```
 
 ## Launch the Python checkers
@@ -99,51 +99,78 @@ $ pipenv run checkers/check-por-cmp-optd-unlc.py
   + ``iresults/optd-qa-por-unlc-not-in-optd.csv``, exhibiting the POR
     referenced by UN/LOCODE but not by OPTD
 ```bash
+$ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv run checkers/check-por-cmp-optd-unlc.py
 $ wc -l results/optd-qa-por-unlc-not-in-optd.csv
-10351 results/optd-qa-por-unlc-not-in-optd.csv
+10349 results/optd-qa-por-unlc-not-in-optd.csv
 $ ls -lFh results/optd-qa-por-*.csv
--rw-r--r-- 1 root root 4.7M Nov  4 18:22 results/optd-qa-por-optd-not-in-unlc.csv
--rw-r--r-- 1 root root 763K Nov  4 18:22 results/optd-qa-por-unlc-not-in-optd.csv
+-rw-r--r-- 1 user staff 4.7M Dec 13 18:22 results/optd-qa-por-optd-not-in-unlc.csv
+-rw-r--r-- 1 user staff 763K Dec 13 18:22 results/optd-qa-por-unlc-not-in-optd.csv
+$ popd
 ```
 
 * In order to get the IATA-referenced POR out of UN/LOCODE-referenced ones:
 ```bash
+$ pushd ~/dev/geo/opentraveldata-qa
 $ awk -F'^' '{if ($2 != "") {print $0}}' results/optd-qa-por-unlc-not-in-optd.csv | wc -l
-22
+21
+$ popd
 ```
 
 ## Airlines
 
 ### Airport Bases / Hubs
 Check, for every airline of the
-[optd_airlines.csv file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
+[`optd_airlines.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
 that the airport bases/hubs are appearing in the
-[optd_airline_por.csv file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv).
+[`optd_airline_por.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv).
 
-Note that both files ([optd_airlines.csv](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv)
-and [optd_airline_por.csv](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv))
+Note that both files ([`optd_airlines.csv`](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv)
+and [`optd_airline_por.csv`](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv))
 will be downloaded from the
 [OpenTravelData project](http://github.com/opentraveldata/opentraveldata)
 and stored within the ``to_be_checked`` directory. If those files are too old,
-they should be removed (a newer version will be automatically downloaded
+they should be removed (a newer version will then be automatically downloaded
 and stored again).
 
 * The following script displays all the missing airport bases/hubs:
 ```bash
+$ pushd ~/dev/geo/opentraveldata-qa
 $ ./mkLocalDir.sh
 $ pipenv run checkers/check-airline-bases.py | tee results/optd-qa-airline-bases.json
+$ popd
 ```
 
 If the script does not return anything, then the check (successfully) passes.
 
 ### Airline networks
 * For every airline of the
-  [optd_airlines.csv file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
+  [`optd_airlines.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
   perform some basic statistics on their network, modelled as graph (where
-  POR are nodes and flight segments/legs are edges):  
+  POR are nodes and flight segments/legs are edges):
 ```bash
-$ pipenv run checkers/check-airline-networks.py > results/optd-qa-airline-networks.json
+$ pushd ~/dev/geo/opentraveldata-qa
+$ pipenv run checkers/check-airline-networks.py
+$ wc -l results/optd-qa-airline-network-far-nodes.csv
+7 results/optd-qa-airline-network-far-nodes.csv
+$ $ ls -lFh results/optd-qa-airline-*.csv
+-rw-r--r--  1 user  staff   8.8K Dec 13 18:47 results/optd-qa-airline-network-far-nodes.csv
+-rw-r--r--  1 user  staff    34B Dec 13 18:47 results/optd-qa-airline-network-zero-distance.csv
+-rw-r--r--  1 user  staff    87B Dec 13 18:47 results/optd-qa-airline-network-zero-edges.csv
+-rw-r--r--  1 user  staff    70B Dec 13 18:47 results/optd-qa-airline-por-not-in-optd.csv
+-rw-r--r--  1 user  staff   136B Dec 13 18:47 results/optd-qa-airline-zero-coord-por-in-optd.csv
+$ cut -d'^' -f1,1 results/optd-qa-airline-network-far-nodes.csv | grep -v "^airline"
+9W
+B5
+KD
+NS
+P2
+X3
+$ cat results/optd-qa-airline-network-zero-edges.csv | grep -v "^airline"
+BY^MAN^MAN^1.0
+MT^BHX^BHX^1.0
+ZB^LBA^LBA^1.0
+$ popd
 ```
 
 

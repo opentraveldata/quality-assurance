@@ -8,8 +8,8 @@ numpy = "*"
 networkx = "*"
 matplotlib = "*"
 cython = "*"
-pyproj = {git = "https://github.com/jswhit/pyproj.git"}
 elasticsearch-opentracing = "*"
+pyproj = "*"
 
 [dev-packages]
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "df3dda2dac86f0734cfdbebfb6a9e4b98d9ea13913af25541b9d29b2d2d4e52f"
+            "sha256": "3ba2276be4ab81d79ae0b411f2bf9f76b4f1a3c785bef340f6bf5001c6c8b435"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -192,8 +192,11 @@
             "version": "==2.3.0"
         },
         "pyproj": {
-            "git": "https://github.com/jswhit/pyproj.git",
-            "ref": "78540f5ff40da92160f80860416c91ee74b7643c"
+            "hashes": [
+                "sha256:53fa54c8fa8a1dfcd6af4bf09ce1aae5d4d949da63b90570ac5ec849efaf3ea8"
+            ],
+            "index": "pypi",
+            "version": "==1.9.5.1"
         },
         "python-dateutil": {
             "hashes": [
