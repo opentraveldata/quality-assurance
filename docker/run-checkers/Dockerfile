@@ -15,9 +15,10 @@ ENV LC_ALL ${LANG}
 
 # Run a few checkers
 WORKDIR ${OPTDQA_DIR}
-RUN pipenv run checkers/check-por-cmp-optd-unlc.py && \
-    pipenv run checkers/check-airline-networks.py && \
-    for csvfile in results/*.csv; do wc -l ${csvfile}; done 
+RUN source ${HOME}/.bashrc && \
+	pipenv run checkers/check-por-cmp-optd-unlc.py && \
+	pipenv run checkers/check-airline-networks.py && \
+	for csvfile in results/*.csv; do wc -l ${csvfile}; done 
 
 # Launch a Bash Shell
 CMD ["bash"]

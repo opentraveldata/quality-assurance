@@ -45,6 +45,7 @@ WORKDIR ${OPTDQA_DIR}
 RUN ./mkLocalDir.sh
 RUN source ${HOME}/.bashrc && \
   pipenv install git+https://github.com/jswhit/pyproj.git#egg=pyproj && \
+  pipenv install cython && \
   pipenv install git+https://github.com/matplotlib/basemap.git#egg=basemap && \
   pipenv install
 
