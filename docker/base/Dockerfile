@@ -29,7 +29,7 @@ RUN yum -y clean all && \
 RUN yum -y install git-all zlib-devel bzip2-devel gzip tar wget curl which \
 	           gcc readline-devel sqlite-devel openssl-devel libffi-devel \
 	           python34 python34-pip python34-devel \
-                   python2-django mod_wsgi Cython \
+                   python2-django mod_wsgi \
 	           geos-devel geos-python
 
 # Python Pyenv and pipenv
@@ -43,9 +43,12 @@ RUN mkdir -p ${HOME}/dev/geo && \
 	${HOME}/dev/geo/opentraveldata-qa
 WORKDIR ${OPTDQA_DIR}
 RUN ./mkLocalDir.sh
-#RUN source ${HOME}/.bashrc && pipenv install
+RUN source ${HOME}/.bashrc && \
+  pipenv install git+https://github.com/jswhit/pyproj.git#egg=pyproj && \
+  pipenv install git+https://github.com/matplotlib/basemap.git#egg=basemap && \
+  pipenv install
+
 
 # Launch a Bash Shell
 CMD ["bash"]
-
 
