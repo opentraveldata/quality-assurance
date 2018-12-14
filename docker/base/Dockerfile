@@ -26,23 +26,22 @@ RUN yum -y clean all && \
     yum -y install epel-release
 
 # Supplementary software packages
-RUN yum -y install git-all bzip2 gzip tar wget curl which \
-                   gcc \
-                   python34 python34-pip python34-devel \
+RUN yum -y install git-all zlib-devel bzip2-devel gzip tar wget curl which \
+	           gcc readline-devel sqlite-devel openssl-devel libffi-devel \
+	           python34 python34-pip python34-devel \
                    python2-django mod_wsgi Cython \
-                   geos-devel geos-python
+	           geos-devel geos-python
+
+# Python Pyenv and pipenv
+RUN git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv
 RUN pip3 install -U pip pipenv
 
 # Clone the Open Travel Data (OPTD) Quality Assurance (QA) Git repository
-RUN mkdir -p ${HOME}/dev/geo && cd ${HOME}/dev/geo && \
-    git clone https://github.com/opentraveldata/quality-assurance.git opentraveldata-qa
+RUN mkdir -p ${HOME}/dev/geo && \
+	git clone https://github.com/opentraveldata/quality-assurance.git \
+	${HOME}/dev/geo/opentraveldata-qa
 WORKDIR ${OPTDQA_DIR}
-RUN ./mkLocalDir.sh
-
-# Install supplementary Python packages
-RUN pipenv install numpy matplotlib networkx cython elasticsearch_opentracing \
-           git+https://github.com/jswhit/pyproj.git#egg=pyproj \
-           git+https://github.com/matplotlib/basemap.git#egg=basemap
+RUN ./mkLocalDir.sh && pipenv install
 
 # Launch a Bash Shell
 CMD ["bash"]
