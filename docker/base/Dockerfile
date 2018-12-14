@@ -42,7 +42,8 @@ RUN mkdir -p ${HOME}/dev/geo && \
 	git clone https://github.com/opentraveldata/quality-assurance.git \
 	${HOME}/dev/geo/opentraveldata-qa
 WORKDIR ${OPTDQA_DIR}
-RUN ./mkLocalDir.sh && pipenv install
+RUN ./mkLocalDir.sh
+#RUN source ${HOME}/.bashrc && pipenv install
 
 # Launch a Bash Shell
 CMD ["bash"]
