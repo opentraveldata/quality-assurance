@@ -34,7 +34,7 @@ RUN yum -y install git-all zlib-devel bzip2-devel gzip tar wget curl which \
 
 # Python Pyenv and pipenv
 RUN git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv
-RUN pyenv install 3.7.1
+RUN source ${HOME}/.bashrc && pyenv install 3.7.1
 RUN pip3 install -U pip pipenv
 
 # Clone the Open Travel Data (OPTD) Quality Assurance (QA) Git repository
