@@ -24,6 +24,11 @@ if __name__ == '__main__':
   optd_por_multi_city_list = [('iata_code', 'optd_pk', 'loc_type', 'geo_id',
                                'city_code_list', 'page_rank')]
   
+  # OPTD points of reference (POR) with multiple cities not sorted by PageRank
+  output_por_multiple_cities_no_std_file = 'results/optd-qa-por-multi-city-not-std.csv'
+  optd_por_multi_city_no_std_list = [('iata_code', 'optd_pk', 'loc_type',
+                                      'geo_id', 'city_code_list', 'page_rank')]
+  
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_por_public_url, optd_por_public_file,
                            verboseFlag)
@@ -95,6 +100,8 @@ if __name__ == '__main__':
 
           # Iterate through the list of city IATA codes
           optd_por_page_rank_list = ""
+          optd_por_page_rank_sorted_flag = True
+          optd_por_page_rank_max = 0.0
           optd_city_code_array = optd_bksf_city_code_list_str.split (',')
 
           for optd_city_code in optd_city_code_array:
@@ -118,10 +125,21 @@ if __name__ == '__main__':
                   if 'city' in optd_por_record_dict:
                       optd_por_record = optd_por_record_dict['city']
                       optd_por_page_rank = optd_por_record['page_rank']
+                      if optd_por_page_rank == "":
+                        optd_por_page_rank = 0.0
+                      else:
+                        optd_por_page_rank = float(optd_por_page_rank)
+
                       if (len(optd_por_page_rank_list)):
-                          optd_por_page_rank_list = optd_por_page_rank_list + ","
+                        optd_por_page_rank_list = optd_por_page_rank_list + ","
+                      else:
+                        optd_por_page_rank_max = optd_por_page_rank
+
                       optd_por_page_rank_list = optd_por_page_rank_list \
-                          + optd_por_page_rank
+                          + str(optd_por_page_rank)
+                      if optd_por_page_rank > optd_por_page_rank_max:
+                        optd_por_page_rank_max = optd_por_page_rank
+                        optd_por_page_rank_sorted_flag = False
                           
           # OPTD POR with multiple cities
           reportStruct = (optd_bksf_iata_code, optd_bksf_pk,
@@ -130,13 +148,24 @@ if __name__ == '__main__':
                           optd_por_page_rank_list)
                       
           optd_por_multi_city_list.append (reportStruct)
-          
+
+          # OPTD POR with multiple cities not sorted according to PageRank values
+          if not optd_por_page_rank_sorted_flag:
+            optd_por_multi_city_no_std_list.append (reportStruct)
           
   ## Write the output lists into CSV files
   # POR having multiple cities
   with open (output_por_multiple_cities_file, 'w', newline ='') as csvfile:
     file_writer = csv.writer (csvfile, delimiter='^')
     for record in optd_por_multi_city_list:
+      file_writer.writerow (record)
+
+  # POR having multiple cities and where the sorting order is not following
+  # the PageRank values
+  with open (output_por_multiple_cities_no_std_file, 'w',
+             newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in optd_por_multi_city_no_std_list:
       file_writer.writerow (record)
      
   # DEBUG

@@ -155,18 +155,22 @@ $ popd
   [OPTD public POR file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
   with the
   [curated file of best known POR](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_best_known_so_far.csv).
-  It generates a CSV file:
+  It generates two CSV files:
   + `results/optd-qa-por-multi-city.csv`, reporting POR with multiple cities
+  + `results/optd-qa-por-multi-city-not-std.csv`, reporting POR
+    with multiple cities not following the sorting order of PageRank values
 
 * Note that a CSV file has a single row, it is the header. So, it can be
   considered as empty.
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv run checkers/check-por-multiple-cities.py
-$ wc -l results/optd-qa-por-multi-city.csv
-92 results/optd-qa-por-multi-city.csv
-$ ls -lFh results/optd-qa-por-multi-city.csv
--rw-r--r--  1 user staff 5.9K Jan 10 15:54 results/optd-qa-por-multi-city.csv
+$ wc -l results/optd-qa-por-multi-city.csv results/optd-qa-por-multi-city-not-std.csv
+91 results/optd-qa-por-multi-city.csv
+30 results/optd-qa-por-multi-city-not-std.csv
+$ ls -lFh results/optd-qa-por-multi-city.csv results/optd-qa-por-multi-city-not-std.csv
+-rw-r--r--  1 user staff 2.2K Jan 10 15:54 results/optd-qa-por-multi-city-not-std.csv
+-rw-r--r--  1 user staff 6.1K Jan 10 15:54 results/optd-qa-por-multi-city.csv
 $ popd
 ```
 
