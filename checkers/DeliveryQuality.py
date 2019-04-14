@@ -66,7 +66,7 @@ def downloadFileIfNeeded (file_url, output_file, verbose_flag = False):
         print ("If that file is too old, you can delete it, and re-execute that script")
     else:
       downloadFile (file_url, output_file, verbose_flag)
-  except OSError:
+  except FileNotFoundError:
     downloadFile (file_url, output_file, verbose_flag)
   return
 
