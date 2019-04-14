@@ -4,7 +4,7 @@ decorator==4.4.0
 elasticsearch-opentracing==0.1.4
 elasticsearch==6.3.1
 futures==3.1.1
-git+https://github.com/jswhit/pyproj.git@02fe9602ebf82fee5f9a2800ad25df5a01119501#egg=pyproj
+pyproj==1.9.6
 git+https://github.com/matplotlib/basemap.git@dce77e4242a25f5d521d5ae9106c037991ae1d0a#egg=basemap
 kiwisolver==1.0.1
 matplotlib==3.0.3
