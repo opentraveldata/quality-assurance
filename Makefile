@@ -1,6 +1,6 @@
 
 # Python
-ifeq (, $(shell which $HOME/.pyenv/shims/pipenv))
+ifeq ($(shell test $HOME/.pyenv/shims/pipenv && echo true),true)
 	PY_EXEC := pipenv run python
 else
 	PY_EXEC := python
