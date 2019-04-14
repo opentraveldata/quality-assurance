@@ -1,6 +1,10 @@
 
 # Python
-PY_EXEC=pipenv run python
+ifeq (, $(shell which $HOME/.pyenv/shims/pipenv))
+	PY_EXEC := pipenv run python
+else
+	PY_EXEC := python
+endif
 
 # Points of Reference (POR)
 
