@@ -9,7 +9,7 @@ networkx = "*"
 matplotlib = "*"
 cython = "*"
 elasticsearch-opentracing = "*"
-pyproj = {git = "https://github.com/jswhit/pyproj.git"}
+pyproj = "==1.9.6"
 basemap = {git = "https://github.com/matplotlib/basemap.git"}
 
 [dev-packages]

@@ -1,6 +1,8 @@
 Quality Assurance (QA) for OpenTravelData (OPTD)
 ================================================
 
+[![Build Status](https://travis-ci.com/opentraveldata/quality-assurance.svg?branch=master)](https://travis-ci.com/opentraveldata/quality-assurance)
+
 # Overview
 [That repository](http://github.com/opentraveldata/quality-assurance)
 features scripts to check the quality of the data files
@@ -13,6 +15,9 @@ a Quality Assurance (QA) dashboard, much like
 And, hopefully, that dashboard will be powered by
 [Docker images](http://github.com/opentraveldata/quality-assurance/blob/master/docker/)
 generated thanks to that repository as well.
+
+[Travis CI](https://travis-ci.com) builds are partially covering the tests
+in https://travis-ci.com/opentraveldata/quality-assurance
 
 The scripts should generate CSV data files, which can then be uploaded
 in databases, or served through standard Web applications.

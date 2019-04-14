@@ -58,15 +58,19 @@ def downloadFile (file_url, output_file, verbose_flag = False):
 def downloadFileIfNeeded (file_url, output_file, verbose_flag = False):
   """Download a file from the Web, only if newer on that latter."""
   # Check whether the output_file has already been downloaded
-  try:
-    if os.stat (output_file).st_size > 0:
-      file_time = datetime.datetime.fromtimestamp (os.path.getmtime (output_file))
-      if verbose_flag:
-        print ("Time-stamp of '" + output_file + "': " + str(file_time))
-        print ("If that file is too old, you can delete it, and re-execute that script")
-    else:
+  file_exists = os.path.isfile (output_file)
+  if file_exists:
+    try:
+      if os.stat (output_file).st_size > 0:
+        file_time = datetime.datetime.fromtimestamp (os.path.getmtime (output_file))
+        if verbose_flag:
+          print ("Time-stamp of '" + output_file + "': " + str(file_time))
+          print ("If that file is too old, you can delete it, and re-execute that script")
+      else:
+        downloadFile (file_url, output_file, verbose_flag)
+    except:
       downloadFile (file_url, output_file, verbose_flag)
-  except FileNotFoundError:
+  else:
     downloadFile (file_url, output_file, verbose_flag)
   return
 

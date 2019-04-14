@@ -1,4 +1,7 @@
 
+# Python
+PY_EXEC=pipenv run python
+
 # Points of Reference (POR)
 
 # UN/LOCODE 
@@ -14,25 +17,31 @@ por_multi_city=results/optd-qa-por-multi-city.csv results/optd-qa-por-multi-city
 # Airlines
 air_net=results/optd-qa-airline-network-far-nodes.csv
 
+# All output CSV
+all_csv=$(por_unlc_csv) $(por_geo_in_optd) $(por_city_not_in_optd) $(por_multi_city) \
+	$(air_net)
 
 # Main target
-checkers: $(por_unlc_csv) $(por_geo_in_optd) $(por_city_not_in_optd) $(por_multi_city) \
-	$(air_net)
+checkers: $(all_csv)
+
+# Cleaning
+clean:
+	\rm -f to_be_checked/*.csv $(all_csv)
 
 # Specific targets
 $(por_unlc_csv):
-	python checkers/check-por-cmp-optd-unlc.py && wc -l $(por_unlc_csv) && head -3 $(por_unlc_csv)
+	$(PY_EXEC) checkers/check-por-cmp-optd-unlc.py && wc -l $(por_unlc_csv) && head -3 $(por_unlc_csv)
 
 $(por_geo_in_optd):
-	python checkers/check-por-geo-id-in-optd.py && wc -l $(por_geo_in_optd) && head -3 $(por_geo_in_optd)
+	$(PY_EXEC) checkers/check-por-geo-id-in-optd.py && wc -l $(por_geo_in_optd) && head -3 $(por_geo_in_optd)
 
 $(por_city_not_in_optd):
-	python checkers/check-por-city-not-in-optd.py && wc -l $(por_city_not_in_optd) && head -3 $(por_city_not_in_optd)
+	$(PY_EXEC) checkers/check-por-city-not-in-optd.py && wc -l $(por_city_not_in_optd) && head -3 $(por_city_not_in_optd)
 
 $(por_multi_city):
-	python checkers/check-por-multiple-cities.py && wc -l $(por_multi_city) && head -3 $(por_multi_city)
+	$(PY_EXEC) checkers/check-por-multiple-cities.py && wc -l $(por_multi_city) && head -3 $(por_multi_city)
 
 $(air_net):
-	pipenv run python checkers/check-airline-networks.py && wc -l $(air_net) && head -3 $(air_net)
+	$(PY_EXEC) checkers/check-airline-networks.py && wc -l $(air_net) && head -3 $(air_net)
 
 
