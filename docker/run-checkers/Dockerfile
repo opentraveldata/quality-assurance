@@ -1,26 +1,48 @@
 # Quality Assurance (QA) dashboard for Open Travel Data (OPTD)
-# Reference:
-# * https://hub.docker.com/r/opentraveldata/quality-assurance/
-# * https://github.com/opentraveldata/quality-assurance/tree/master/docker
+# References:
+# * C++/Python base image:
+#   + https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base
+#   + https://github.com/cpp-projects-showcase/docker-images)
+# * Docker images for this project:
+#   + https://cloud.docker.com/u/opentraveldata/repository/docker/opentraveldata/quality-assurance
+#   + https://github.com/opentraveldata/quality-assurance/tree/master/docker
+
 #
-FROM opentraveldata/quality-assurance:base
+FROM cpppythondevelopment/base:centos7
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
-LABEL version="0.1"
+LABEL version="0.2"
 
 # Docker build time environment variables
-ENV HOME /root
-ENV OPTDQA_DIR ${HOME}/dev/geo/opentraveldata-qa
+ENV container docker
+ENV HOME /home/build
+ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL ${LANG}
+ENV OPTDQA_DIR ${HOME}/dev/geo/opentraveldata-qa
+
+# Add a Shell alias for the OPTD QA project
+USER root
+ADD resources/bash_aliases ${HOME}/.bash_aliases
+RUN chown build.build ${HOME}/.bash_aliases
+
+# Switch to the `build` user
+WORKDIR ${HOME}
+USER build
+
+# Clone the Open Travel Data (OPTD) Quality Assurance (QA) Git repository
+RUN mkdir -p ${HOME}/dev/geo && \
+  git clone https://github.com/opentraveldata/quality-assurance.git ${OPTDQA_DIR}
+WORKDIR ${OPTDQA_DIR}
+RUN ./mkLocalDir.sh
+RUN source ${HOME}/.bashrc && pipenv install
+
+# Add a Shell alias for the OPTD QA project
+RUN cat >> ${HOME}/.bashrc < ${HOME}/.bash_aliases
 
 # Run a few checkers
-WORKDIR ${OPTDQA_DIR}
-RUN source ${HOME}/.bashrc && \
-	pipenv run checkers/check-por-cmp-optd-unlc.py && \
-	pipenv run checkers/check-airline-networks.py && \
-	for csvfile in results/*.csv; do wc -l ${csvfile}; done 
+RUN source ${HOME}/.bashrc && make checkers && \
+  for csvfile in results/*.csv; do wc -l ${csvfile}; done 
 
-# Launch a Bash Shell
-CMD ["bash"]
-
+# Entry point
+CMD ["/bin/bash"]
 

@@ -19,20 +19,20 @@ generated thanks to that repository as well.
 [Travis CI](https://travis-ci.com) builds are partially covering the tests
 in https://travis-ci.com/opentraveldata/quality-assurance
 
-The scripts should generate CSV data files, which can then be uploaded
+Most of the scripts generate CSV data files, which can then be uploaded
 in databases, or served through standard Web applications.
-For historical reasons, however, most of the scripts still generate JSON
-structures on the standard output. JSON should be used only for metadata,
+For historical reasons, some scripts may still generate JSON structures
+on the standard output. In the future, JSON should be used only for metadata,
 not for the data itself.
 
 ## See also
 * [Service Delivery Quality (SDQ) GitHub organization](https://github.com/service-delivery-quality)
   + [Quality Assurance samples](https://github.com/service-delivery-quality/quality-assurance)
 * [Geonames' QA dashboard](http://qa.geonames.org/qa/)
-* [Quality Assurance (QA) images on Docker Hub](https://hub.docker.com/r/opentraveldata/quality-assurance)
+* [Quality Assurance (QA) images on Docker Cloud](https://cloud.docker.com/u/opentraveldata/repository/docker/opentraveldata/quality-assurance)
 * [How to set up a Python virtual environment](https://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
 
-# Installation
+# Quick starter
 
 ## Through a pre-built Docker image
 * Retrieve the Docker image:
@@ -43,10 +43,14 @@ $ docker pull opentraveldata/quality-assurance:base
 * Launch the Docker-powered scripts:
 ```bash
 $ docker run --rm -it opentraveldata/quality-assurance:base bash
-[root@8ce25cc20a10 opentraveldata-qa (master)] exit
+[build@8ce25cc20a10 opentraveldata-qa (master)] make checkers
+[build@8ce25cc20a10 opentraveldata-qa (master)] exit
 ```
 
-### Docker image manual build
+
+# Installation
+
+## With a manually built Docker image
 * See
   [the Docker section for more details](http://github.com/opentraveldata/quality-assurance/blob/master/docker/)
 
@@ -72,9 +76,9 @@ Then all the Python scripts will be run thanks to `pipenv`.
 * As a summary of what has been detailed in above-mentioned how-to (and which
   only be done once and for all):
 ```bash
-$ if [ ! -d ${HOME}/.pyenv ]; then pushd ${HOME} && git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv && popd; fi
-$ export PYENV_ROOT="${HOME}/.pyenv"; export PATH="${PYENV_ROOT}/bin:${PATH}"; if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
-$ pyenv install 3.7.2
+$ if [ ! -d ${HOME}/.pyenv ]; then pushd ${HOME} && git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv && popd; else pushd ${HOME}/.pyenv && git pull && popd; fi
+$ export PYENV_ROOT="${HOME}/.pyenv"; export PATH="${PYENV_ROOT}/.pyenv/shims:${PATH}"; if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
+$ pyenv install 3.7.2 && pyenv global 3.7.2 && pip install -U pip pipenv && pyenv global system
 $ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv install
 $ popd
@@ -88,7 +92,12 @@ $ popd
 ```
 
 ## Launch the Python checkers
-* Use `pipenv` to launch the Python scripts. For instance:
+* Use the `Makefile` to launch all the checkers:
+```bash
+$ make checkers
+```
+
+* Use `pipenv` to launch specific Python scripts. For instance:
 ```bash
 $ pipenv run checkers/check-por-cmp-optd-unlc.py
 ```
