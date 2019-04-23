@@ -4,22 +4,28 @@ PY_EXEC=pipenv run python
 
 # Points of Reference (POR)
 
-# UN/LOCODE 
+## UN/LOCODE 
 por_unlc_csv=results/optd-qa-por-unlc-not-in-optd.csv results/optd-qa-por-optd-not-in-unlc.csv
 
-# Geonames in OPTD (Open Travel Data)
+## Geonames in OPTD (Open Travel Data)
 por_geo_in_optd=results/optd-qa-por-best-not-in-optd.csv results/optd-qa-por-cmp-geo-id.csv
 
-# City
+## City
 por_city_not_in_optd=results/optd-qa-por-city-not-in-optd.csv
 por_multi_city=results/optd-qa-por-multi-city.csv results/optd-qa-por-multi-city-not-std.csv
 
 # Airlines
+
+## Bases
+air_bases=results/optd-qa-airline-bases-not-in-flight-legs.csv
+
+## Networks
 air_net=results/optd-qa-airline-network-far-nodes.csv
 
 # All output CSV
-all_csv=$(por_unlc_csv) $(por_geo_in_optd) $(por_city_not_in_optd) $(por_multi_city) \
-	$(air_net)
+all_por_csv=$(por_unlc_csv) $(por_geo_in_optd) $(por_city_not_in_optd) $(por_multi_city)
+all_air_csv=$(air_bases) $(air_net)
+all_csv=$(all_por_csv) $(all_air_csv)
 
 # Main target
 checkers: $(all_csv)
@@ -48,6 +54,9 @@ $(por_city_not_in_optd): tmpdir
 
 $(por_multi_city): tmpdir
 	$(PY_EXEC) checkers/check-por-multiple-cities.py && wc -l $(por_multi_city) && head -3 $(por_multi_city)
+
+$(air_bases): tmpdir
+	$(PY_EXEC) checkers/check-airline-bases.py && wc -l $(air_bases) && head -3 $(air_bases)
 
 $(air_net): tmpdir
 	$(PY_EXEC) checkers/check-airline-networks.py && wc -l $(air_net) && head -3 $(air_net)

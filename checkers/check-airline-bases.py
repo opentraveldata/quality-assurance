@@ -21,6 +21,11 @@ if __name__ == '__main__':
   optd_por_public_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv?raw=true'
   optd_por_public_file = 'to_be_checked/optd_por_public.csv'
 
+  ## Output
+  # List of bases/hubs not present in the list of flight legs
+  output_arln_bases_not_in_leg_file = 'results/optd-qa-airline-bases-not-in-flight-legs.csv'
+  arln_bases_list = [('airline_3char_code', 'airline_2char_code', 'airline_name', 'base_iata_code')]
+
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_airline_url, optd_airline_file, verboseFlag)
   dq.downloadFileIfNeeded (optd_airline_por_url, optd_airline_por_file, verboseFlag)
@@ -33,7 +38,7 @@ if __name__ == '__main__':
     dq.displayFileHead (optd_por_public_file)
 
   #
-  # Screen-scraped flight schedules
+  # Screen-scraped flight frequencies
   # airline_code^apt_org^apt_dst^flt_freq
   #
   # Build, for every airline, the list of POR they serve
@@ -135,7 +140,7 @@ if __name__ == '__main__':
   for iata_code in airline_dict:
     airline_por_list = airline_por_dict[iata_code]
 
-    reportStruct = dict()
+    arln_rptd_dict = dict()
     for icao_code in airline_dict[iata_code]:
       if icao_code == 'bases_in_sched':
         continue
@@ -154,16 +159,19 @@ if __name__ == '__main__':
 
           else:
             # Register a few details to report later
-            if base and not icao_code in reportStruct:
-              reportStruct[icao_code] = {'base': base, 'airline_name': name}
+            if base and not icao_code in arln_rptd_dict:
+              arln_rptd_dict[icao_code] = True
+              reportStruct = (icao_code, iata_code, name, base)
+              arln_bases_list.append (reportStruct)
             
-    # If none of the airlines having that IATA code
-    # have bases appearing in flight schedules, report them
-    if airline_dict[iata_code]['bases_in_sched'] == False and len(reportStruct):
-      reportStruct['iata_code'] = iata_code
-      print (str(reportStruct))
 
-    
+  ## Write the output lists into CSV files
+  # Bases not appearing in flight legs
+  with open (output_arln_bases_not_in_leg_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in arln_bases_list:
+      file_writer.writerow (record)
+      
   # DEBUG
   if verboseFlag:
     print ("Airline full dictionary:\n" + str(airline_dict))
