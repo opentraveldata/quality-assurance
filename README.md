@@ -228,11 +228,11 @@ $ popd
   checks, for every airline of the
   [`optd_airlines.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
   that the airport bases/hubs are appearing in the
-  [`optd_airline_por.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv).
+  [`optd_airline_por_rcld.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv).
 
 * Note that both files
   ([`optd_airlines.csv`](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv)
-  and [`optd_airline_por.csv`](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv))
+  and [`optd_airline_por_rcld.csv`](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv))
   will be downloaded from the
   [OpenTravelData project](http://github.com/opentraveldata/opentraveldata)
   and stored within the `to_be_checked` directory. If those files are too old,
@@ -246,7 +246,13 @@ $ popd
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
 $ ./mkLocalDir.sh
-$ pipenv run checkers/check-airline-bases.py | tee results/optd-qa-airline-bases.json
+$ pipenv run python checkers/check-airline-bases.py
+$ wc -l results/optd-qa-airline-bases-not-in-flight-legs.csv
+22 results/optd-qa-airline-bases-not-in-flight-legs.csv
+$ head -3 results/optd-qa-airline-bases-not-in-flight-legs.csv
+airline_3char_code^airline_2char_code^airline_name^base_iata_code
+ABG^RL^Royal Flight^VKO
+RUN^9T^MyCargo Airlines^IST
 $ popd
 ```
 
@@ -263,7 +269,7 @@ $ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv run checkers/check-airline-networks.py
 $ wc -l results/optd-qa-airline-network-far-nodes.csv
 7 results/optd-qa-airline-network-far-nodes.csv
-$ $ ls -lFh results/optd-qa-airline-*.csv
+$ ls -lFh results/optd-qa-airline-*.csv
 -rw-r--r--  1 user  staff   8.8K Dec 13 18:47 results/optd-qa-airline-network-far-nodes.csv
 -rw-r--r--  1 user  staff    34B Dec 13 18:47 results/optd-qa-airline-network-zero-distance.csv
 -rw-r--r--  1 user  staff    87B Dec 13 18:47 results/optd-qa-airline-network-zero-edges.csv
@@ -280,6 +286,24 @@ $ cat results/optd-qa-airline-network-zero-edges.csv | grep -v "^airline"
 BY^MAN^MAN^1.0
 MT^BHX^BHX^1.0
 ZB^LBA^LBA^1.0
+$ popd
+```
+
+### Airline appearing in schedules but not in OPTD
+* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-airline-sched-in-optd.py)
+  checks, for every airline appearing in the
+  [`optd_airline_por_rcld.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/optd_airline_por_rcld.csv),
+  whether they are also referenced by OpenTravelData (OPTD) in the
+  [`optd_airlines.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv):
+```bash
+$ pushd ~/dev/geo/opentraveldata-qa
+$ pipenv run check-airline-sched-in-optd.py
+$ wc -l results/optd-qa-airline-schd-not-in-optd.csv
+28 results/optd-qa-airline-schd-not-in-optd.csv
+$ head -3 results/optd-qa-airline-schd-not-in-optd.csv
+airline_code
+9Y
+AJA
 $ popd
 ```
 

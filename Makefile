@@ -22,9 +22,12 @@ air_bases=results/optd-qa-airline-bases-not-in-flight-legs.csv
 ## Networks
 air_net=results/optd-qa-airline-network-far-nodes.csv
 
+## Schedules
+air_schd_not_optd=results/optd-qa-airline-schd-not-in-optd.csv
+
 # All output CSV
 all_por_csv=$(por_unlc_csv) $(por_geo_in_optd) $(por_city_not_in_optd) $(por_multi_city)
-all_air_csv=$(air_bases) $(air_net)
+all_air_csv=$(air_bases) $(air_net) $(air_schd_not_optd)
 all_csv=$(all_por_csv) $(all_air_csv)
 
 # Main target
@@ -61,4 +64,6 @@ $(air_bases): tmpdir
 $(air_net): tmpdir
 	$(PY_EXEC) checkers/check-airline-networks.py && wc -l $(air_net) && head -3 $(air_net)
 
+$(air_schd_not_optd): tmpdir
+	$(PY_EXEC) checkers/check-airline-sched-in-optd.py && wc -l $(air_schd_not_optd) && head -3 $(air_schd_not_optd)
 

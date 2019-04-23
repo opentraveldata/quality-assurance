@@ -17,6 +17,11 @@ if __name__ == '__main__':
   optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv?raw=true'
   optd_airline_por_file = 'to_be_checked/optd_airline_por_rcld.csv'
 
+  ## Output
+  # List of airlines present in schedules and not in OPTD
+  output_arln_schd_no_optd_file = 'results/optd-qa-airline-schd-not-in-optd.csv'
+  arln_not_in_optd_list = [('airline_code', )]
+
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_airline_url, optd_airline_file, verboseFlag)
   dq.downloadFileIfNeeded (optd_airline_por_url, optd_airline_por_file, verboseFlag)
@@ -72,9 +77,16 @@ if __name__ == '__main__':
       #
       if not airline_code in airline_dict and not airline_code in airline_sched_dict:
         airline_sched_dict[airline_code] = True
-        reportStr = {'airline_code': airline_code}
-        print (str(reportStr))
+        reportStr = (airline_code, )
+        arln_not_in_optd_list.append (reportStr)
 
+  ## Write the output lists into CSV files
+  # Bases not appearing in flight legs
+  with open (output_arln_schd_no_optd_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in arln_not_in_optd_list:
+      file_writer.writerow (record)
+      
   # DEBUG
   if verboseFlag:
     print ("Airline full dictionary:\n" + str(airline_dict))
