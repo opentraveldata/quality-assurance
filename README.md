@@ -222,6 +222,8 @@ $ popd
   The script then generates a few CSV files:
   + `results/optd-qa-por-optd-no-it.csv`, exhibiting the POR
     referenced by OPTD but not by IATA
+  + `results/optd-qa-por-it-not-optd.csv`, exhibiting the POR
+    referenced by IATA but not by OPTD
 
 * Note that if a CSV file has a single row, it is the header. So, it can be
   considered as empty.
@@ -234,6 +236,12 @@ $ head -3 results/optd-qa-por-optd-no-it.csv
 iata_code^geoname_id^iso31662^country_code^city_code_list^location_type^fclass^fcode^page_rank
 AED^5879155^AK^US^AED^CA^P^PPL^
 AYE^7257567^MA^US^AYE^CH^P^PPL^
+$ wc -l results/optd-qa-por-it-not-optd.csv
+3 results/optd-qa-por-it-not-optd.csv
+$ head -3 results/optd-qa-por-it-not-optd.csv
+iata_code
+EWS
+VSN
 $ popd
 ```
 

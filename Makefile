@@ -5,7 +5,7 @@ PY_EXEC=pipenv run python
 # Points of Reference (POR)
 
 ## OPTD (Open Travel Data) vs IATA
-por_optd_no_it=results/optd-qa-por-optd-no-it.csv
+por_optd_vs_it=results/optd-qa-por-optd-no-it.csv results/optd-qa-por-it-not-optd.csv
 
 ## UN/LOCODE 
 por_unlc=results/optd-qa-por-unlc-not-in-optd.csv results/optd-qa-por-optd-not-in-unlc.csv
@@ -32,7 +32,7 @@ air_net=results/optd-qa-airline-network-far-nodes.csv
 air_schd_not_optd=results/optd-qa-airline-schd-not-in-optd.csv
 
 # All output CSV
-all_por_csv=$(por_optd_no_it) $(por_unlc) $(por_geo_in_optd) \
+all_por_csv=$(por_optd_vs_it) $(por_unlc) $(por_geo_in_optd) \
  $(por_no_geoloc) $(por_city_not_in_optd) $(por_multi_city)
 all_air_csv=$(air_bases) $(air_net) $(air_schd_not_optd)
 all_csv=$(all_por_csv) $(all_air_csv)
@@ -53,8 +53,8 @@ clean: tmpdir
 	\rm -f to_be_checked/*.csv $(all_csv)
 
 # Specific targets
-$(por_optd_no_it): tmpdir
-	$(PY_EXEC) checkers/check-por-cmp-optd-it.py && wc -l $(por_optd_no_it) && head -3 $(por_optd_no_it)
+$(por_optd_vs_it): tmpdir
+	$(PY_EXEC) checkers/check-por-cmp-optd-it.py && wc -l $(por_optd_vs_it) && head -3 $(por_optd_vs_it)
 
 $(por_unlc): tmpdir
 	$(PY_EXEC) checkers/check-por-cmp-optd-unlc.py && wc -l $(por_unlc) && head -3 $(por_unlc)

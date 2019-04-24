@@ -39,9 +39,8 @@ if __name__ == '__main__':
                                'location_type', 'fclass', 'fcode', 'page_rank')]
 
   # IATA POR not referenced by OPTD
-  reportStruct = {'por_code': it_por_code, 'in_optd': 0, 'in_iata': 1,
-                  'reason': reasonStr}
-
+  output_por_it_not_optd_file = 'results/optd-qa-por-it-not-optd.csv'
+  optd_por_it_not_optd_list = [('iata_code', )]
   
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_por_public_url, optd_por_public_file,
@@ -188,10 +187,8 @@ if __name__ == '__main__':
       if not it_por_code in optd_por_dict and not it_cty_code in optd_por_dict and not it_por_exc:
         # The OPTD POR cannot be found in the list of IATA derived POR,
         # and it is not a known exception
-        reasonStr = "IATA derived POR not in OpenTravelData"
-        reportStruct = {'por_code': it_por_code, 'in_optd': 0, 'in_iata': 1,
-                        'reason': reasonStr}
-        print (str(reportStruct))
+        reportStruct = (it_por_code, )
+        optd_por_it_not_optd_list.append (reportStruct)
 
       elif not it_por_exc:
         # Still not a known exception, but the IATA POR is known by OPTD,
@@ -373,6 +370,12 @@ if __name__ == '__main__':
   with open (output_por_optd_no_it_file, 'w', newline ='') as csvfile:
     file_writer = csv.writer (csvfile, delimiter='^')
     for record in optd_por_optd_no_it_list:
+      file_writer.writerow (record)
+
+  # IATA POR not referenced by OPTD
+  with open (output_por_it_not_optd_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in optd_por_it_not_optd_list:
       file_writer.writerow (record)
 
   # DEBUG
