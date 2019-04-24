@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
-import csv, datetime
+import csv, re, datetime
 import DeliveryQuality as dq
 
 # Main
 if __name__ == '__main__':
   #
-  usageStr = "That script downloads OpenTravelData (OPTD) airline-related CSV files\nand check that the reference POR are present in the OPTD POR file"
+  usageStr = "That script downloads OpenTravelData (OPTD) POR-related CSV files\nand check that the reference POR are present in the OPTD POR file"
   verboseFlag = dq.handle_opt(usageStr)
 
+  ## Input
   # OPTD-maintained list of POR
   optd_por_public_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv?raw=true'
   optd_por_public_file = 'to_be_checked/optd_por_public.csv'
@@ -24,18 +25,50 @@ if __name__ == '__main__':
   optd_state_exc_file = 'to_be_checked/optd_state_exceptions.csv'
 
   # IATA derived list of POR
-  optd_por_it_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/data/IATA/iata_airport_list_latest.csv?raw=true'
-  optd_por_it_file = 'to_be_checked/iata_airport_list_latest.csv'
+  optd_por_it_base_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/data/IATA/'
+  optd_por_it_symlink_url = optd_por_it_base_url + 'iata_airport_list_latest.csv?raw=true'
+  optd_por_it_url = ''
+  optd_por_it_symlink_file = 'to_be_checked/iata_airport_list_latest.csv'
+  optd_por_it_file = ''
 
+  ## Output
+  # OPTD points of reference (POR) not referenced by IATA
+  output_por_optd_no_it_file = 'results/optd-qa-por-optd-no-it.csv'
+  optd_por_optd_no_it_list = [('iata_code', 'geoname_id', 'iso31662',
+                               'country_code', 'city_code_list',
+                               'location_type', 'fclass', 'fcode', 'page_rank')]
+
+  # IATA POR not referenced by OPTD
+  reportStruct = {'por_code': it_por_code, 'in_optd': 0, 'in_iata': 1,
+                  'reason': reasonStr}
+
+  
   # If the files are not present, or are too old, download them
-  dq.downloadFileIfNeeded (optd_por_public_url, optd_por_public_file, verboseFlag)
+  dq.downloadFileIfNeeded (optd_por_public_url, optd_por_public_file,
+                           verboseFlag)
   dq.downloadFileIfNeeded (optd_por_exc_url, optd_por_exc_file, verboseFlag)
+  dq.downloadFileIfNeeded (optd_state_exc_url, optd_state_exc_file, verboseFlag)
+  dq.downloadFileIfNeeded (optd_por_it_symlink_url, optd_por_it_symlink_file,
+                           verboseFlag)
+
+  # For the IATA screen-scraped data, the file is a symbolic link.
+  # The actual (pointed to) data file has to be retrieved.
+  # Example of content of the symbolic link file:
+  # archives/iata_airport_list_20190418.csv
+  # The actual data file is then https://github.com/opentraveldata/opentraveldata/blob/master/data/IATA/archives/iata_airport_list_20190418.csv
+  it_filepath_re = re.compile ("^archives/(iata_airport_list_[0-9]{8}.csv)$")
+  it_filepath = dq.extractFileHeader (optd_por_it_symlink_file)
+  optd_por_it_url = optd_por_it_base_url + it_filepath + '?raw=true'
+  match = it_filepath_re.match (it_filepath)
+  it_filename = match.group (1)
+  optd_por_it_file = 'to_be_checked/' + it_filename
   dq.downloadFileIfNeeded (optd_por_it_url, optd_por_it_file, verboseFlag)
 
   # DEBUG
   if verboseFlag:
     dq.displayFileHead (optd_por_public_file)
     dq.displayFileHead (optd_por_exc_file)
+    dq.displayFileHead (optd_state_exc_file)
     dq.displayFileHead (optd_por_it_file)
 
   # (POR, city)-related known errors, by various sources
@@ -103,7 +136,7 @@ if __name__ == '__main__':
       #optd_cont_name = row['continent_name']
       optd_adm1_code = row['adm1_code']
       #optd_adm1_name = row['adm1_name_utf']
-      optd_state_code = row['state_code']
+      optd_state_code = row['iso31662']
       city_code_list_str = row['city_code_list']
       #tvl_code_list_str = row['tvl_por_list']
 
@@ -314,18 +347,10 @@ if __name__ == '__main__':
       optd_feat_code = optd_por_details['feat_code']
       optd_page_rank = optd_por_details['page_rank']
 
-      reasonStr = "OPTD POR not/no longer referenced by IATA"
-      reportStruct = {'por_code': optd_por_code, 'in_optd': 1, 'in_iata': 0,
-                      'optd_geo_id': optd_geo_id,
-                      'optd_state_code': optd_state_code,
-                      'optd_ctry_code': optd_ctry_code,
-                      'optd_cty_list': optd_cty_list_str,
-                      'optd_loc_type': optd_loc_type,
-                      'optd_feat_class': optd_feat_class,
-                      'optd_feat_code': optd_feat_code,
-                      'optd_page_rank': optd_page_rank,
-                      'reason': reasonStr}
-      print (str(reportStruct))
+      reportStruct = (optd_por_code, optd_geo_id, optd_state_code,
+                      optd_ctry_code, optd_cty_list_str, optd_loc_type,
+                      optd_feat_class, optd_feat_code, optd_page_rank)
+      optd_por_optd_no_it_list.append (reportStruct)
   
   # Sanity checks
   # All the (POR, city)-related exception rules should have been used
@@ -342,6 +367,13 @@ if __name__ == '__main__':
                       'wrong_state_code': state_exc_dict[state_code_exc]['wrong_state_code']}
       print ("!!!!! Remaining entry of the file of state-related known exceptions: " + str(reportStruct) + ". Please, remove that from the '" + optd_state_exc_url + "' file.")
     
+
+  ## Write the output lists into CSV files
+  # OPTD points of reference (POR) not referenced by IATA
+  with open (output_por_optd_no_it_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in optd_por_optd_no_it_list:
+      file_writer.writerow (record)
 
   # DEBUG
   if verboseFlag:

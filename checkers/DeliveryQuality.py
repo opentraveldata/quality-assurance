@@ -87,6 +87,15 @@ def displayFileHead (input_file):
   #
   return
 
+def extractFileHeader (input_file):
+  """Extract the header of the given file."""
+  #
+  header_line = ''
+  with open (input_file) as tmpfile:
+    header_line = tmpfile.readline().strip()
+  #
+  return header_line
+
 def geocalcbycoord(lat0, lon0, lat1, lon1):
     """Return the distance (in km) between two points in 
     geographical coordinates."""
