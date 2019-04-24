@@ -139,6 +139,26 @@ $ ls -lFh results/optd-qa-por-best-not-in-optd.csv results/optd-qa-por-cmp-geo-i
 $ popd
 ```
 
+### POR having no geo-location in OPTD
+* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-optd-no-geocoord.py)
+  spots POR missing geo-location in the
+  [OPTD public POR file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv).
+  It generates a CSV file:
+  + `results/optd-qa-por-optd-no-geocoord.csv`, reporting the POR having no
+  geo-location (geo-coordinates)
+
+* Note that if a CSV file has a single row, it is the header. So, it can be
+  considered as empty.
+```bash
+$ pushd ~/dev/geo/opentraveldata-qa
+$ pipenv run checkers/check-por-optd-no-geocoord.py
+$ wc -l results/optd-qa-por-optd-no-geocoord.csv
+ 1 results/optd-qa-por-optd-no-geocoord.csv
+$ ls -lFh results/optd-qa-por-optd-no-geocoord.csv
+-rw-r--r--  1 user staff 27B Apr 24 08:20 results/optd-qa-por-optd-no-geocoord.csv
+$ popd
+```
+
 ### City POR not in OPTD
 * [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-city-not-in-optd.py)
   compares the
@@ -151,7 +171,7 @@ $ popd
   with cities not referenced as a city in the
   [generated OPTD public file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
 
-* Note that a CSV file has a single row, it is the header. So, it can be
+* Note that if a CSV file has a single row, it is the header. So, it can be
   considered as empty.
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
@@ -174,7 +194,7 @@ $ popd
   + `results/optd-qa-por-multi-city-not-std.csv`, reporting POR
     with multiple cities not following the sorting order of PageRank values
 
-* Note that a CSV file has a single row, it is the header. So, it can be
+* Note that if a CSV file has a single row, it is the header. So, it can be
   considered as empty.
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
@@ -188,26 +208,55 @@ $ ls -lFh results/optd-qa-por-multi-city.csv results/optd-qa-por-multi-city-not-
 $ popd
 ```
 
+### OPTD vs IATA
+* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-cmp-optd-it.py)
+  compares the
+  [OPTD-referenced POR having a UN/LOCODE code](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_unlc.csv)
+  with the
+  [ones referenced by IATA](http://github.com/opentraveldata/opentraveldata/blob/master/data/IATA).
+  It has to be noted that the Python script first downloads the
+  [`iata_airport_list_latest.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/data/IATA/iata_airport_list_latest.csv),
+  which is actually a symbolic link. Then, the Python script downloads
+  the actual data file, say for instance
+  [`archives/iata_airport_list_20190418.csv`](http://github.com/opentraveldata/opentraveldata/blob/master/data/IATA/archives/iata_airport_list_20190418.csv).
+  The script then generates a few CSV files:
+  + `results/optd-qa-por-optd-no-it.csv`, exhibiting the POR
+    referenced by OPTD but not by IATA
+
+* Note that if a CSV file has a single row, it is the header. So, it can be
+  considered as empty.
+```bash
+$ pushd ~/dev/geo/opentraveldata-qa
+$ pipenv run checkers/check-por-cmp-optd-it.py
+$ wc -l results/optd-qa-por-optd-no-it.csv
+66 results/optd-qa-por-optd-no-it.csv
+$ head -3 results/optd-qa-por-optd-no-it.csv
+iata_code^geoname_id^iso31662^country_code^city_code_list^location_type^fclass^fcode^page_rank
+AED^5879155^AK^US^AED^CA^P^PPL^
+AYE^7257567^MA^US^AYE^CH^P^PPL^
+$ popd
+```
+
 ### OPTD vs UN/LOCODE
 * [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-cmp-optd-unlc.py)
   compares the
   [OPTD-referenced POR having a UN/LOCODE code](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_unlc.csv)
-  with the ones referenced by
-  [UN/LOCODE](http://github.com/opentraveldata/opentraveldata/blob/master/data/unlocode).
+  with the
+  [ones referenced by UN/LOCODE](http://github.com/opentraveldata/opentraveldata/blob/master/data/unlocode).
   It generates two CSV files:
   + `results/optd-qa-por-optd-not-in-unlc.csv`, exhibiting the POR
     referenced by OPTD but not by UN/LOCODE
   + `iresults/optd-qa-por-unlc-not-in-optd.csv`, exhibiting the POR
     referenced by UN/LOCODE but not by OPTD
 
-* Note that a CSV file has a single row, it is the header. So, it can be
+* Note that if a CSV file has a single row, it is the header. So, it can be
   considered as empty.
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv run checkers/check-por-cmp-optd-unlc.py
 $ wc -l results/optd-qa-por-unlc-not-in-optd.csv
 10349 results/optd-qa-por-unlc-not-in-optd.csv
-$ ls -lFh results/optd-qa-por-*.csv
+$ ls -lFh results/optd-qa-por-*unlc*.csv
 -rw-r--r-- 1 user staff 4.7M Dec 13 18:22 results/optd-qa-por-optd-not-in-unlc.csv
 -rw-r--r-- 1 user staff 763K Dec 13 18:22 results/optd-qa-por-unlc-not-in-optd.csv
 $ popd
