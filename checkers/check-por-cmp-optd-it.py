@@ -41,6 +41,16 @@ if __name__ == '__main__':
   # IATA POR not referenced by OPTD
   output_por_it_not_optd_file = 'results/optd-qa-por-it-not-optd.csv'
   optd_por_it_not_optd_list = [('iata_code', )]
+
+  # IATA POR no longer valid in OPTD
+  output_por_it_no_valid_in_optd_file = 'results/optd-qa-por-it-no-valid-in-optd.csv'
+  optd_por_it_no_valid_in_optd_list = [('iata_code', 'envelope_id', 'date_from',
+                                        'date_until', 'it_state_code',
+                                        'it_country_code', 'it_city_code',
+                                        'it_location_type', 'geoname_id',
+                                        'iso31662', 'country_code',
+                                        'city_code_list', 'location_type',
+                                        'fclass', 'fcode', 'page_rank')]
   
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_por_public_url, optd_por_public_file,
@@ -233,25 +243,14 @@ if __name__ == '__main__':
         if optd_env_id != '' and it_ctry_code != optd_ctry_code:
           # The OPTD POR is no longer valid, whereas still active
           # in the list of IATA derived POR
-          reasonStr = "IATA derived POR no longer valid in OpenTravelData"
-          reportStruct = {'por_code': it_por_code, 'in_optd': 1, 'in_iata': 1,
-                          'env_id': optd_env_id,
-                          'date_from': optd_date_from,
-                          'date_until': optd_date_until,
-                          'it_state_code': it_state_code,
-                          'it_ctry_code': it_ctry_code,
-                          'it_cty_code': it_cty_code,
-                          'it_loc_type': it_loc_type,
-                          'optd_geo_id': optd_geo_id,
-                          'optd_state_code': optd_state_code,
-                          'optd_ctry_code': optd_ctry_code,
-                          'optd_cty_list': optd_cty_list_str,
-                          'optd_loc_type': optd_loc_type,
-                          'optd_feat_class': optd_feat_class,
-                          'optd_feat_code': optd_feat_code,
-                          'optd_page_rank': optd_page_rank,
-                          'reason': reasonStr}
-          print (str(reportStruct))
+          reportStruct = (it_por_code, optd_env_id, optd_date_from,
+                          optd_date_until, it_state_code,
+                          it_ctry_code, it_cty_code,
+                          it_loc_type, optd_geo_id,
+                          optd_state_code, optd_ctry_code,
+                          optd_cty_list_str, optd_loc_type,
+                          optd_feat_class, optd_feat_code, optd_page_rank)
+          optd_por_it_no_valid_in_optd_list.append (reportStruct)
 
         if optd_env_id == '' and not it_por_code in optd_por_dict:
           # Only the IATA city code is known by OPTD
@@ -376,6 +375,12 @@ if __name__ == '__main__':
   with open (output_por_it_not_optd_file, 'w', newline ='') as csvfile:
     file_writer = csv.writer (csvfile, delimiter='^')
     for record in optd_por_it_not_optd_list:
+      file_writer.writerow (record)
+
+  # IATA POR no longer valid in OPTD
+  with open (output_por_it_no_valid_in_optd_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in optd_por_it_no_valid_in_optd_list:
       file_writer.writerow (record)
 
   # DEBUG

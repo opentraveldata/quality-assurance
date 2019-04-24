@@ -224,6 +224,8 @@ $ popd
     referenced by OPTD but not by IATA
   + `results/optd-qa-por-it-not-optd.csv`, exhibiting the POR
     referenced by IATA but not by OPTD
+  + `results/optd-qa-por-it-no-valid-in-optd.csv`, exhibiting the POR
+    referenced by IATA but no longer valid in OPTD
 
 * Note that if a CSV file has a single row, it is the header. So, it can be
   considered as empty.
@@ -236,12 +238,16 @@ $ head -3 results/optd-qa-por-optd-no-it.csv
 iata_code^geoname_id^iso31662^country_code^city_code_list^location_type^fclass^fcode^page_rank
 AED^5879155^AK^US^AED^CA^P^PPL^
 AYE^7257567^MA^US^AYE^CH^P^PPL^
+$ wc -l results/optd-qa-por-it-no-valid-in-optd.csv
+5 results/optd-qa-por-it-no-valid-in-optd.csv
+$ head -3 results/optd-qa-por-it-no-valid-in-optd.csv
+iata_code^envelope_id^date_from^date_until^it_state_code^it_country_code^it_city_code^it_location_type^geoname_id^iso31662^country_code^city_code_list^location_type^fclass^fcode^page_rank
+LLM^1^^2013-03-01^^SB^LLM^A^1737957^^MY^LLM^C^P^PPL^
+QDL^1^^2014-07-01^^CH^LUG^R^3461888^ES^BR^QDL^C^P^PPL^
 $ wc -l results/optd-qa-por-it-not-optd.csv
-3 results/optd-qa-por-it-not-optd.csv
+1 results/optd-qa-por-it-not-optd.csv
 $ head -3 results/optd-qa-por-it-not-optd.csv
 iata_code
-EWS
-VSN
 $ popd
 ```
 

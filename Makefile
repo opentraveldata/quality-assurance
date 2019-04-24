@@ -5,7 +5,7 @@ PY_EXEC=pipenv run python
 # Points of Reference (POR)
 
 ## OPTD (Open Travel Data) vs IATA
-por_optd_vs_it=results/optd-qa-por-optd-no-it.csv results/optd-qa-por-it-not-optd.csv
+por_optd_vs_it=results/optd-qa-por-optd-no-it.csv results/optd-qa-por-it-not-optd.csv results/optd-qa-por-it-no-valid-in-optd.csv
 
 ## UN/LOCODE 
 por_unlc=results/optd-qa-por-unlc-not-in-optd.csv results/optd-qa-por-optd-not-in-unlc.csv
