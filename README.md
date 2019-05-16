@@ -2,6 +2,7 @@ Quality Assurance (QA) for OpenTravelData (OPTD)
 ================================================
 
 [![Build Status](https://travis-ci.com/opentraveldata/quality-assurance.svg?branch=master)](https://travis-ci.com/opentraveldata/quality-assurance)
+[![Docker Repository on Quay](https://quay.io/repository/opentraveldata/quality-assurance/status "Docker Repository on Quay")](https://quay.io/repository/opentraveldata/quality-assurance)
 
 # Overview
 [That repository](http://github.com/opentraveldata/quality-assurance)
