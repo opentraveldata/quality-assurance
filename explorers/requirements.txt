@@ -1,0 +1,17 @@
+cycler==0.10.0
+cython==0.29.7
+decorator==4.4.0
+elasticsearch-opentracing==0.1.4
+elasticsearch==7.0.0
+futures==3.1.1
+git+https://github.com/matplotlib/basemap.git@cb914ea3ae466b7957f9325229c8c13d4da7d3a3#egg=basemap
+kiwisolver==1.0.1
+matplotlib==3.0.3
+networkx==2.3
+numpy==1.16.2
+opentracing==1.1.0
+pyparsing==2.4.0
+pyproj==1.9.6
+python-dateutil==2.8.0
+six==1.12.0
+urllib3==1.24.2
