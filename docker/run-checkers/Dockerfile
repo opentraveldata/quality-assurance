@@ -2,7 +2,7 @@
 # References:
 # * C++/Python base image:
 #   + https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base
-#   + https://github.com/cpp-projects-showcase/docker-images)
+#   + https://github.com/cpp-projects-showcase/docker-images
 # * Docker images for this project:
 #   + https://cloud.docker.com/u/opentraveldata/repository/docker/opentraveldata/quality-assurance
 #   + https://github.com/opentraveldata/quality-assurance/tree/master/docker
@@ -15,7 +15,7 @@ LABEL version="0.2"
 # Docker build time environment variables
 ENV container docker
 ENV HOME /home/build
-ENV LANGUAGE en_US:en
+ENV LANGUAGE en_US.en
 ENV LANG en_US.UTF-8
 ENV LC_ALL ${LANG}
 ENV OPTDQA_DIR ${HOME}/dev/geo/opentraveldata-qa

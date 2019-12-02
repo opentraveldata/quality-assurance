@@ -6,9 +6,11 @@ name = "pypi"
 [packages]
 numpy = "*"
 networkx = "*"
+matplotlib = "*"
+cython = "*"
 elasticsearch-opentracing = "*"
-geopandas = "*"
-Shapely = "*"
+pyproj = "==1.9.6"
+basemap = {git = "https://github.com/matplotlib/basemap.git", ref = "cb914ea3ae466b7957f9325229c8c13d4da7d3a3"}
 
 [dev-packages]
 

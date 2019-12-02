@@ -2,7 +2,10 @@
 
 import csv, re
 import networkx as nx
-import geopandas
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
 import DeliveryQuality as dq
 
 #
@@ -67,10 +70,8 @@ if __name__ == '__main__':
     dq.displayFileHead (optd_airline_por_file)
 
   #
-  # Maps (http://geopandas.org/projections.html)
-  #
-  #world= geopandas.read_file(geopandas.datasets.get_path('naturalearth_lowres'))
-  
+  basemap = Basemap(projection='robin',lon_0=0,resolution='l')
+
   #
   # OpenTravelData (OPTD) file of the POR details (optd_por_public.csv)
   #
@@ -110,12 +111,9 @@ if __name__ == '__main__':
         continue
       
       # Register the POR coordinates, if it is seen for the first time
-      if not optd_por_code in optd_por_coord_dict:
+      if not optd_por_code in optd_por_map_dict:
         optd_por_coord_dict[optd_por_code] = (optd_por_coord_lat, optd_por_coord_lon)
-        
-        geometry = geopandas.points_from_xy ([float(optd_por_coord_lon),],
-                                              [float(optd_por_coord_lat),])
-        optd_por_map_dict[optd_por_code] = geometry
+        optd_por_map_dict[optd_por_code] = basemap(optd_por_coord_lon, optd_por_coord_lat)
 
 
   #
@@ -175,6 +173,12 @@ if __name__ == '__main__':
         cumulated_flt_freq = airline_por_list[apt_dst]
         airline_por_list[apt_dst] = cumulated_flt_freq + flt_freq
 
+  # DEBUG
+  #nx.draw_graphviz (schedule_dict["FC"])
+  #nx.draw_networkx (schedule_dict["FC"], optd_por_map_dict, node_color='blue')
+  #nx.draw_networkx (schedule_dict["KT"], optd_por_map_dict, node_color='red')
+  #plt.show()
+  
   #
   # pk^env_id^validity_from^validity_to^3char_code^2char_code^num_code^name^name2^alliance_code^alliance_status^type^wiki_link^flt_freq^alt_names^bases^key^version
   #
@@ -198,7 +202,8 @@ if __name__ == '__main__':
     print ("Airline full dictionary:\n" + str(airline_sched_dict))
 
 
-  # Networks on Maps: http://www.sociology-hacks.org/?p=67
+  # http://stackoverflow.com/questions/19915266/drawing-a-graph-with-networkx-on-a-basemap
+# Networks on Maps: http://www.sociology-hacks.org/?p=67
   # Creating a route planner for road network: http://ipython-books.github.io/featured-03/
   
   # Decompose the airline network into independent sub-networks
@@ -207,8 +212,7 @@ if __name__ == '__main__':
   for airline_code in airline_sched_dict:
       graph_comp_idx = 1
       current_network = schedule_dict[airline_code]
-      #graphs = list(nx.connected_component_subgraphs(current_network))
-      graphs = [current_network.subgraph(c) for c in nx.connected_components(current_network)]
+      graphs = list(nx.connected_component_subgraphs(current_network))
 
       for graph_comp in graphs:
           # Find the center of the sub-network
@@ -240,10 +244,15 @@ if __name__ == '__main__':
                      + ", degree=" + str(graph_degree)
                      + ", graph_centrality=" + str(graph_centrality))
 
-              labelStr = "Sub-network[" + str(graph_comp_idx) + "] for " \
-                         + airline_code
+              labelStr = "Sub-network[" + str(graph_comp_idx) + "] for " + airline_code
+              plt.figure(k_airline_idx + graph_comp_idx)
+              plt.title(labelStr)
               nx.draw_networkx (graph_comp, optd_por_map_dict,
                                 node_color = 'green', label = labelStr)
+              # Draw the geographical features
+              basemap.drawcountries (linewidth = 0.5)
+              basemap.fillcontinents (color = 'white', lake_color = 'white')
+              basemap.drawcoastlines (linewidth = 0.5)
 
           #
           center_node = graph_comp_center[0]
@@ -256,7 +265,7 @@ if __name__ == '__main__':
                                                         center_node, idx_node)
 
               # Check whether the current node is referenced by OPTD
-              if not idx_node in optd_por_coord_dict:
+              if not idx_node in optd_por_map_dict:
                 airline_name = airline_dict[airline_code]['airline_name']
                 reportStruct = (airline_code, airline_name, center_node,
                                 idx_node)
@@ -315,6 +324,11 @@ if __name__ == '__main__':
 
       # Iteration on the airlines
       airline_idx += 1
+
+      # For the current airline
+      if verboseFlag:
+        a = 1
+        #plt.show()
 
   ## Write the output lists into CSV files
   # Zero-length edges on airline networks
