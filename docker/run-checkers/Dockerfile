@@ -8,14 +8,14 @@
 #   + https://github.com/opentraveldata/quality-assurance/tree/master/docker
 
 #
-FROM cpppythondevelopment/base:centos7
+FROM cpppythondevelopment/base:centos8
 MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
 LABEL version="0.2"
 
 # Docker build time environment variables
 ENV container docker
 ENV HOME /home/build
-ENV LANGUAGE en_US.en
+ENV LANGUAGE en_US:en
 ENV LANG en_US.UTF-8
 ENV LC_ALL ${LANG}
 ENV OPTDQA_DIR ${HOME}/dev/geo/opentraveldata-qa
