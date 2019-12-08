@@ -51,7 +51,9 @@ if __name__ == '__main__':
 
   # IATA POR not referenced by OPTD
   output_por_it_not_optd_file = 'results/optd-qa-por-it-not-optd.csv'
-  optd_por_it_not_optd_list = [('iata_code', )]
+  optd_por_it_not_optd_list = [('iata_code', 'iata_name', 'iata_loc_type',
+                                'iata_ctry_code', 'iata_state_code',
+                                'it_tz_code', 'it_cty_code', 'it_cty_name')]
 
   # IATA POR no longer valid in OPTD
   output_por_it_no_valid_in_optd_file = 'results/optd-qa-por-it-no-valid-in-optd.csv'
@@ -196,30 +198,35 @@ if __name__ == '__main__':
     file_reader = csv.DictReader (csvfile, delimiter='^')
     for row in file_reader:
       it_por_code = row['por_code']
-      #it_por_name = row['por_name']
+      it_por_name = row['por_name']
       it_loc_type = row['loc_type']
       it_state_code = row['state_code']
       it_ctry_code = row['country_code']
       it_cty_code = row['city_code']
-      #it_cty_name = row['city_name']
-      #it_tz_code = row['tz_code']
-      #it_loc_id = row['loc_id']
+      it_cty_name = row['city_name']
+      it_tz_code = row['tz_code']
+      it_loc_id = row['loc_id']
 
       # Check whether the POR is known to be an exception
       # for the reference ("I") source
       it_por_exc = False
       if it_por_code in por_exc_dict:
-        if "I" in por_exc_dict[it_por_code]['source'] and por_exc_dict[it_por_code]['actv_in_optd'] == "0" and por_exc_dict[it_por_code]['actv_in_src'] == "1":
+        if "I" in por_exc_dict[it_por_code]['source'] and \
+           por_exc_dict[it_por_code]['actv_in_optd'] == "0" and \
+           por_exc_dict[it_por_code]['actv_in_src'] == "1":
           it_por_exc = True
 
           # Remove the record from the known errors, as it has been handled
           por_exc_dict[it_por_code]['used'] = True
 
       # Check whether the IATA derived POR is in the list of OPTD POR
-      if not it_por_code in optd_por_dict and not it_cty_code in optd_por_dict and not it_por_exc:
+      if not it_por_code in optd_por_dict and \
+         not it_cty_code in optd_por_dict and not it_por_exc:
         # The OPTD POR cannot be found in the list of IATA derived POR,
         # and it is not a known exception
-        reportStruct = (it_por_code, )
+        reportStruct = (it_por_code, it_por_name, it_loc_type,
+                        it_ctry_code, it_state_code, it_tz_code,
+                        it_cty_code, it_cty_name)
         optd_por_it_not_optd_list.append (reportStruct)
 
       elif not it_por_exc:
