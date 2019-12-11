@@ -227,6 +227,11 @@ $ popd
     referenced by IATA but not by OPTD
   + `results/optd-qa-por-it-no-valid-in-optd.csv`, exhibiting the POR
     referenced by IATA but no longer valid in OPTD
+  + `results/optd-qa-por-it-in-optd-as-city-only.csv`, exhibiting the POR
+    referenced by OPTD only as cities (whereas they appear in IATA
+	also as transport-/travel-related)
+  + `results/optd-qa-state-optd-it-diff.csv`, exhibiting the POR
+    having different state codes in IATA and OPTD
 
 * Note that if a CSV file has a single row, it is the header. So, it can be
   considered as empty.
@@ -248,8 +253,48 @@ QDL^1^^2014-07-01^^CH^LUG^R^3461888^ES^BR^QDL^C^P^PPL^
 $ wc -l results/optd-qa-por-it-not-optd.csv
 1 results/optd-qa-por-it-not-optd.csv
 $ head -3 results/optd-qa-por-it-not-optd.csv
-iata_code
+iata_code^iata_name^iata_loc_type^iata_ctry_code^iata_state_code^it_tz_code^it_cty_code^it_cty_name
+$ head -3 results/optd-qa-por-it-in-optd-as-city-only.csv
+por_code^in_optd^in_iata^env_id^date_from^date_until^it_state_code^it_ctry_code^it_cty_code^it_loc_type^optd_geo_id^optd_state_code^optd_ctry_code^optd_cty_list^optd_loc_type^optd_feat_class^optd_feat_code^optd_page_rank
+$ head -3 results/optd-qa-state-optd-it-diff.csv
+por_code^in_optd^in_iata^env_id^date_from^date_until^it_state_code^it_ctry_code^it_cty_code^it_loc_type^optd_geo_id^optd_state_code^optd_ctry_code^optd_cty_list^optd_loc_type^optd_feat_class^optd_feat_code^optd_page_rank
+AGE^1^1^^^^^DE^AGE^A^3208531^NI^DE^AGE^A^S^AIRF^
+AGF^1^1^^^^^FR^AGF^A^6299365^NAQ^FR^AGF^A^S^AIRP^
 $ popd
+```
+
+### State codes
+
+* The checker is the same as above (`checkers/check-por-cmp-optd-it.py`)
+
+* Check the number of POR having different state codes,
+  broken down by country:
+```bash
+$ awk -F'^' '{print $8}' results/optd-qa-state-optd-it-diff.csv|sort|uniq -c|sort -nr|head -5
+ 342 CN
+ 288 FR
+ 185 DE
+ 175 GB
+ 138 RU$ 
+```
+
+* Check the number of POR having differrent state codes for a specific country:
+```bash
+$ awk -F'^' '{if ($8 == "CN") {print $8 "^" $7 "^" $12}}' results/optd-qa-state-optd-it-diff.csv|sort|uniq -c|sort -nr|head -5
+  33 CN^^GD
+  24 CN^^NM
+  24 CN^^HB
+  19 CN^^ZJ
+  19 CN^^LN
+```
+
+* Add some exception rules in the
+  [`optd_state_exceptions.csv` CSV file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_state_exceptions.csv):
+```bash
+$ head -3 to_be_checked/optd_state_exceptions.csv
+pk^state_code^geo_id^source^env_id^date_from^date_to^wrong_state_code^comment
+AR-C^C^3433955^IR^^^^BA^State code in source does not reflect any of the known standards (be it ISO 3166-2 or IATA codes), but seems to correspond to the phonetic initials. References: https://en.wikipedia.org/wiki/ISO_3166-2:AR, https://en.wikipedia.org/wiki/Provinces_of_Argentina
+AR-H^H^3861887^IR^^^^CH^State code in source does not reflect any of the known standards (be it ISO 3166-2 or IATA codes), but seems to correspond to the first two letters of the state name. References: https://en.wikipedia.org/wiki/ISO_3166-2:AR, https://en.wikipedia.org/wiki/Provinces_of_Argentina
 ```
 
 ### OPTD vs UN/LOCODE
