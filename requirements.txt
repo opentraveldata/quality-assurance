@@ -1,4 +1,5 @@
 -i https://pypi.org/simple
+argparse==1.4.0
 attrs==19.3.0
 click-plugins==1.1.1
 click==7.0
@@ -6,10 +7,11 @@ cligj==0.5.0
 decorator==4.4.1
 elasticsearch-opentracing==0.1.4
 elasticsearch==7.1.0
-fiona==1.8.11
+fiona==1.8.13
 futures==3.1.1
 geopandas==0.6.2
 munch==2.5.0
+neobase==0.20.2
 networkx==2.4
 numpy==1.17.4
 opentracing==1.1.0
