@@ -26,6 +26,7 @@ por_no_geoloc=results/optd-qa-por-optd-no-geocoord.csv
 por_city_not_in_optd=results/optd-qa-por-city-not-in-optd.csv
 por_multi_city=results/optd-qa-por-multi-city.csv \
   results/optd-qa-por-multi-city-not-std.csv
+por_missing_close_city=results/optd-qa-por-big-city-around.csv
 
 # Airlines
 
@@ -40,7 +41,8 @@ air_schd_not_optd=results/optd-qa-airline-schd-not-in-optd.csv
 
 # All output CSV
 all_por_csv=$(por_optd_vs_it) $(por_unlc) $(por_geo_in_optd) \
- $(por_no_geoloc) $(por_city_not_in_optd) $(por_multi_city)
+ $(por_no_geoloc) $(por_city_not_in_optd) $(por_multi_city) \
+ $(por_missing_close_city)
 all_air_csv=$(air_bases) $(air_net) $(air_schd_not_optd)
 all_csv=$(all_por_csv) $(all_air_csv)
 
@@ -83,6 +85,10 @@ $(por_city_not_in_optd): tmpdir
 $(por_multi_city): tmpdir
 	$(PY_EXEC) checkers/check-por-multiple-cities.py && \
 	wc -l $(por_multi_city) && head -3 $(por_multi_city)
+
+$(por_missing_close_city): tmpdir
+	$(PY_EXEC) checkers/check-por-missing-cities.py && \
+	wc -l $(por_missing_close_city) && head -3 $(por_missing_close_city)
 
 $(air_bases): tmpdir
 	$(PY_EXEC) checkers/check-airline-bases.py && \

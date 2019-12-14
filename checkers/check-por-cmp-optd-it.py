@@ -136,11 +136,12 @@ if __name__ == '__main__':
   state_exc_dict = dict()
   with open (optd_state_exc_file, newline='') as csvfile:
     file_reader = csv.DictReader (csvfile, delimiter='^')
-    # ctry_code^state_code^geo_id^source^env_id^date_from^date_to^wrong_state_code^comment
+    # ctry_code^state_code^geo_id^source^env_id^date_from^date_to^wrong_country_code^wrong_state_code^comment
     for row in file_reader:
       state_pk = row['pk']
       state_code = row['state_code']
       geo_id = row['geo_id']
+      wrong_country_code = row['wrong_country_code']
       wrong_state_code = row['wrong_state_code']
       exc_src = row['source']
       env_id = row['env_id']
@@ -150,6 +151,7 @@ if __name__ == '__main__':
         # Register the exception details for the POR
         state_exc_dict[state_pk] = {'pk': state_pk, 'state_code': state_code,
                                     'geo_id': geo_id,
+                                    'wrong_country_code': wrong_country_code,
                                     'wrong_state_code': wrong_state_code,
                                     'source': exc_src,
                                     'used': False}
@@ -310,14 +312,7 @@ if __name__ == '__main__':
           # Check that there is no known exception
           is_state_exc = False
 
-          # First, check that the POR is not HDQ, which is very specific
-          # and literally means headquarters. In the source, no country
-          # (and therefore no state) is assigned to it. In OPTD, on the other
-          # hand, it has been assigned to England (ENG), UK (GB)
-          if it_por_code == "HDQ":
-            is_state_exc = True
-
-          # In the optd_state_exceptions.csv file
+          # Check the optd_state_exceptions.csv file
           # The full state code is formatted as "<ctry_code>-<state_code>",
           # where ctry_code and state_code are the ISO 3166-1 and ISO 3166-2
           # codes respectively
@@ -325,12 +320,13 @@ if __name__ == '__main__':
           if full_state_code in state_exc_dict:
             state_exc_details = state_exc_dict[full_state_code]
             state_exc_geo_id = state_exc_details['geo_id']
+            state_exc_wrong_country_code= state_exc_details['wrong_country_code']
             state_exc_wrong_state_code = state_exc_details['wrong_state_code']
             if it_state_code == state_exc_wrong_state_code:
               is_state_exc = True
               state_exc_dict[full_state_code]['used'] = True
 
-          # In the optd_por_exceptions.csv file
+          # Check the optd_por_exceptions.csv file
           optd_por_exc_state_diff = it_code in por_exc_dict \
             and "I" in por_exc_dict[it_code]['source'] \
             and por_exc_dict[it_code]['actv_in_optd'] == "1" \
