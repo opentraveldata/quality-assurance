@@ -228,14 +228,23 @@ if __name__ == '__main__':
           optd_geoid = optd_por['geo_id']
 
           # Check whether the POR is known to be an exception
-          # for the OPTD ("O") source and with reason_code "CC" (close-city)
+          # for the OPTD ("O") source, with reason_code "CC" (close city)
+          # and where the close big city is stated. Example of rule:
+          # por_code^source^actv_in_optd^...^city_code^reason_code^comment
+          # CCB^O^1^1^..^LAX^CC^comment
+          # That rule states that this Python script reports CCB as potentially
+          # also serving LAX, but this reporting should be dismissed (see the
+          # comment part of that exception rule to understand why)
           it_por_exc = False
           if por_code in por_exc_dict:
-              it_por_exc = True
 
-              # Remove the record from the known errors,
-              # as it has been handled
-              por_exc_dict[por_code]['used'] = True
+              optd_city_code = por_exc_dict[por_code]['city_code']
+              if optd_city_code == city_code:
+                  it_por_exc = True
+
+                  # Remove the record from the known errors,
+                  # as it has been handled
+                  por_exc_dict[por_code]['used'] = True
 
           # When the POR corresponds to an exception, we do not report it
           if it_por_exc:
