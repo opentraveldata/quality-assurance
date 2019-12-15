@@ -3,9 +3,9 @@ python:
 - 3.7-dev
 addons:
   ssh_known_hosts:
-  - "$TIPRX_SVR:$TIPRX_PRT"
-  - "$TITSC_SVR"
-  - "$TITSCNEW_SVR"
+  - proxy8.transport-intelligence.com:9022
+  - www-int2.transport-search.org
+  - www2-int2.transport-search.org
 before_script:
 - echo -e "Host tiproxy8\n\tHostName ${TIPRX_SVR}\n\tPort ${TIPRX_PRT}\n\tForwardAgent yes" >> ~/.ssh/config
 - echo -e "Host titsc\n\tHostName ${TITSC_SVR}\n\tProxyCommand ssh -W %h:22 qa@tiproxy8" >> ~/.ssh/config
