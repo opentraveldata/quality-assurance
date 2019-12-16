@@ -16,21 +16,29 @@ export DATA_DIR="${DATA_DIR_BASE}/${TODAY_DATE}"
 echo "TODAY_DATE=${TODAY_DATE} - DATA_DIR=${DATA_DIR}"
 
 #
+echo "Injecting a few host keys into ~/.ssh/config"
+cat >> ~/.ssh/config << _EOF
+www2-int2.transport-search.org ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDmslzunyRnmtrJSwaP1vGuS+vTFBoodZRY1Ri+VIXR8qBKa4MGNgX5WfwQIEOCsbme4gzJ4BZHFNY8WAwNl500=
+www-int2.transport-search.org ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKuH70tG6Ep2ibfqkZMnhPhXan9uIEXuQXUMdNG7N8ZSTv713tO1moU/nVl/drrN68Z4bLD+Nj49OIhj/9OM/W8=
+_EOF
+
+#
 echo "Creating ${DATA_DIR} on to qa@tits"
-ssh qa@titsc "mkdir -p ${DATA_DIR}"
+ssh -o StrictHostKeyChecking=no qa@titsc "mkdir -p ${DATA_DIR}"
 
 #
 echo "Synchronizing results/ onto qa@titsc..."
-time rsync -rav -e ssh results qa@titsc:${DATA_DIR}/
+time rsync -rav -e "ssh -o StrictHostKeyChecking=no" results qa@titsc:${DATA_DIR}/
 echo "... done"
 
 #
 echo "Synchronizing results/ onto qa@titsc..."
-time rsync -rav -e ssh to_be_checked qa@titsc:${DATA_DIR}/
+time rsync -rav -e "ssh -o StrictHostKeyChecking=no" to_be_checked qa@titsc:${DATA_DIR}/
 echo "... done"
 
 #
 echo "Compressing all the CSV files in results/ on qa@titsc"
-time ssh qa@titsc "bzip2 ${DATA_DIR}/to_be_checked/*.csv"
+time "ssh -o StrictHostKeyChecking=no" qa@titsc "bzip2 ${DATA_DIR}/to_be_checked/*.csv"
 echo "... done"
+
 
