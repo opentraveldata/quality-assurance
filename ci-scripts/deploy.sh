@@ -24,27 +24,49 @@ _EOF
 chmod 600 ~/.ssh/known_hosts
 
 #
-echo "Content of ~/.ssh/config"
-cat ~/.ssh/config
-echo "--"
+#echo "Content of ~/.ssh/config"
+#cat ~/.ssh/config
+#echo "--"
 
 #
-echo "Creating ${DATA_DIR} on to qa@tits"
-ssh -o StrictHostKeyChecking=no qa@titsc "mkdir -p ${DATA_DIR}"
+syncToTITsc() {
+	#
+	echo
+	echo "Synchronization of the CSV data files onto ${TITSC_SVR}"
+	echo
 
-#
-echo "Synchronizing results/ onto qa@titsc..."
-time rsync -rav -e "ssh -o StrictHostKeyChecking=no" results qa@titsc:${DATA_DIR}/
-echo "... done"
+	#
+	echo "Creating ${DATA_DIR} on to qa@${TITSC_SVR}..."
+	ssh -o StrictHostKeyChecking=no qa@${TITSC_SVR} "mkdir -p ${DATA_DIR}"
+	echo "... done"
 
-#
-echo "Synchronizing results/ onto qa@titsc..."
-time rsync -rav -e "ssh -o StrictHostKeyChecking=no" to_be_checked qa@titsc:${DATA_DIR}/
-echo "... done"
+	#
+	echo "Synchronizing results/ onto qa@${TITSC_SVR}..."
+	time rsync -rav --del -e "ssh -o StrictHostKeyChecking=no" results qa@${TITSC_SVR}:${DATA_DIR}/
+	echo "... done"
 
-#
-echo "Compressing all the CSV files in results/ on qa@titsc"
-time "ssh -o StrictHostKeyChecking=no" qa@titsc "bzip2 ${DATA_DIR}/to_be_checked/*.csv"
-echo "... done"
+	#
+	echo "Synchronizing results/ onto qa@${TITSC_SVR}..."
+	time rsync -rav --del -e "ssh -o StrictHostKeyChecking=no" to_be_checked qa@${TITSC_SVR}:${DATA_DIR}/
+	echo "... done"
+
+	#
+	echo "Compressing all the CSV files in results/ on qa@${TITSC_SVR}..."
+	time ssh -o StrictHostKeyChecking=no qa@${TITSC_SVR} "bzip2 ${DATA_DIR}/to_be_checked/*.csv"
+	echo "... done"
+
+	#
+	echo
+	echo "========"
+	echo
+}
+
+# https://transport-search.org/data/optd/qa
+TITSC_SVR="titsc"
+syncToTITsc
+
+# https://www2.transport-search.org/data/optd/qa
+TITSC_SVR="titscnew"
+syncToTITsc
 
 
