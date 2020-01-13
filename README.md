@@ -1,8 +1,15 @@
 Quality Assurance (QA) for OpenTravelData (OPTD)
 ================================================
 
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/opentraveldata/quality-assurance?color=green)
 [![Build Status](https://travis-ci.com/opentraveldata/quality-assurance.svg?branch=master)](https://travis-ci.com/opentraveldata/quality-assurance)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/opentraveldata/quality-assurance)](https://hub.docker.com/repository/docker/opentraveldata/quality-assurance)
 [![Docker Repository on Quay](https://quay.io/repository/opentraveldata/quality-assurance/status "Docker Repository on Quay")](https://quay.io/repository/opentraveldata/quality-assurance)
+[![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/opentraveldata/quality-assurance?color=green)](https://docs.python.org/3/)
+[![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/opentraveldata/quality-assurance/networkx)](https://pypi.org/project/networkx/)
+[![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/opentraveldata/quality-assurance/pandas)](https://pypi.org/project/pandas/)
+[![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/opentraveldata/quality-assurance/neobase)](https://pypi.org/project/NeoBase)
+[![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/opentraveldata/quality-assurance/elasticsearch)](https://pypi.org/project/elasticsearch/)
 
 # Overview
 [That repository](http://github.com/opentraveldata/quality-assurance)
