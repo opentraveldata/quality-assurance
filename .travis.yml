@@ -10,7 +10,7 @@ before_script:
 - echo -e "Host titsc\n\tHostName ${TITSC_SVR}\n\tProxyCommand ssh -W %h:22 qa@tiproxy8\n\tStrictHostKeyChecking no" >> ~/.ssh/config
 - echo -e "Host titscnew\n\tHostName ${TITSCNEW_SVR}\n\tProxyCommand ssh -W %h:22 qa@tiproxy8\n\tStrictHostKeyChecking no" >> ~/.ssh/config
 install:
-- pip install -r requirements.txt
+- pip3 install -r requirements.txt
 script: make PY_EXEC=python checkers
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_9cd66a2ab98f_key -iv $encrypted_9cd66a2ab98f_iv
