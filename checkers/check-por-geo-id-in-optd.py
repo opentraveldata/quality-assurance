@@ -29,6 +29,7 @@ if __name__ == '__main__':
 
   # Points of reference (POR) having the same (duplicated) Geonames ID
   output_por_dup_geo_id_file = 'results/optd-qa-por-dup-geo-id.csv'
+  optd_por_dup_geo_id_hdr = ('iata_code', 'loc_type', 'geo_id')
   optd_por_dup_geo_id_list = []
   
   # Points of reference (POR) having a Geonames ID in the manually curated file
@@ -165,7 +166,7 @@ if __name__ == '__main__':
   def sortThird (row): return row[2]
   optd_por_dup_geo_id_list.sort (key = sortThird)
   # Insert the header
-  optd_por_dup_geo_id_list.insert (0, ('iata_code', 'loc_type', 'geo_id'))
+  optd_por_dup_geo_id_list.insert (0, optd_por_dup_geo_id_hdr)
   with open (output_por_dup_geo_id_file, 'w', newline ='') as csvfile:
     file_writer = csv.writer (csvfile, delimiter='^')
     for record in optd_por_dup_geo_id_list:
