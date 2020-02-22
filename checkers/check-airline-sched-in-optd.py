@@ -6,7 +6,9 @@ import DeliveryQuality as dq
 # Main
 if __name__ == '__main__':
   #
-  usageStr = "That script downloads OpenTravelData (OPTD) airline-related CSV files\nand check that the scheduled airlines are present in the OPTD airline file"
+  usageStr = "That script downloads OpenTravelData (OPTD) airline-related " \
+    "CSV files\nand check that the scheduled airlines are present in " \
+    "the OPTD airline file"
   verboseFlag = dq.handle_opt(usageStr)
 
   # Airline details
@@ -14,8 +16,12 @@ if __name__ == '__main__':
   optd_airline_file = 'to_be_checked/optd_airlines.csv'
 
   # List of flight leg frequencies
-  optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv?raw=true'
-  optd_airline_por_file = 'to_be_checked/optd_airline_por_rcld.csv'
+  k_w_seats = False
+  optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv?raw=true'
+  optd_airline_por_file = 'to_be_checked/optd_airline_por.csv'
+  if k_w_seats:
+    optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv?raw=true'
+    optd_airline_por_file = 'to_be_checked/optd_airline_por_rcld.csv'
 
   ## Output
   # List of airlines present in schedules and not in OPTD
@@ -24,7 +30,8 @@ if __name__ == '__main__':
 
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_airline_url, optd_airline_file, verboseFlag)
-  dq.downloadFileIfNeeded (optd_airline_por_url, optd_airline_por_file, verboseFlag)
+  dq.downloadFileIfNeeded (optd_airline_por_url, optd_airline_por_file,
+                           verboseFlag)
 
   # DEBUG
   if verboseFlag:
@@ -63,20 +70,31 @@ if __name__ == '__main__':
                                           'validity_to': date_to}
 
   #
+  # Without seats (optd_airline_por.csv):
+  # airline_code^apt_org^apt_dst^flt_freq
+  #
+  # With seats (optd_airline_por_rcld.csv):
   # airline_code^apt_org^apt_dst^seats_mtly_avg^freq_mtly_avg
   #
-  airline_sched_dict = dict()
+  airline_reported_dict = dict()
   with open (optd_airline_por_file, newline='') as csvfile:
     file_reader = csv.DictReader (csvfile, delimiter='^')
     for row in file_reader:
       airline_code = row['airline_code']
       apt_org = row['apt_org']
       apt_dst = row['apt_dst']
-      flt_freq = float(row['freq_mtly_avg'])
+      flt_freq = 0
+      if k_w_seats:
+        flt_freq = float(row['freq_mtly_avg'])
+      else:
+        flt_freq = int(row['flt_freq'])
 
-      #
-      if not airline_code in airline_dict and not airline_code in airline_sched_dict:
-        airline_sched_dict[airline_code] = True
+      # Check whether the airline, appearing in the schedule,
+      # is known from OPTD. If not, report it and keep track
+      # that it has been reported
+      if not airline_code in airline_dict \
+         and not airline_code in airline_reported_dict:
+        airline_reported_dict[airline_code] = True
         reportStr = (airline_code, )
         arln_not_in_optd_list.append (reportStr)
 
