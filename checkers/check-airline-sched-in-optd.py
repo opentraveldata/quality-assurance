@@ -26,7 +26,8 @@ if __name__ == '__main__':
   ## Output
   # List of airlines present in schedules and not in OPTD
   output_arln_schd_no_optd_file = 'results/optd-qa-airline-schd-not-in-optd.csv'
-  arln_not_in_optd_list = [('airline_code', )]
+  arln_not_in_optd_hdr = ('airline_code', 'clted_flt_freq')
+  arln_not_in_optd_list = []
 
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_airline_url, optd_airline_file, verboseFlag)
@@ -76,7 +77,7 @@ if __name__ == '__main__':
   # With seats (optd_airline_por_rcld.csv):
   # airline_code^apt_org^apt_dst^seats_mtly_avg^freq_mtly_avg
   #
-  airline_reported_dict = dict()
+  airline_sched_non_optd_dict = dict()
   with open (optd_airline_por_file, newline='') as csvfile:
     file_reader = csv.DictReader (csvfile, delimiter='^')
     for row in file_reader:
@@ -91,14 +92,28 @@ if __name__ == '__main__':
 
       # Check whether the airline, appearing in the schedule,
       # is known from OPTD. If not, report it and keep track
-      # that it has been reported
-      if not airline_code in airline_dict \
-         and not airline_code in airline_reported_dict:
-        airline_reported_dict[airline_code] = True
-        reportStr = (airline_code, )
-        arln_not_in_optd_list.append (reportStr)
+      # of the total flight frequency so far for that airline
+      if not airline_code in airline_dict:
+        if not airline_code in airline_sched_non_optd_dict:
+          airline_sched_non_optd_dict[airline_code] = 0
+
+        # Keep track of the total flight frequency so far for that airline
+        clted_flt_freq = airline_sched_non_optd_dict[airline_code] + flt_freq
+        airline_sched_non_optd_dict[airline_code] = clted_flt_freq
+
+  # Fill in the reporting list
+  for airline_code, clted_flt_freq in airline_sched_non_optd_dict.items():
+    reportStr = (airline_code, clted_flt_freq)
+    arln_not_in_optd_list.append (reportStr)
 
   ## Write the output lists into CSV files
+  # Sort by cumulated frequency, which are numbers (that is why the header
+  # is added only after sorting)
+  def sortSecond (row): return row[1]
+  arln_not_in_optd_list.sort (key = sortSecond, reverse = True)
+  # Insert the header
+  arln_not_in_optd_list.insert (0, arln_not_in_optd_hdr)
+
   # Bases not appearing in flight legs
   with open (output_arln_schd_no_optd_file, 'w', newline ='') as csvfile:
     file_writer = csv.writer (csvfile, delimiter='^')
