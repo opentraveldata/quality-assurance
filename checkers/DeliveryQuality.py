@@ -96,7 +96,7 @@ def extractFileHeader (input_file):
   #
   return header_line
 
-def geocalcbycoord(lat0, lon0, lat1, lon1):
+def geocalcbycoord (lat0, lon0, lat1, lon1):
     """Return the distance (in km) between two points in 
     geographical coordinates."""
     lat0 = np.radians(lat0)

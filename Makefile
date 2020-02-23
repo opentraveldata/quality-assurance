@@ -26,6 +26,10 @@ por_geo_in_optd=results/optd-qa-por-best-not-in-optd.csv \
   results/optd-qa-por-dup-geo-id.csv \
   results/optd-qa-por-cmp-geo-id.csv
 
+## Geonames vs OPTD
+por_optd_geo_dist=results/optd-qa-por-optd-geo-diff.csv
+
+## Flight legs vs OPTD
 por_sched_vs_optd=results/optd-qa-por-sched-not-in-optd.csv
 
 ## Missing geo-location
@@ -50,7 +54,7 @@ air_schd_not_optd=results/optd-qa-airline-schd-not-in-optd.csv
 
 # All output CSV
 all_por_csv=$(por_optd_vs_it) $(por_zero_pr) $(por_unlc) $(por_geo_in_optd) \
- $(por_sched_vs_optd) $(por_no_geoloc) \
+ $(por_optd_geo_dist) $(por_sched_vs_optd) $(por_no_geoloc) \
  $(por_city_not_in_optd) $(por_multi_city) \
  $(por_missing_close_city)
 all_air_csv=$(air_bases) $(air_net) $(air_schd_not_optd)
@@ -91,6 +95,10 @@ $(por_unlc): tmpdir
 $(por_geo_in_optd): tmpdir
 	$(PY_EXEC) checkers/check-por-geo-id-in-optd.py && \
 	wc -l $(por_geo_in_optd) && head -3 $(por_geo_in_optd)
+
+$(por_optd_geo_dist): tmpdir
+	$(PY_EXEC) checkers/check-por-cmp-optd-geo.py && \
+	wc -l $(por_optd_geo_dist) && head -3 $(por_optd_geo_dist)
 
 $(por_sched_vs_optd): tmpdir
 	$(PY_EXEC) checkers/check-por-sched-in-optd.py && \
