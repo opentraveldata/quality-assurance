@@ -17,6 +17,9 @@ por_dup_iata=results/optd-qa-por-dup-iata.csv
 ## PageRank (PR) values set explicitly to zero (0)
 por_zero_pr=results/optd-qa-por-optd-zero-pagerank.csv
 
+## Inconsistency in validity dates and/or envelope ID
+por_data_incsty=results/optd-qa-por-date-inconsistency.csv
+
 ## UN/LOCODE 
 por_unlc=results/optd-qa-por-unlc-not-in-optd.csv \
   results/optd-qa-por-optd-not-in-unlc.csv
@@ -53,7 +56,8 @@ air_net=results/optd-qa-airline-network-far-nodes.csv
 air_schd_not_optd=results/optd-qa-airline-schd-not-in-optd.csv
 
 # All output CSV
-all_por_csv=$(por_optd_vs_it) $(por_zero_pr) $(por_unlc) $(por_geo_in_optd) \
+all_por_csv=$(por_optd_vs_it) $(por_zero_pr) $(por_data_incsty) \
+ $(por_unlc) $(por_geo_in_optd) \
  $(por_optd_geo_dist) $(por_sched_vs_optd) $(por_no_geoloc) \
  $(por_city_not_in_optd) $(por_multi_city) \
  $(por_missing_close_city)
@@ -83,6 +87,10 @@ $(por_optd_vs_it): tmpdir
 $(por_dup_iata): tmpdir
 	$(PY_EXEC) checkers/check-por-duplicate-iata.py && \
 	wc -l $(por_dup_iata) && head -3 $(por_dup_iata)
+
+$(por_data_incsty): tmpdir
+	$(PY_EXEC) checkers/check-por-date-consistency.py && \
+	wc -l $(por_data_incsty) && head -3 $(por_data_incsty)
 
 $(por_zero_pr): tmpdir
 	$(PY_EXEC) checkers/check-por-optd-zero-pagerank.py && \
