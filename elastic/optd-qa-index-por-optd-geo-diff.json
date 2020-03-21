@@ -1,0 +1,36 @@
+{
+	"mappings": {
+		"properties": {
+			"iata_code": {
+				"type": "keyword"
+			},
+			"geoname_id": {
+				"type": "long"
+			},
+			"location_type": {
+				"type": "keyword"
+			},
+			"country_code": {
+				"type": "keyword"
+			},
+			"adm1_code": {
+				"type": "keyword"
+			},
+			"page_rank": {
+				"type": "double"
+			},
+			"optd_coord": {
+				"type": "geo_point"
+			},
+			"geo_coord": {
+				"type": "geo_point"
+			},
+			"distance": {
+				"type": "double"
+			},
+			"weighted_distance": {
+				"type": "double"
+			}
+		}
+	}
+}

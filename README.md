@@ -38,7 +38,22 @@ not for the data itself.
   + [Quality Assurance samples](https://github.com/service-delivery-quality/quality-assurance)
 * [Geonames' QA dashboard](http://qa.geonames.org/qa/)
 * [Quality Assurance (QA) images on Docker Cloud](https://cloud.docker.com/u/opentraveldata/repository/docker/opentraveldata/quality-assurance)
+* [Induction on monitoring with Elasticsearch](https://github.com/infra-helpers/induction-monitoring)
 * [How to set up a Python virtual environment](https://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
+
+## ElasticSearch (ES)
+* [ElasticSearch](https://elasitc.co) stacks:
+  + [EFK (ElasticSearch, Fluentd, Kibana](https://docs.fluentd.org/v/0.12/articles/docker-logging-efk-compose)
+  + [Kibana](https://www.elastic.co/products/kibana)
+  + [Fluentd](https://www.fluentd.org/)
+* [Elasticsearch geo-point](https://www.elastic.co/guide/en/elasticsearch/reference/current/geo-point.html)
+
+### Ingest processors
+* Main: https://www.elastic.co/guide/en/elasticsearch/reference/current/ingest-processors.html
+* [Grok processor](https://www.elastic.co/guide/en/elasticsearch/reference/current/grok-processor.html)
+* [CSV processor](https://www.elastic.co/guide/en/elasticsearch/reference/current/csv-processor.html)
+* [Date processor](https://www.elastic.co/guide/en/elasticsearch/reference/current/date-processor.html)
+* [Script processor](https://www.elastic.co/guide/en/elasticsearch/reference/current/script-processor.html)
 
 # Quick starter
 
@@ -109,6 +124,63 @@ $ make checkers
 ```bash
 $ pipenv run checkers/check-por-cmp-optd-unlc.py
 ```
+
+## Elasticsearch
+
+* Simulate the targetted pipeline:
+```bash
+$ curl -XPOST "http://localhost:9200/_ingest/pipeline/_simulate" -H "Content-Type: application/json" --data "@elastic/optd-qa-index-sim-por-optd-geo-diff.json"|jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1435  100   496  100   939  62000   114k --:--:-- --:--:-- --:--:--  175k
+```
+```javascript
+{
+  "docs": [
+    {
+      "doc": {
+        "_index": "subway_info",
+        "_type": "_doc",
+        "_id": "AVvJZVQEBr2flFKzrrkr",
+        "_source": {
+          "iata_code": "DOH",
+          "optd_coord": {
+            "lon": "51.565056",
+            "lat": "25.261125"
+          },
+          "distance": "4.368154282573759",
+          "weighted_distance": "20197.72392862065",
+          "location_type": "C",
+          "geoname_id": "290030",
+          "country_code": "QA",
+          "page_rank": "0.4622857726179021",
+          "geo_coord": {
+            "lon": "51.53096",
+            "lat": "25.28545"
+          },
+          "adm1_code": "01",
+          "timestamp": "2020-03-20T15:12:23.000+01:00"
+        },
+        "_ingest": {
+          "timestamp": "2020-03-20T23:26:02.29742Z"
+        }
+      }
+    }
+  ]
+}
+```
+
+### Todo
+* [Issue #1](https://github.com/opentraveldata/quality-assurance/issues/1)
+
+As of March 2020, the resulting CSV data files have various formats. Dumping
+the corresponding content into Elasticsearch (ES) would force to have almost
+an index per CSV file type, which would slightly defeat the interest of
+using ES. Rather, it seems better to merge all the CSV file types into a
+single format, allowing to get a single ES index. Then, every CSF file
+will be tagged with their respective checking intent. The search and
+time-series analysis will be much easier.
+So, the next step is to merge all the formats of the CSF files.
 
 # Checks
 

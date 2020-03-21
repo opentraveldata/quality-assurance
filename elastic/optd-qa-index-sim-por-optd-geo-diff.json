@@ -1,0 +1,38 @@
+{
+ "pipeline": {
+   "description": "Parsing the OPTD QA CSV",
+   "processors": [
+     {
+       "csv": {
+         "field": "optd-qa",
+         "separator": "^",
+         "target_fields": ["iata_code", "geoname_id", "location_type", "country_code", "adm1_code", "page_rank", "optd_coord.lat", "optd_coord.lon", "distance", "geo_coord.lat", "geo_coord.lon", "weighted_distance"]
+       }
+     },
+     {
+       "remove": {
+         "field": "optd-qa"
+       }
+     },
+     {
+       "date" : {
+         "field" : "timestamp",
+         "target_field" : "timestamp",
+         "formats" : ["yyyy-MM-dd HH:mm:ss"],
+         "timezone" : "Europe/Paris"
+       }
+     }
+   ]
+ },
+"docs": [
+   {
+     "_index": "subway_info",
+     "_id": "AVvJZVQEBr2flFKzrrkr",
+     "_score": 1,
+     "_source": {
+       "timestamp": "2020-03-20 15:12:23",
+       "optd-qa": "DOH^290030^C^QA^01^0.4622857726179021^25.261125^51.565056^4.368154282573759^25.28545^51.53096^20197.72392862065"
+     }
+   }
+ ]
+}

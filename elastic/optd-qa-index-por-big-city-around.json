@@ -1,0 +1,29 @@
+{
+	"mappings": {
+		"properties": {
+			"por_code": {
+				"type": "keyword"
+			},
+			"por_page_rank": {
+				"type": "double"
+			},
+			"por_feat_code": {
+				"type": "keyword"
+			},
+			"por_geo_id": {
+				"type": "long"
+			},
+			"city_code": {
+				"type": "keyword"
+			},
+			"city_page_rank": {
+				"type": "double"
+			},
+			"city_code_list": {
+				"type": "keyword"
+			},
+			"distance": {
+				"type": "double"
+			}		}
+	}
+}
