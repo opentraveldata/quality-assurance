@@ -25,7 +25,7 @@ if __name__ == '__main__':
   #  - 3V^MLH^GVA^53
   #  - A5^BSL^CDG^961
   #  - 5^MLH^ORY^932  
-  known_dup_geo_list = ['6299466']
+  known_dup_geo_list = [6299466, ]
 
   ## Input
   # OPTD-maintained list of POR, master file
@@ -122,8 +122,8 @@ if __name__ == '__main__':
             oldReportStruct = (old_iata_code, old_loc_type, old_geo_id)
             optd_por_dup_geo_id_list.append (oldReportStruct)
 
-          reportStruct = (optd_iata_code, optd_loc_type, optd_geo_id)
-          optd_por_dup_geo_id_list.append (reportStruct)        
+        reportStruct = (optd_iata_code, optd_loc_type, optd_geo_id)
+        optd_por_dup_geo_id_list.append (reportStruct)        
         
   # OPTD file for best known POR so far
   # pk^iata_code^latitude^longitude^city_code^date_from
