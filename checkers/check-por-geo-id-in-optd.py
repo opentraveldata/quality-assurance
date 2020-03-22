@@ -11,6 +11,22 @@ if __name__ == '__main__':
     "the OPTD public POR file"
   verboseFlag = dq.handle_opt(usageStr)
 
+  ##
+  # List of known exceptions for single POR being assigned several Geonames ID
+  # * 6299466 is the Geonames ID corresponding to Basel/Mulhouse/EuroAirport.
+  #   IATA wrongly assigns on one hand BSL and MLH to the airport itself
+  #   (named EuroAirport), and on the other hand the same EAP code
+  #   to both of the cities. All that does not make sense at whole,
+  #   but, as of 2020, almost all of the published flight schedules use
+  #   either BSL or MLH to designate the airport, and EAP does not appear
+  #   in those schedules. See to_be_checked/optd_airline_por.csv:
+  #  - 2A^BSL^QYG^2562
+  #  - 3O^BSL^CMN^155
+  #  - 3V^MLH^GVA^53
+  #  - A5^BSL^CDG^961
+  #  - 5^MLH^ORY^932  
+  known_dup_geo_list = ['6299466']
+
   ## Input
   # OPTD-maintained list of POR, master file
   optd_por_bksf_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_best_known_so_far.csv?raw=true'
@@ -95,18 +111,19 @@ if __name__ == '__main__':
       if not optd_geo_id in optd_por_dict:
         optd_por_dict[optd_geo_id] = reportDict
       else:
-        oldReportDict = optd_por_dict[optd_geo_id]
-        has_been_notified = oldReportDict['notified']
-        if not has_been_notified:
-          oldReportDict['notified'] = True
-          old_iata_code = oldReportDict['iata_code']
-          old_loc_type = oldReportDict['location_type']
-          old_geo_id = oldReportDict['geoname_id']
-          oldReportStruct = (old_iata_code, old_loc_type, old_geo_id)
-          optd_por_dup_geo_id_list.append (oldReportStruct)
+        if not optd_geo_id in known_dup_geo_list:
+          oldReportDict = optd_por_dict[optd_geo_id]
+          has_been_notified = oldReportDict['notified']
+          if not has_been_notified:
+            oldReportDict['notified'] = True
+            old_iata_code = oldReportDict['iata_code']
+            old_loc_type = oldReportDict['location_type']
+            old_geo_id = oldReportDict['geoname_id']
+            oldReportStruct = (old_iata_code, old_loc_type, old_geo_id)
+            optd_por_dup_geo_id_list.append (oldReportStruct)
 
-        reportStruct = (optd_iata_code, optd_loc_type, optd_geo_id)
-        optd_por_dup_geo_id_list.append (reportStruct)        
+          reportStruct = (optd_iata_code, optd_loc_type, optd_geo_id)
+          optd_por_dup_geo_id_list.append (reportStruct)        
         
   # OPTD file for best known POR so far
   # pk^iata_code^latitude^longitude^city_code^date_from
