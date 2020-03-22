@@ -50,7 +50,11 @@ por_missing_close_city=results/optd-qa-por-big-city-around.csv
 air_bases=results/optd-qa-airline-bases-not-in-flight-legs.csv
 
 ## Networks
-air_net=results/optd-qa-airline-network-far-nodes.csv
+air_net=results/optd-qa-airline-network-far-nodes.csv \
+  results/optd-qa-airline-network-zero-distance.csv \
+  results/optd-qa-airline-network-zero-edges.csv \
+  results/optd-qa-airline-por-not-in-optd.csv \
+  results/optd-qa-airline-zero-coord-por-in-optd.csv
 
 ## Schedules
 air_schd_not_optd=results/optd-qa-airline-schd-not-in-optd.csv
