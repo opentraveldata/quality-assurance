@@ -27,8 +27,8 @@ por_wrong_icao=results/optd-qa-por-wrong-icao.csv
 por_unlc=results/optd-qa-por-unlc-not-in-optd.csv \
   results/optd-qa-por-optd-not-in-unlc.csv
 
-## Geonames in OPTD (Open Travel Data)
-por_geo_in_optd=results/optd-qa-por-best-not-in-optd.csv \
+## Geonames vs OPTD (Open Travel Data)
+por_geo_in_optd=results/optd-qa-por-best-not-in-geo.csv \
   results/optd-qa-por-best-incst-code.csv \
   results/optd-qa-por-dup-geo-id.csv \
   results/optd-qa-por-cmp-geo-id.csv

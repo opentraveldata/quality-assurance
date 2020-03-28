@@ -11,7 +11,8 @@ k_ascii = 64
 k_earth_radius = 6372.8
 
 # Standard header for the OPTD POR data files (e.g., optd_por_public_all.csv)
-k_optd_std_hdr = ('iata_code', 'icao_code', 'faa_code',
+k_optd_std_hdr = ('reporting-reason',
+                  'iata_code', 'icao_code', 'faa_code',
                   'is_geonames', 'geoname_id', 'envelope_id',
                   'name', 'asciiname', 'latitude', 'longitude',
                   'fclass', 'fcode', 'page_rank', 'date_from', 'date_until',
