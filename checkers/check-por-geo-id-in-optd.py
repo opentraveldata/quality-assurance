@@ -43,6 +43,12 @@ if __name__ == '__main__':
   optd_por_best_not_in_optd_list = [('iata_code', 'optd_pk', 'loc_type',
                                      'geo_id', 'city_code_list')]
 
+  # Points of reference (POR) manually curated (in the file of best known POR)
+  # where the primary key (made of the IATA code, location type and Geonames ID)
+  # is not consistent with the IATA code
+  output_por_best_incst_code_file = 'results/optd-qa-por-best-incst-code.csv'
+  optd_por_best_incst_code_list = [('iata_code', 'optd_pk')]
+  
   # Points of reference (POR) having the same (duplicated) Geonames ID
   output_por_dup_geo_id_file = 'results/optd-qa-por-dup-geo-id.csv'
   optd_por_dup_geo_id_hdr = ('iata_code', 'loc_type', 'geo_id')
@@ -86,22 +92,28 @@ if __name__ == '__main__':
       if optd_env_id != '': continue
       
       #
-      reportDict = {"iata_code": optd_iata_code,
+      reportDict = {'iata_code': optd_iata_code,
                     'location_type': optd_loc_type,
                     'geoname_id': optd_geo_id,
                     'envelope_id': optd_env_id,
-                    "city_code_list": city_code_list_str,
-                    "country_code": optd_ctry_code,
-                    "page_rank": optd_page_rank, "adm1_code": optd_adm1_code,
-                    "geo_lat": optd_coord_lat, "geo_lon": optd_coord_lon,
+                    'city_code_list': city_code_list_str,
+                    'country_code': optd_ctry_code,
+                    'page_rank': optd_page_rank,
+                    'adm1_code': optd_adm1_code,
+                    'geo_lat': optd_coord_lat,
+                    'geo_lon': optd_coord_lon,
                     'notified': False}
       
       # Register the POR details with IATA code as the key
+      # Note that there may be several records for a signle IATA code
       if not optd_iata_code in optd_por_dict:
-        optd_por_dict[optd_iata_code] = dict()
+        optd_por_dict[optd_iata_code] = []
+
+      # Retrieve the list of POR for that IATA code
+      optd_por_list = optd_por_dict[optd_iata_code]
 
       # Register the OPTD details for the POR
-      optd_por_dict[optd_iata_code][optd_loc_type] = reportDict
+      optd_por_list.append (reportDict)
 
       # When the POR has no Geonames ID assigned, it is not reported here
       if optd_geo_id == 0: continue
@@ -122,8 +134,8 @@ if __name__ == '__main__':
             oldReportStruct = (old_iata_code, old_loc_type, old_geo_id)
             optd_por_dup_geo_id_list.append (oldReportStruct)
 
-        reportStruct = (optd_iata_code, optd_loc_type, optd_geo_id)
-        optd_por_dup_geo_id_list.append (reportStruct)        
+          reportStruct = (optd_iata_code, optd_loc_type, optd_geo_id)
+          optd_por_dup_geo_id_list.append (reportStruct)        
         
   # OPTD file for best known POR so far
   # pk^iata_code^latitude^longitude^city_code^date_from
@@ -133,16 +145,28 @@ if __name__ == '__main__':
     for row in file_reader:
       optd_bksf_pk = row['pk']
       match = primary_key_re.match (optd_bksf_pk)
+      optd_bksf_iata_code_from_pk = match.group (1)
       optd_bksf_loc_type = match.group (2)
-      optd_bksf_geo_id = match.group (3)
+      optd_bksf_geo_id_str = match.group (3)
+      optd_bksf_geo_id = int(optd_bksf_geo_id_str)
       optd_bksf_iata_code = row['iata_code']
       optd_bksf_city_code_list = row['city_code']
       optd_bksf_coord_lat = row['latitude']
       optd_bksf_coord_lon = row['longitude']
       optd_bksf_date_from = row['date_from']
 
+      # Record the POR details
+      reportStruct = (optd_bksf_iata_code, optd_bksf_pk,
+                      optd_bksf_loc_type, optd_bksf_geo_id,
+                      optd_bksf_city_code_list)
+
+      # Check that the IATA code is the same individually and as part
+      # of the primary key (made of the code, location type and Geonames ID)
+      if optd_bksf_iata_code_from_pk != optd_bksf_iata_code:
+        optd_por_best_incst_code_list.append (reportStruct)
+
       # Check whether the OPTD best known POR is in the list of OPTD public POR
-      if not optd_bksf_geo_id in optd_por_dict:
+      if optd_bksf_geo_id != 0 and not optd_bksf_geo_id in optd_por_dict:
         # The OPTD POR cannot be found in the list of best known POR
 
         # Get a few more details in order to report them. As there is
@@ -153,15 +177,13 @@ if __name__ == '__main__':
         # for that IATA code.
         if not optd_bksf_iata_code in optd_por_dict:
           # Report the POR details
-          reportStruct = (optd_bksf_iata_code, optd_bksf_pk,
-                          optd_bksf_loc_type, optd_bksf_geo_id,
-                          optd_bksf_city_code_list)
           optd_por_best_not_in_optd_list.append (reportStruct)
 
         else:
-          optd_por_record_dict = optd_por_dict[optd_bksf_iata_code]
-          for optd_por_loc_type, optd_por_record in optd_por_record_dict.items():
+          optd_por_list = optd_por_dict[optd_bksf_iata_code]
+          for optd_por_record in optd_por_list:
             optd_por_page_rank = optd_por_record['page_rank']
+            
             # Report the POR details
             reportStruct = (optd_bksf_iata_code, optd_bksf_pk,
                             optd_bksf_loc_type,
@@ -175,8 +197,13 @@ if __name__ == '__main__':
     file_writer = csv.writer (csvfile, delimiter='^')
     for record in optd_por_best_not_in_optd_list:
       file_writer.writerow (record)
+
+  # POR having inconsistency between IATA code and primary key
+  with open (output_por_best_incst_code_file, 'w', newline ='') as csvfile:
+    file_writer = csv.writer (csvfile, delimiter='^')
+    for record in optd_por_best_incst_code_list:
+      file_writer.writerow (record)
   
-  ##
   # POR having duplicated Geonames ID
   # Sort by Geonames ID, which are numbers (that is why the header is added
   # only after sorting)

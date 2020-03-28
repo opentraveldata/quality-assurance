@@ -20,12 +20,16 @@ por_zero_pr=results/optd-qa-por-optd-zero-pagerank.csv
 ## Inconsistency in validity dates and/or envelope ID
 por_data_incsty=results/optd-qa-por-date-inconsistency.csv
 
+## Wrong ICAO codes (not made of strictly four letters)
+por_wrong_icao=results/optd-qa-por-wrong-icao.csv
+
 ## UN/LOCODE 
 por_unlc=results/optd-qa-por-unlc-not-in-optd.csv \
   results/optd-qa-por-optd-not-in-unlc.csv
 
 ## Geonames in OPTD (Open Travel Data)
 por_geo_in_optd=results/optd-qa-por-best-not-in-optd.csv \
+  results/optd-qa-por-best-incst-code.csv \
   results/optd-qa-por-dup-geo-id.csv \
   results/optd-qa-por-cmp-geo-id.csv
 
@@ -61,7 +65,7 @@ air_schd_not_optd=results/optd-qa-airline-schd-not-in-optd.csv
 
 # All output CSV
 all_por_csv=$(por_optd_vs_it) $(por_zero_pr) $(por_data_incsty) \
- $(por_unlc) $(por_geo_in_optd) \
+ $(por_wrong_icao) $(por_unlc) $(por_geo_in_optd) \
  $(por_optd_geo_dist) $(por_sched_vs_optd) $(por_no_geoloc) \
  $(por_city_not_in_optd) $(por_multi_city) \
  $(por_missing_close_city)
@@ -95,6 +99,10 @@ $(por_dup_iata): tmpdir
 $(por_data_incsty): tmpdir
 	$(PY_EXEC) checkers/check-por-date-consistency.py && \
 	wc -l $(por_data_incsty) && head -3 $(por_data_incsty)
+
+$(por_wrong_icao): tmpdir
+	$(PY_EXEC) checkers/check-por-geo-wrong-icao.py && \
+	wc -l $(por_wrong_icao) && head -3 $(por_wrong_icao)
 
 $(por_zero_pr): tmpdir
 	$(PY_EXEC) checkers/check-por-optd-zero-pagerank.py && \

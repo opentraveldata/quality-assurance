@@ -10,6 +10,23 @@ k_ascii = 64
 #
 k_earth_radius = 6372.8
 
+# Standard header for the OPTD POR data files (e.g., optd_por_public_all.csv)
+k_optd_std_hdr = ('iata_code', 'icao_code', 'faa_code',
+                  'is_geonames', 'geoname_id', 'envelope_id',
+                  'name', 'asciiname', 'latitude', 'longitude',
+                  'fclass', 'fcode', 'page_rank', 'date_from', 'date_until',
+                  'comment', 'country_code', 'cc2', 'country_name',
+                  'continent_name',
+                  'adm1_code', 'adm1_name_utf', 'adm1_name_ascii',
+                  'adm2_code', 'adm2_name_utf', 'adm2_name_ascii',
+                  'adm3_code', 'adm4_code', 'population', 'elevation', 'gtopo30',
+                  'timezone', 'gmt_offset', 'dst_offset', 'raw_offset',
+                  'moddate',
+                  'city_code_list', 'city_name_list', 'city_detail_list',
+                  'tvl_por_list', 'iso31662', 'location_type', 'wiki_link',
+                  'alt_name_section', 'wac', 'wac_name', 'ccy_code',
+                  'unlc_list', 'uic_list', 'geoname_lat', 'geoname_lon')
+
 def usage (script_name, usage_doc):
   """Display the usage for that program."""
   print ("")
