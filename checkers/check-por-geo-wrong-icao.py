@@ -44,7 +44,7 @@ if __name__ == '__main__':
   ## Write the output lists into CSV files
   # POR having wrong ICAO codes (not made of strictly four letters)
   with open (output_por_wrong_icao_file, 'w', newline ='') as csvfile:
-    file_writer = csv.writer (csvfile, delimiter='^')
+    file_writer = csv.writer (csvfile, delimiter='^', lineterminator='\n')
     for record in optd_por_wrong_icao_list:
       file_writer.writerow (record)
 

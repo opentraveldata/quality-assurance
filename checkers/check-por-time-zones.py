@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-# You need to install the latest pytz, otherwise you might get false positives. Then run the tests with:
+# You need to install the latest pytz, otherwise you might get false positives.
+# Then run the tests with:
 # OPTD_POR_FILE=./to_be_checked/optd_por_public.csv python check-por-time-zones.py
 
 import pytz

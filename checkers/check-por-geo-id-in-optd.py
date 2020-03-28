@@ -194,13 +194,13 @@ if __name__ == '__main__':
   ## Write the output lists into CSV files
   # POR in the best known list but not in the OPTD public data file
   with open (output_por_best_not_in_optd_file, 'w', newline ='') as csvfile:
-    file_writer = csv.writer (csvfile, delimiter='^')
+    file_writer = csv.writer (csvfile, delimiter='^', lineterminator='\n')
     for record in optd_por_best_not_in_optd_list:
       file_writer.writerow (record)
 
   # POR having inconsistency between IATA code and primary key
   with open (output_por_best_incst_code_file, 'w', newline ='') as csvfile:
-    file_writer = csv.writer (csvfile, delimiter='^')
+    file_writer = csv.writer (csvfile, delimiter='^', lineterminator='\n')
     for record in optd_por_best_incst_code_list:
       file_writer.writerow (record)
   
@@ -212,14 +212,14 @@ if __name__ == '__main__':
   # Insert the header
   optd_por_dup_geo_id_list.insert (0, optd_por_dup_geo_id_hdr)
   with open (output_por_dup_geo_id_file, 'w', newline ='') as csvfile:
-    file_writer = csv.writer (csvfile, delimiter='^')
+    file_writer = csv.writer (csvfile, delimiter='^', lineterminator='\n')
     for record in optd_por_dup_geo_id_list:
       file_writer.writerow (record)
       
   # POR having a Geonames ID in the list of best known POR inconsistent
   # with the Geonames ID in the OPTD public file
   with open (output_por_cmp_geo_id_file, 'w', newline ='') as csvfile:
-    file_writer = csv.writer (csvfile, delimiter='^')
+    file_writer = csv.writer (csvfile, delimiter='^', lineterminator='\n')
     for record in optd_por_cmp_geo_id_list:
       file_writer.writerow (record)
 
