@@ -165,21 +165,18 @@ if __name__ == '__main__':
       if optd_bksf_iata_code_from_pk != optd_bksf_iata_code:
         optd_por_best_incst_code_list.append (reportStruct)
 
-      # Check whether the OPTD best known POR is in the list of OPTD public POR
-      if optd_bksf_geo_id != 0 and not optd_bksf_geo_id in optd_por_dict:
-        # The OPTD POR cannot be found in the list of best known POR
+      # Check whether the OPTD best known POR is in the list of OPTD public POR.
+      #
+      # By design, when the Geonames ID is zero (0), that POR is not (yet)
+      # known from Geonames (and referenced in the list of best known POR).
+      # Any POR not (yet) referenced by Geonames is reported here, in the
+      # output_por_best_not_in_optd_file file.
+      if not optd_bksf_geo_id in optd_por_dict:
+        # Report the POR details
+        optd_por_best_not_in_optd_list.append (reportStruct)
 
-        # Get a few more details in order to report them. As there is
-        # an inconsistency between the OPTD public file and the list of
-        # best known POR (curated by OPTD), it is possible that
-        # the (IATA code, location type) pair cannot be found in the OPTD
-        # public file as well. However, there should be at least one record
-        # for that IATA code.
-        if not optd_bksf_iata_code in optd_por_dict:
-          # Report the POR details
-          optd_por_best_not_in_optd_list.append (reportStruct)
-
-        else:
+      else:
+        if optd_bksf_geo_id != 0:
           optd_por_list = optd_por_dict[optd_bksf_iata_code]
           for optd_por_record in optd_por_list:
             optd_por_page_rank = optd_por_record['page_rank']
