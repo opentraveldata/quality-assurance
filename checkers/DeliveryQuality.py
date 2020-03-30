@@ -11,7 +11,7 @@ k_ascii = 64
 k_earth_radius = 6372.8
 
 # Standard header for the OPTD POR data files (e.g., optd_por_public_all.csv)
-k_optd_std_hdr = ('reporting-reason',
+k_optd_std_hdr = ('reporting_reason',
                   'iata_code', 'icao_code', 'faa_code',
                   'is_geonames', 'geoname_id', 'envelope_id',
                   'name', 'asciiname', 'latitude', 'longitude',
@@ -26,7 +26,8 @@ k_optd_std_hdr = ('reporting-reason',
                   'city_code_list', 'city_name_list', 'city_detail_list',
                   'tvl_por_list', 'iso31662', 'location_type', 'wiki_link',
                   'alt_name_section', 'wac', 'wac_name', 'ccy_code',
-                  'unlc_list', 'uic_list', 'geoname_lat', 'geoname_lon')
+                  'unlc_list', 'uic_list', 'geoname_lat', 'geoname_lon',
+                  'distance', 'weighted_distance')
 
 def usage (script_name, usage_doc):
   """Display the usage for that program."""
@@ -164,3 +165,32 @@ def getFullStateCode (country_code, state_code):
     the country code (ISO 3166-1) and the state code (ISO 3166-2)"""
     full_state_code = country_code + "-" + state_code
     return full_state_code
+
+def addReportingReason (optd_tuple, reporting_reason = ''):
+  """Return a new tuple being the addition of the reporting reason
+  and the full OPTD record (like in the optd_por_public.csv file)"""
+  oTuple = (reporting_reason, ) + optd_tuple
+  return oTuple
+
+def addDistances (optd_tuple, distance, weight = 0.0):
+  """Return a new tuple being the addition of the reporting reason
+  and the full OPTD record (like in the optd_por_public.csv file).
+  * Most of the time, no distance is reported.
+  * When a distance is reported, both that distance and a weighted distance
+    are reported
+  """
+  oTuple = optd_tuple
+  
+  if distance == '':
+    # Most of the time, no distance is reported
+    oTuple += ('', '')
+
+  else:
+    # When a distance is reported, both that distance and a weighted distance
+    # are reported
+    distance = float (distance)
+    weight = float (weight)
+    weighted_distance = distance * weight
+    oTuple += (distance, weighted_distance)
+    
+  return oTuple

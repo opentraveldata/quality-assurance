@@ -1,0 +1,165 @@
+{
+	"mappings": {
+		"properties": {
+			"reporting_reason": {
+				"type": "keyword"
+			},
+			"iata_code": {
+				"type": "keyword"
+			},
+			"icao_code": {
+				"type": "keyword"
+			},
+			"faa_code": {
+				"type": "keyword"
+			},
+			"is_geonames": {
+				"type": "boolean"
+			},
+			"geoname_id": {
+				"type": "long"
+			},
+			"envelope_id": {
+				"type": "short"
+			},
+			"name": {
+				"type": "keyword"
+			},
+			"asciiname": {
+				"type": "keyword"
+			},
+			"coord": {
+				"type": "geo_point"
+			},
+			"fclass": {
+				"type": "keyword"
+			},
+			"fcode": {
+				"type": "keyword"
+			},
+			"page_rank": {
+				"type": "double"
+			},
+			"date_from": {
+				"type": "date",
+				"ignore_malformed": true
+			},
+			"date_until": {
+				"type": "date",
+				"ignore_malformed": true
+			},
+			"comment": {
+				"type": "text"
+			},
+			"country_code": {
+				"type": "keyword"
+			},
+			"cc2": {
+				"type": "keyword"
+			},
+			"country_name": {
+				"type": "keyword"
+			},
+			"continent_name": {
+				"type": "keyword"
+			},
+			"adm1_code": {
+				"type": "keyword"
+			},
+			"adm1_name_utf": {
+				"type": "keyword"
+			},
+			"adm1_name_ascii": {
+				"type": "keyword"
+			},
+			"adm2_code": {
+				"type": "keyword"
+			},
+			"adm2_name_utf": {
+				"type": "keyword"
+			},
+			"adm2_name_ascii": {
+				"type": "keyword"
+			},
+			"adm3_code": {
+				"type": "keyword"
+			},
+			"adm4_code": {
+				"type": "keyword"
+			},
+			"population": {
+				"type": "long"
+			},
+			"elevation": {
+				"type": "float"
+			},
+			"gtopo30": {
+				"type": "long"
+			},
+			"timezone": {
+				"type": "keyword"
+			},
+			"gmt_offset": {
+				"type": "short"
+			},
+			"dst_offset": {
+				"type": "short"
+			},
+			"raw_offset": {
+				"type": "short"
+			},
+			"moddate": {
+				"type": "date",
+				"ignore_malformed": true
+			},
+			"city_code_list": {
+				"type": "keyword"
+			},
+			"city_name_list": {
+				"type": "keyword"
+			},
+			"city_detail_list": {
+				"type": "keyword"
+			},
+			"tvl_por_list": {
+				"type": "keyword"
+			},
+			"iso31662": {
+				"type": "keyword"
+			},
+			"location_type": {
+				"type": "keyword"
+			},
+			"wiki_link": {
+				"type": "text"
+			},
+			"alt_name_section": {
+				"type": "keyword"
+			},
+			"wac": {
+				"type": "keyword"
+			},
+			"wac_name": {
+				"type": "keyword"
+			},
+			"ccy_code": {
+				"type": "keyword"
+			},
+			"unlc_list": {
+				"type": "keyword"
+			},
+			"uic_list": {
+				"type": "keyword"
+			},
+			"geo_coord": {
+				"type": "geo_point"
+			},
+			"distance": {
+				"type": "double"
+			},
+			"weighted_distance": {
+				"type": "double"
+			}
+		}
+	}
+}

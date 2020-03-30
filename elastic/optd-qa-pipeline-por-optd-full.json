@@ -1,0 +1,75 @@
+{
+	"description": "Parsing the OPTD (OpenTravelData) POR (Points of Reference) QA (Quality Assurance) reports",
+	"processors": [
+		{
+			"grok": {
+				"field": "optd_qa_por_full",
+				"patterns": [
+					"^%{DATA:reporting_reason}\\^%{OPT_WORD:iata_code}\\^%{OPT_WORD:icao_code}\\^%{OPT_WORD:faa_code}\\^%{WORD:is_geonames}\\^%{INT:geoname_id}\\^%{OPT_INT:envelope_id}\\^%{DATA:name}\\^%{DATA:asciiname}\\^%{OPT_NUMBER:coord.lat}\\^%{OPT_NUMBER:coord.lon}\\^%{FCLASS:fclass}\\^%{OPT_WORD:fcode}\\^%{OPT_NUMBER:page_rank}\\^%{OPT_DATE:date_from}\\^%{OPT_DATE:date_until}\\^%{DATA:comment}\\^%{OPT_WORD:country_code}\\^%{OPT_WORD:cc2}\\^%{DATA:country_name}\\^%{DATA:continent_name}\\^%{OPT_WORD:adm1_code}\\^%{DATA:adm1_name_utf}\\^%{DATA:adm1_name_ascii}\\^%{OPT_WORD:adm2_code}\\^%{DATA:adm2_name_utf}\\^%{DATA:adm2_name_ascii}\\^%{OPT_WORD:adm3_code}\\^%{OPT_WORD:adm4_code}\\^%{OPT_INT:population}\\^%{OPT_INT:elevation}\\^%{OPT_INT:gtopo30}\\^%{DATA:timezone}\\^%{OPT_NUMBER:gmt_offset}\\^%{OPT_NUMBER:dst_offset}\\^%{OPT_NUMBER:raw_offset}\\^%{OPT_DATE:moddate}\\^%{DATA:city_code_list}\\^%{DATA:city_name_list}\\^%{DATA:city_detail_list}\\^%{DATA:tvl_por_list}\\^%{OPT_WORD:iso31662}\\^%{OPT_WORD:location_type}\\^%{DATA:wiki_link}\\^%{DATA:alt_name_section}\\^%{OPT_WORD:wac}\\^%{DATA:wac_name}\\^%{OPT_WORD:ccy_code}\\^%{DATA:unlc_list}\\^%{DATA:uic_list}\\^%{OPT_NUMBER:geo_coord.lat}\\^%{OPT_NUMBER:geo_coord.lon}\\^%{OPT_NUMBER:distance}\\^%{OPT_NUMBER:weighted_distance}$"
+				],
+				"pattern_definitions": {
+					"FCLASS": "[AHLPRSTUV]",
+					"OPT_DATE": "(%{YEAR}-%{MONTHNUM2}-%{MONTHDAY}|-1)?",
+					"OPT_INT": "(%{INT})?",
+					"OPT_NUMBER": "(%{NUMBER})?",
+					"OPT_WORD": "(%{WORD})?"
+				}
+			}
+		},
+		{
+			"remove": {
+				"field": "optd_qa_por_full"
+			}
+		},
+		{
+			"set": {
+				"field": "is_geonames",
+				"if": "ctx.is_geonames == 'Y'",
+				"value": true
+			}
+		},
+		{
+			"set": {
+				"field": "is_geonames",
+				"if": "ctx.is_geonames == 'N'",
+				"value": false
+			}
+		},
+		{
+			"set": {
+				"field": "coord.lat",
+				"if": "ctx.coord.lat == ''",
+				"value": 0.0
+			}
+		},
+		{
+			"set": {
+				"field": "coord.lon",
+				"if": "ctx.coord.lon == ''",
+				"value": 0.0
+			}
+		},
+		{
+			"set": {
+				"field": "geo_coord.lat",
+				"if": "ctx.geo_coord.lat == ''",
+				"value": "{{coord.lat}}"
+			}
+		},
+		{
+			"set": {
+				"field": "geo_coord.lon",
+				"if": "ctx.geo_coord.lon == ''",
+				"value": "{{coord.lon}}"
+			}
+		},
+		{
+			"date" : {
+				"field" : "timestamp",
+				"target_field" : "timestamp",
+				"formats" : ["yyyy-MM-dd HH:mm:ss"],
+				"timezone" : "Etc/UTC"
+			}
+		}
+	]
+}

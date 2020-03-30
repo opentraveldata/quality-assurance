@@ -115,12 +115,19 @@ if __name__ == '__main__':
           if not has_been_notified:
             oldReportDict['notified'] = True
             old_record_as_list = oldReportDict['record_as_list']
-            old_record_as_list = ('', ) + old_record_as_list
-            optd_por_dup_geo_id_list.append (old_record_as_list)
+            old_record_as_list_for_rpt = \
+              dq.addReportingReason (old_record_as_list, reporting_reason = '')
+            old_record_as_list_for_rpt = \
+              dq.addDistances (old_record_as_list_for_rpt, distance = '')
 
+            optd_por_dup_geo_id_list.append (old_record_as_list_for_rpt)
+            
           #
-          record_as_list = ('', ) + record_as_list
-          optd_por_dup_geo_id_list.append (record_as_list)
+          record_as_list_for_rpt = dq.addReportingReason (record_as_list,
+                                                          reporting_reason = '')
+          record_as_list_for_rpt = dq.addDistances (record_as_list_for_rpt,
+                                                    distance = '')
+          optd_por_dup_geo_id_list.append (record_as_list_for_rpt)
         
   # OPTD file for best known POR so far
   # pk^iata_code^latitude^longitude^city_code^date_from
@@ -162,8 +169,10 @@ if __name__ == '__main__':
         if optd_bksf_geo_id == 0 and optd_bksf_pk in optd_record_list:
           optd_por_record = optd_record_list[optd_bksf_pk]
           record_as_list = optd_por_record['record_as_list']
-          record_as_list = (f'', ) + record_as_list
-          optd_por_best_not_in_geo_list.append (record_as_list)
+          record_as_list_for_rpt = dq.addReportingReason (record_as_list)
+          record_as_list_for_rpt = dq.addDistances (record_as_list_for_rpt,
+                                                    distance = '')
+          optd_por_best_not_in_geo_list.append (record_as_list_for_rpt)
 
       else:
         # Points of reference (POR) having a Geonames ID in the manually
@@ -175,9 +184,12 @@ if __name__ == '__main__':
             for optd_por_pk, optd_por_record in optd_record_list.items():
               # Report the POR details
               record_as_list = optd_por_record['record_as_list']
-              record_as_list = (f"{optd_bksf_pk} not found in optd", ) \
-                + record_as_list
-              optd_por_cmp_geo_id_list.append (record_as_list)
+              reporting_reason = f"{optd_bksf_pk} not found in optd"
+              record_as_list_for_rpt = dq.addReportingReason (record_as_list,
+                                                              reporting_reason)
+              record_as_list_for_rpt = dq.addDistances (record_as_list_for_rpt,
+                                                        distance = '')
+              optd_por_cmp_geo_id_list.append (record_as_list_for_rpt)
 
   ## Write the output lists into CSV files
   # POR in the best known list but not in the OPTD public data file
