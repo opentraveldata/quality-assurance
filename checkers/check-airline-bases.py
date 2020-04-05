@@ -9,13 +9,18 @@ if __name__ == '__main__':
   usageStr = "That script downloads OpenTravelData (OPTD) airline-related CSV files\nand check that the airport bases/hubs are present in the list of flight legs"
   verboseFlag = dq.handle_opt(usageStr)
 
+  ## Input
   # Airline details
   optd_airline_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv?raw=true'
   optd_airline_file = 'to_be_checked/optd_airlines.csv'
 
   # List of flight leg frequencies
-  optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv?raw=true'
-  optd_airline_por_file = 'to_be_checked/optd_airline_por_rcld.csv'
+  k_w_seats = False
+  optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv?raw=true'
+  optd_airline_por_file = 'to_be_checked/optd_airline_por.csv'
+  if k_w_seats:
+    optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv?raw=true'
+    optd_airline_por_file = 'to_be_checked/optd_airline_por_rcld.csv'
 
   # OPTD-maintained list of POR, generated file
   optd_por_public_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv?raw=true'
@@ -28,8 +33,10 @@ if __name__ == '__main__':
 
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_airline_url, optd_airline_file, verboseFlag)
-  dq.downloadFileIfNeeded (optd_airline_por_url, optd_airline_por_file, verboseFlag)
-  dq.downloadFileIfNeeded (optd_por_public_url, optd_por_public_file, verboseFlag)
+  dq.downloadFileIfNeeded (optd_airline_por_url, optd_airline_por_file,
+                           verboseFlag)
+  dq.downloadFileIfNeeded (optd_por_public_url, optd_por_public_file,
+                           verboseFlag)
 
   # DEBUG
   if verboseFlag:
@@ -37,11 +44,11 @@ if __name__ == '__main__':
     dq.displayFileHead (optd_airline_por_file)
     dq.displayFileHead (optd_por_public_file)
 
-  #
-  # Screen-scraped flight frequencies
+  # Without seats (optd_airline_por.csv):
   # airline_code^apt_org^apt_dst^flt_freq
   #
-  # Build, for every airline, the list of POR they serve
+  # With seats (optd_airline_por_rcld.csv):
+  # airline_code^apt_org^apt_dst^seats_mtly_avg^freq_mtly_avg
   #
   airline_por_dict = dict()
   with open (optd_airline_por_file, newline='') as csvfile:
@@ -50,7 +57,11 @@ if __name__ == '__main__':
       airline_code = row['airline_code']
       apt_org = row['apt_org']
       apt_dst = row['apt_dst']
-      flt_freq = float(row['freq_mtly_avg'])
+      flt_freq = 0
+      if k_w_seats:
+        flt_freq = float(row['freq_mtly_avg'])
+      else:
+        flt_freq = int(row['flt_freq'])
 
       # Register or update the dictionary for that airline code
       if airline_code in airline_por_dict:
@@ -71,7 +82,8 @@ if __name__ == '__main__':
           airline_por_list[apt_dst] = cumulated_flt_freq + flt_freq
 
       else:
-        # Register the flight frequencies for the origin and destination airports
+        # Register the flight frequencies for the origin
+        # and destination airports
         airline_por_list = dict()
         airline_por_list[apt_org] = flt_freq
         airline_por_list[apt_dst] = flt_freq
@@ -80,7 +92,7 @@ if __name__ == '__main__':
 
   #
   # OpenTravelData-maintained list of POR
-  # iata_code^icao_code^faa_code^is_geonames^geoname_id^envelope_id^name^asciiname^latitude^longitude^fclass^fcode^page_rank^date_from^date_until^comment^country_code^cc2^country_name^continent_name^adm1_code^adm1_name_utf^adm1_name_ascii^adm2_code^adm2_name_utf^adm2_name_ascii^adm3_code^adm4_code^population^elevation^gtopo30^timezone^gmt_offset^dst_offset^raw_offset^moddate^city_code_list^city_name_list^city_detail_list^tvl_por_list^state_code^location_type^wiki_link^alt_name_section^wac^wac_name
+  # iata_code^icao_code^faa_code^is_geonames^geoname_id^envelope_id^name^asciiname^latitude^longitude^fclass^fcode^page_rank^date_from^date_until^comment^country_code^cc2^country_name^continent_name^adm1_code^adm1_name_utf^adm1_name_ascii^adm2_code^adm2_name_utf^adm2_name_ascii^adm3_code^adm4_code^population^elevation^gtopo30^timezone^gmt_offset^dst_offset^raw_offset^moddate^city_code_list^city_name_list^city_detail_list^tvl_por_list^state_code^location_type^wiki_link^alt_name_section^wac^wac_name^ccy_code^unlc_list^uic_list^geoname_lat^geoname_lon
   #
   optd_por_dict = dict()
   with open (optd_por_public_file, newline='') as csvfile:

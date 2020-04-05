@@ -25,8 +25,12 @@ if __name__ == '__main__':
   optd_airline_file = 'to_be_checked/optd_airlines.csv'
 
   # List of flight leg frequencies
-  optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv?raw=true'
-  optd_airline_por_file = 'to_be_checked/optd_airline_por_rcld.csv'
+  k_w_seats = False
+  optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por.csv?raw=true'
+  optd_airline_por_file = 'to_be_checked/optd_airline_por.csv'
+  if k_w_seats:
+    optd_airline_por_url = 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv?raw=true'
+    optd_airline_por_file = 'to_be_checked/optd_airline_por_rcld.csv'
 
   ## Output
   # Zero-length edges on airline networks
@@ -58,7 +62,8 @@ if __name__ == '__main__':
   # If the files are not present, or are too old, download them
   dq.downloadFileIfNeeded (optd_por_url, optd_por_file, verboseFlag)
   dq.downloadFileIfNeeded (optd_airline_url, optd_airline_file, verboseFlag)
-  dq.downloadFileIfNeeded (optd_airline_por_url, optd_airline_por_file, verboseFlag)
+  dq.downloadFileIfNeeded (optd_airline_por_url, optd_airline_por_file,
+                           verboseFlag)
 
   # DEBUG
   if verboseFlag:
@@ -118,7 +123,10 @@ if __name__ == '__main__':
         optd_por_map_dict[optd_por_code] = geometry
 
 
+  # Without seats (optd_airline_por.csv):
+  # airline_code^apt_org^apt_dst^flt_freq
   #
+  # With seats (optd_airline_por_rcld.csv):
   # airline_code^apt_org^apt_dst^seats_mtly_avg^freq_mtly_avg
   #
   airline_sched_dict = dict()
@@ -130,7 +138,11 @@ if __name__ == '__main__':
       airline_code = row['airline_code']
       apt_org = row['apt_org']
       apt_dst = row['apt_dst']
-      flt_freq = float(row['freq_mtly_avg'])
+      flt_freq = 0
+      if k_w_seats:
+        flt_freq = float(row['freq_mtly_avg'])
+      else:
+        flt_freq = int(row['flt_freq'])
 
       # If the airline code is new, create a (NetworkX graph)
       if airline_code != last_airline_code:
@@ -168,6 +180,7 @@ if __name__ == '__main__':
       else:
         cumulated_flt_freq = airline_por_list[apt_org]
         airline_por_list[apt_org] = cumulated_flt_freq + flt_freq
+        
       # Register the flight frequency for the destination airport
       if not apt_dst in airline_por_list:
         airline_por_list[apt_dst] = flt_freq
@@ -199,7 +212,8 @@ if __name__ == '__main__':
 
 
   # Networks on Maps: http://www.sociology-hacks.org/?p=67
-  # Creating a route planner for road network: http://ipython-books.github.io/featured-03/
+  # Creating a route planner for road network:
+  #  http://ipython-books.github.io/featured-03/
   
   # Decompose the airline network into independent sub-networks
   airline_idx = 1
@@ -208,7 +222,8 @@ if __name__ == '__main__':
       graph_comp_idx = 1
       current_network = schedule_dict[airline_code]
       #graphs = list(nx.connected_component_subgraphs(current_network))
-      graphs = [current_network.subgraph(c) for c in nx.connected_components(current_network)]
+      graphs = [current_network.subgraph(c) \
+                for c in nx.connected_components(current_network)]
 
       for graph_comp in graphs:
           # Find the center of the sub-network
