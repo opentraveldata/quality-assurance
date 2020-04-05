@@ -119,6 +119,7 @@ if __name__ == '__main__':
     for row in file_reader:
       por_code = row['por_code']
       cty_code = row['city_code']
+      state_code = row['state_code']
       exc_src = row['source']
       env_id = row['env_id']
       actv_in_optd = row['actv_in_optd']
@@ -127,7 +128,9 @@ if __name__ == '__main__':
       #
       if not por_code in por_exc_dict and env_id == "" and "I" in exc_src:
         # Register the exception details for the POR
-        por_exc_dict[por_code] = {'city_code': cty_code, 'source': exc_src,
+        por_exc_dict[por_code] = {'city_code': cty_code,
+                                  'state_code': state_code,
+                                  'source': exc_src,
                                   'actv_in_optd': actv_in_optd,
                                   'actv_in_src': actv_in_src,
                                   'used': False}
