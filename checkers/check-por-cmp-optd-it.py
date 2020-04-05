@@ -336,7 +336,7 @@ if __name__ == '__main__':
             por_exc_dict[it_code]['used'] = True
 
           #
-          if not is_state_exc:
+          if it_state_code != '' and not is_state_exc:
             # No known exception rule applies for that state
             reportStruct = (it_por_code, 1, 1, optd_env_id, optd_date_from,
                             optd_date_until, it_state_code, it_ctry_code,
