@@ -103,17 +103,29 @@ if __name__ == '__main__':
       unlc_is_brdxing = row['is_brdxing']
       unlc_is_unkwn = row['is_unkwn']
 
+      # The UN/LOCODE-referenced POR is not referenced by OPTD
+      reportStruct = (unlc_por_code, unlc_iata_code, unlc_ctry_code,
+                      unlc_state_code, unlc_short_code, unlc_name_utf8,
+                      unlc_name_ascii, unlc_coord_lat, unlc_coord_lon,
+                      unlc_change_code, unlc_status, unlc_is_port,
+                      unlc_is_rail, unlc_is_road, unlc_is_apt, unlc_is_postoff,
+                      unlc_is_icd, unlc_is_fxtpt, unlc_is_brdxing,
+                      unlc_is_unkwn)
+      
+      # Record the details in the list of UN/LOCODE indexed POR.
+      # Note that there may be several records for a given UN/LOCODE,
+      # typically one record per location type. For instance:
+      # ADALV^42.50779^1.52109^3041563^^^P^PPLC
+      # ADALV^42.51124^1.53358^7730819^^^S^AIRH
+      #
+      # As we are interested only by whether or not a UN/LOCODE is referenced
+      # or not, there is no need so far to record all the POR with
+      # different location types
+      if not unlc_por_code in unlc_por_dict:
+        unlc_por_dict[unlc_por_code] = reportStruct
+
       # Check whether the UN/LOCODE referenced POR is in the list of OPTD POR
       if not unlc_por_code in optd_por_dict:
-        # The UN/LOCODE-referenced POR is not referenced by OPTD
-        reportStruct = (unlc_por_code, unlc_iata_code, unlc_ctry_code,
-                        unlc_state_code, unlc_short_code, unlc_name_utf8,
-                        unlc_name_ascii, unlc_coord_lat, unlc_coord_lon,
-                        unlc_change_code, unlc_status, unlc_is_port,
-                        unlc_is_rail, unlc_is_road, unlc_is_apt, unlc_is_postoff,
-                        unlc_is_icd, unlc_is_fxtpt, unlc_is_brdxing,
-                        unlc_is_unkwn)
-
         # UN/LOCODE not referenced by OPTD
         por_unlc_not_in_optd_list.append (reportStruct)
 
