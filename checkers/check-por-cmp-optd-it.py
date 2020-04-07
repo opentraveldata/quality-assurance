@@ -45,6 +45,7 @@ if __name__ == '__main__':
                                    'it_state_code', 'it_ctry_code',
                                    'it_cty_code', 'it_loc_type',
                                    'optd_geo_id', 'optd_state_code',
+                                   'optd_city_state_list',
                                    'optd_ctry_code', 'optd_cty_list',
                                    'optd_loc_type', 'optd_feat_class',
                                    'optd_feat_code', 'optd_page_rank')]
@@ -112,7 +113,11 @@ if __name__ == '__main__':
     dq.displayFileHead (optd_state_exc_file)
     dq.displayFileHead (optd_por_it_file)
 
+  #
   # (POR, city)-related known errors, by various sources
+  #
+  # por_code^source^actv_in_optd^actv_in_src^env_id^date_from^date_to^city_code^state_code^reason_code^comment
+  #
   por_exc_dict = dict()
   with open (optd_por_exc_file, newline='') as csvfile:
     file_reader = csv.DictReader (csvfile, delimiter='^')
@@ -128,18 +133,22 @@ if __name__ == '__main__':
       #
       if not por_code in por_exc_dict and env_id == "" and "I" in exc_src:
         # Register the exception details for the POR
-        por_exc_dict[por_code] = {'city_code': cty_code,
+        por_exc_dict[por_code] = {'iata_code': por_code,
+                                  'city_code': cty_code,
                                   'state_code': state_code,
                                   'source': exc_src,
                                   'actv_in_optd': actv_in_optd,
                                   'actv_in_src': actv_in_src,
                                   'used': False}
 
+  #
   # State-related known errors, by various sources
+  #
+  # ctry_code^state_code^geo_id^source^env_id^date_from^date_to^wrong_country_code^wrong_state_code^comment
+  #
   state_exc_dict = dict()
   with open (optd_state_exc_file, newline='') as csvfile:
     file_reader = csv.DictReader (csvfile, delimiter='^')
-    # ctry_code^state_code^geo_id^source^env_id^date_from^date_to^wrong_country_code^wrong_state_code^comment
     for row in file_reader:
       state_pk = row['pk']
       state_code = row['state_code']
@@ -150,22 +159,25 @@ if __name__ == '__main__':
       env_id = row['env_id']
 
       #
-      if not state_pk in state_exc_dict and env_id == "" and "I" in exc_src:
+      if not state_pk in state_exc_dict and env_id == '' and 'I' in exc_src:
         # Register the exception details for the POR
         state_exc_dict[state_pk] = {'pk': state_pk, 'state_code': state_code,
-                                    'geo_id': geo_id,
+                                    'geoname_id': geo_id,
                                     'wrong_country_code': wrong_country_code,
                                     'wrong_state_code': wrong_state_code,
                                     'source': exc_src,
                                     'used': False}
 
+  #
   # OPTD-maintained POR with the full details
-  optd_por_dict = dict()
+  #
+  optd_por_by_code_dict = dict()
+  optd_por_by_geo_dict = dict()
   with open (optd_por_public_file, newline='') as csvfile:
     file_reader = csv.DictReader (csvfile, delimiter='^')
     for row in file_reader:
       por_code = row['iata_code']
-      #optd_por_name = row['name']
+      optd_por_name = row['name']
       optd_loc_type = row['location_type']
       optd_geo_id = row['geoname_id']
       optd_env_id = row['envelope_id']
@@ -177,35 +189,78 @@ if __name__ == '__main__':
       optd_coord_lon = row['longitude']
       optd_page_rank = row['page_rank']
       optd_ctry_code = row['country_code']
-      #optd_ctry_name = row['country_name']
-      #optd_ctry_code_alt = row['cc2']
-      #optd_cont_name = row['continent_name']
+      optd_ctry_name = row['country_name']
+      optd_ctry_code_alt = row['cc2']
+      optd_cont_name = row['continent_name']
       optd_adm1_code = row['adm1_code']
-      #optd_adm1_name = row['adm1_name_utf']
+      optd_adm1_name_utf = row['adm1_name_utf']
       optd_state_code = row['iso31662']
       city_code_list_str = row['city_code_list']
-      #tvl_code_list_str = row['tvl_por_list']
+      city_detail_list_str = row['city_detail_list']
+      tvl_code_list_str = row['tvl_por_list']
 
-      #
-      if not por_code in optd_por_dict \
-         or optd_por_dict[por_code]['env_id'] != '':
+      # POR record with full details
+      optd_record = {'iata_code': por_code,
+                     'location_type': optd_loc_type,
+                     'geoname_id': optd_geo_id,
+                     'name': optd_por_name,
+                     'env_id': optd_env_id,
+                     'date_from': optd_date_from,
+                     'date_until': optd_date_until,
+                     'feat_class': optd_feat_class,
+                     'feat_code': optd_feat_code,
+                     'geo_lat': optd_coord_lat,
+                     'geo_lon': optd_coord_lon,
+                     'page_rank': optd_page_rank,
+                     'country_code': optd_ctry_code,
+                     'country_name': optd_ctry_name,
+                     'cc2': optd_ctry_code_alt,
+                     'adm1_code': optd_adm1_code,
+                     'adm1_name_utf': optd_adm1_name_utf,
+                     'state_code': optd_state_code,
+                     'city_code_list': city_code_list_str,
+                     'city_detail_list': city_detail_list_str,
+                     'city_state_list': set(),
+                     'tvl_por_list': tvl_code_list_str}
+      
+      # Store the record indexed by IATA code
+      if not por_code in optd_por_by_code_dict \
+         or optd_por_by_code_dict[por_code]['env_id'] != '':
         # Register the OPTD details for the POR
-        optd_por_dict[por_code] = {'por_code': por_code,
-                                   'loc_type': optd_loc_type,
-                                   'geo_id': optd_geo_id,
-                                   'env_id': optd_env_id,
-                                   'date_from': optd_date_from,
-                                   'date_until': optd_date_until,
-                                   'feat_class': optd_feat_class,
-                                   'feat_code': optd_feat_code,
-                                   'geo_lat': optd_coord_lat,
-                                   'geo_lon': optd_coord_lon,
-                                   'page_rank': optd_page_rank,
-                                   'ctry_code': optd_ctry_code,
-                                   'adm1_code': optd_adm1_code,
-                                   'state_code': optd_state_code,
-                                   'cty_list': city_code_list_str}
+        optd_por_by_code_dict[por_code] = optd_record
+      
+      # Store the record indexed by Geonames ID
+      if not optd_geo_id in optd_por_by_geo_dict \
+         or optd_por_by_geo_dict[optd_geo_id]['env_id'] != '':
+        # Register the OPTD details for the POR
+        optd_por_by_geo_dict[optd_geo_id] = optd_record
 
+  # Browse the just built POR dictionary, and add the details for cities.
+  # There are two independent POR dictionaries (one indexed by IATA code,
+  # the other one indexed by Geonames ID). The state of the city has to be
+  # added in both dictionaries.
+  # The rationale is that some airports (like CBE, CVG, BWI) are located
+  # in a given state, while the city their are serving are located in a
+  # neighbouring state. And IATA references the state only for the city,
+  # whereas the in OPTD, the state (ISO3166-2 code) is given for the POR
+  # itself, not the city it is serving.
+  # So, here, every POR is added the list of states corresponding to the
+  # list of cities it is serving. Then, at a later stage, the IATA state
+  # will be compared to the OPTD state (and to the list of its city states).
+  for optd_por_code, optd_por_details in optd_por_by_code_dict.items():
+    city_detail_list_str = optd_por_details['city_detail_list']
+    city_detail_list = city_detail_list_str.split('=')
+
+    for city_detail_str in city_detail_list:
+      city_details = city_detail_str.split('|')
+      city_geo_id = city_details[1]
+
+      if city_geo_id in optd_por_by_geo_dict:
+        city_record = optd_por_by_geo_dict[city_geo_id]
+        city_state = city_record['state_code']
+        city_record['city_state_list'].add (city_state)
+        optd_por_details['city_state_list'].add (city_state)
+  
   # IATA derived list of POR
   it_por_dict = dict()
   with open (optd_por_it_file, newline='') as csvfile:
@@ -222,20 +277,20 @@ if __name__ == '__main__':
       it_loc_id = row['loc_id']
 
       # Check whether the POR is known to be an exception
-      # for the reference ("I") source
+      # for the reference ('I') source
       it_por_exc = False
       if it_por_code in por_exc_dict:
-        if "I" in por_exc_dict[it_por_code]['source'] and \
-           por_exc_dict[it_por_code]['actv_in_optd'] == "0" and \
-           por_exc_dict[it_por_code]['actv_in_src'] == "1":
+        if 'I' in por_exc_dict[it_por_code]['source'] and \
+           por_exc_dict[it_por_code]['actv_in_optd'] == '0' and \
+           por_exc_dict[it_por_code]['actv_in_src'] == '1':
           it_por_exc = True
 
           # Remove the record from the known errors, as it has been handled
           por_exc_dict[it_por_code]['used'] = True
 
       # Check whether the IATA derived POR is in the list of OPTD POR
-      if not it_por_code in optd_por_dict and \
-         not it_cty_code in optd_por_dict and not it_por_exc:
+      if not it_por_code in optd_por_by_code_dict and \
+         not it_cty_code in optd_por_by_code_dict and not it_por_exc:
         # The OPTD POR cannot be found in the list of IATA derived POR,
         # and it is not a known exception
         reportStruct = (it_por_code, it_por_name, it_loc_type,
@@ -246,42 +301,43 @@ if __name__ == '__main__':
       elif not it_por_exc:
         # Still not a known exception, but the IATA POR is known by OPTD,
         # either as a travel-related POR or as a city POR:
-        # if it_por_code in optd_por_dict or it_cty_code in optd_por_dict
+        # if it_por_code in optd_por_by_code_dict or it_cty_code in optd_por_by_code_dict
 
         it_code = it_por_code
-        if it_por_code in optd_por_dict:
+        if it_por_code in optd_por_by_code_dict:
           # First, register the IATA derived POR, so that we can then,
           # in the next main loop, search for OPTD POR not referenced by IATA
-          it_por_dict[it_por_code] = {'loc_type': it_loc_type,
+          it_por_dict[it_por_code] = {'location_type': it_loc_type,
                                       'state_code': it_state_code,
                                       'country_code': it_ctry_code,
                                       'city_code': it_cty_code}
-        if it_cty_code in optd_por_dict:
+        if it_cty_code in optd_por_by_code_dict:
           # If the city code is different from the travel related code,
           # and that city code is still not known from OPTD, register it
-          it_por_dict[it_cty_code] = {'loc_type': "C",
+          it_por_dict[it_cty_code] = {'location_type': "C",
                                       'state_code': it_state_code,
                                       'country_code': it_ctry_code,
                                       'city_code': it_cty_code}
           # Only the IATA city code is known by OPTD
-          if not it_por_code in optd_por_dict:
+          if not it_por_code in optd_por_by_code_dict:
             it_code = it_cty_code
 
         # The OPTD POR is in the list of IATA derived POR,
         # and it is not a known exception: retrieve the details from OPTD
-        optd_por_details = optd_por_dict[it_code]
+        optd_por_details = optd_por_by_code_dict[it_code]
 
         optd_env_id = optd_por_details['env_id']
         optd_date_from = optd_por_details['date_from']
         optd_date_until = optd_por_details['date_until']
         optd_state_code = optd_por_details['state_code']
-        optd_ctry_code = optd_por_details['ctry_code']
-        optd_cty_list_str = optd_por_details['cty_list']
-        optd_loc_type = optd_por_details['loc_type']
-        optd_geo_id = optd_por_details['geo_id']
+        optd_ctry_code = optd_por_details['country_code']
+        optd_cty_list_str = optd_por_details['city_code_list']
+        optd_loc_type = optd_por_details['location_type']
+        optd_geo_id = optd_por_details['geoname_id']
         optd_feat_class = optd_por_details['feat_class']
         optd_feat_code = optd_por_details['feat_code']
         optd_page_rank = optd_por_details['page_rank']
+        optd_city_state_list = optd_por_details['city_state_list']
 
         if optd_env_id != '' and it_ctry_code != optd_ctry_code:
           # The OPTD POR is no longer valid, whereas still active
@@ -295,7 +351,7 @@ if __name__ == '__main__':
                           optd_feat_class, optd_feat_code, optd_page_rank)
           optd_por_it_no_valid_in_optd_list.append (reportStruct)
 
-        if optd_env_id == '' and not it_por_code in optd_por_dict:
+        if optd_env_id == '' and not it_por_code in optd_por_by_code_dict:
           # Only the IATA city code is known by OPTD
           reasonStr = "IATA derived POR in OpenTravelData as a city, " \
                       "but not as travel-related POR"
@@ -309,7 +365,8 @@ if __name__ == '__main__':
           optd_por_it_in_optd_as_city_only_list.append (reportStruct)
 
         # ISO 3166-2 state code
-        if it_state_code != optd_state_code:
+        if it_state_code != optd_state_code \
+           and not it_state_code in optd_city_state_list:
           # The state codes are not the same for the IATA- and OPTD-derived POR
 
           # Check that there is no known exception
@@ -322,7 +379,7 @@ if __name__ == '__main__':
           full_state_code = dq.getFullStateCode (optd_ctry_code, optd_state_code)
           if full_state_code in state_exc_dict:
             state_exc_details = state_exc_dict[full_state_code]
-            state_exc_geo_id = state_exc_details['geo_id']
+            state_exc_geo_id = state_exc_details['geoname_id']
             state_exc_wrong_country_code= state_exc_details['wrong_country_code']
             state_exc_wrong_state_code = state_exc_details['wrong_state_code']
             if it_state_code == state_exc_wrong_state_code:
@@ -341,10 +398,12 @@ if __name__ == '__main__':
           #
           if it_state_code != '' and not is_state_exc:
             # No known exception rule applies for that state
+            optd_city_state_list_str = '|'.join (optd_city_state_list)
             reportStruct = (it_por_code, 1, 1, optd_env_id, optd_date_from,
                             optd_date_until, it_state_code, it_ctry_code,
                             it_cty_code, it_loc_type, optd_geo_id,
-                            optd_state_code, optd_ctry_code, optd_cty_list_str,
+                            optd_state_code, optd_city_state_list_str,
+                            optd_ctry_code, optd_cty_list_str,
                             optd_loc_type, optd_feat_class, optd_feat_code,
                             optd_page_rank)
             optd_state_optd_it_diff_list.append (reportStruct)
@@ -354,8 +413,7 @@ if __name__ == '__main__':
         por_exc_dict[it_por_code]['used'] = True
 
   # Search for OPTD POR not, or no longer, referenced by IATA
-  for optd_por_code in optd_por_dict:
-    optd_por_details = optd_por_dict[optd_por_code]
+  for optd_por_code, optd_por_details in optd_por_by_code_dict.items():
     optd_env_id = optd_por_details['env_id']
 
     # Check whether there is an exception rule
@@ -368,10 +426,10 @@ if __name__ == '__main__':
        and not optd_por_exc_in_optd_but_not_it:
       # Retrieve the details from OPTD
       optd_state_code = optd_por_details['state_code']
-      optd_ctry_code = optd_por_details['ctry_code']
-      optd_cty_list_str = optd_por_details['cty_list']
-      optd_loc_type = optd_por_details['loc_type']
-      optd_geo_id = optd_por_details['geo_id']
+      optd_ctry_code = optd_por_details['country_code']
+      optd_cty_list_str = optd_por_details['city_code_list']
+      optd_loc_type = optd_por_details['location_type']
+      optd_geo_id = optd_por_details['geoname_id']
       optd_feat_class = optd_por_details['feat_class']
       optd_feat_code = optd_por_details['feat_code']
       optd_page_rank = optd_por_details['page_rank']
@@ -436,4 +494,4 @@ if __name__ == '__main__':
       
   # DEBUG
   if verboseFlag:
-    print ("OPTD POR data full dictionary:\n" + str(optd_por_dict))
+    print ("OPTD POR data full dictionary:\n" + str(optd_por_by_code_dict))
