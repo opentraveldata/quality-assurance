@@ -11,6 +11,43 @@ Quality Assurance (QA) for OpenTravelData (OPTD)
 [![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/opentraveldata/quality-assurance/neobase)](https://pypi.org/project/NeoBase)
 [![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/opentraveldata/quality-assurance/elasticsearch)](https://pypi.org/project/elasticsearch/)
 
+# Table of Content (ToC)
+- [Quality Assurance (QA) for OpenTravelData (OPTD)](#quality-assurance--qa--for-opentraveldata--optd-)
+- [Table of Content (ToC)](#table-of-content--toc-)
+- [Overview](#overview)
+  * [See also](#see-also)
+  * [ElasticSearch (ES)](#elasticsearch--es-)
+    + [Ingest processors](#ingest-processors)
+- [Quick starter](#quick-starter)
+  * [Through a pre-built Docker image](#through-a-pre-built-docker-image)
+- [Installation](#installation)
+  * [With a manually built Docker image](#with-a-manually-built-docker-image)
+  * [Through a local cloned Git repository (without Docker)](#through-a-local-cloned-git-repository--without-docker-)
+  * [On the local environment (without Docker)](#on-the-local-environment--without-docker-)
+    + [Pyenv and `pipenv`](#pyenv-and--pipenv-)
+  * [Launch the Python checkers](#launch-the-python-checkers)
+  * [Elasticsearch](#elasticsearch)
+    + [Re-set the read-write property of indices](#re-set-the-read-write-property-of-indices)
+    + [Simplified pipeline and index](#simplified-pipeline-and-index)
+    + [POR full index and pipeline](#por-full-index-and-pipeline)
+    + [Todo](#todo)
+- [Checks](#checks)
+  * [Points of Reference (POR)](#points-of-reference--por-)
+    + [OPTD consistency and Geonames ID](#optd-consistency-and-geonames-id)
+    + [POR having no geo-location in OPTD](#por-having-no-geo-location-in-optd)
+    + [City POR not in OPTD](#city-por-not-in-optd)
+    + [Multi-city POR in OPTD](#multi-city-por-in-optd)
+    + [OPTD vs IATA](#optd-vs-iata)
+    + [State codes](#state-codes)
+    + [OPTD vs UN/LOCODE](#optd-vs-un-locode)
+  * [Airlines](#airlines)
+    + [Airport Bases / Hubs](#airport-bases---hubs)
+    + [Airline networks](#airline-networks)
+    + [Airline appearing in schedules but not in OPTD](#airline-appearing-in-schedules-but-not-in-optd)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 # Overview
 [That repository](http://github.com/opentraveldata/quality-assurance)
 features scripts to check the quality of the data files
@@ -28,10 +65,20 @@ generated thanks to that repository as well.
 in https://travis-ci.com/opentraveldata/quality-assurance
 
 Most of the scripts generate CSV data files, which can then be uploaded
-in databases, or served through standard Web applications.
+in databases (classical relational database systems (RDBMS) such as PostgreSQL
+or ElasticSearch (ES)), or served through standard Web applications.
 For historical reasons, some scripts may still generate JSON structures
 on the standard output. In the future, JSON should be used only for metadata,
 not for the data itself.
+
+The CSV reports are published (thanks to Travis CI) to an OPTD-operated
+ElasticSearch (ES) cluster. The full details on how to setup that ES cluster,
+on Proxmox LXC containers, are given in a [dedicated `elasticsearch`
+tutorial](https://github.com/infra-helpers/induction-monitoring/tree/master/elasticseearch/).
+
+For convenience, most of the ES examples are demonstrated both on a local
+single-node installation (_e.g._, on a laptop) and on on the above-mentioned
+cluster.
 
 ## See also
 * [Service Delivery Quality (SDQ) GitHub organization](https://github.com/service-delivery-quality)
@@ -46,6 +93,7 @@ not for the data itself.
   + [EFK (ElasticSearch, Fluentd, Kibana](https://docs.fluentd.org/v/0.12/articles/docker-logging-efk-compose)
   + [Kibana](https://www.elastic.co/products/kibana)
   + [Fluentd](https://www.fluentd.org/)
+* [Tutorial - Setup an ES cluster on Proxmox LXC containers](https://github.com/infra-helpers/induction-monitoring/tree/master/elasticseearch/))
 * [Elasticsearch geo-point](https://www.elastic.co/guide/en/elasticsearch/reference/current/geo-point.html)
 
 ### Ingest processors
@@ -92,7 +140,7 @@ As detailed in the
 [online guide on how to set up a Python virtual environment](http://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env),
 [Pyenv](https://github.com/pyenv/pyenv) and
 [`pipenv`](http://pypi.org/project/pipenv) should be installed,
-and Python 3.7 installed thanks to Pyenv.
+and Python 3.8 installed thanks to Pyenv.
 Then all the Python scripts will be run thanks to `pipenv`.
 
 ### Pyenv and `pipenv`
@@ -101,7 +149,7 @@ Then all the Python scripts will be run thanks to `pipenv`.
 ```bash
 $ if [ ! -d ${HOME}/.pyenv ]; then pushd ${HOME} && git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv && popd; else pushd ${HOME}/.pyenv && git pull && popd; fi
 $ export PYENV_ROOT="${HOME}/.pyenv"; export PATH="${PYENV_ROOT}/.pyenv/shims:${PATH}"; if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
-$ pyenv install 3.7.2 && pyenv global 3.7.2 && pip install -U pip pipenv && pyenv global system
+$ pyenv install 3.8.2 && pyenv global 3.8.2 && pip install -U pip pipenv && pyenv global system
 $ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv install
 $ popd
@@ -128,9 +176,22 @@ $ pipenv run checkers/check-por-cmp-optd-unlc.py
 ## Elasticsearch
 
 ### Re-set the read-write property of indices
-
+* Local installation:
 ```bash
 $ curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'|jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    66  100    21  100    45     82    175 --:--:-- --:--:-- --:--:--   257
+```
+```javascript
+{
+  "acknowledged": true
+}
+```
+
+* Remote installation:
+```bash
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XPUT -H "Content-Type: application/json" http://localhost:9400/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'|jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100    66  100    21  100    45     82    175 --:--:-- --:--:-- --:--:--   257
@@ -144,7 +205,7 @@ $ curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_set
 ### Simplified pipeline and index
 * Simulate a simplified targetted pipeline:
 ```bash
-$ curl -XPOST "http://localhost:9200/_ingest/pipeline/_simulate" -H "Content-Type: application/json" --data "@optd-qa-pipeline-simulation-por-optd-geo-diff.json"|jq
+$ curl -XPOST "http://localhost:9200/_ingest/pipeline/_simulate" -H "Content-Type: application/json" --data "@elastic/optd-qa-pipeline-simulation-por-optd-geo-diff.json"|jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  1435  100   496  100   939  62000   114k --:--:-- --:--:-- --:--:--  175k
@@ -182,6 +243,17 @@ $ curl -XPOST "http://localhost:9200/_ingest/pipeline/_simulate" -H "Content-Typ
       }
     }
   ]
+}
+```
+```bash
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XPOST "http://localhost:9400/_ingest/pipeline/_simulate" -H "Content-Type: application/json" --data "@elastic/optd-qa-pipeline-simulation-por-optd-geo-diff.json"|jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1435  100   496  100   939  62000   114k --:--:-- --:--:-- --:--:--  175k
+```
+```javascript
+{
+  ...
 }
 ```
 
@@ -485,6 +557,16 @@ $ curl -XPOST "http://localhost:9200/_ingest/pipeline/_simulate" -H "Content-Typ
   ]
 }
 ```
+```bash
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XPOST "http://localhost:9400/_ingest/pipeline/_simulate" -H "Content-Type: application/json" --data "@elastic/optd-qa-pipeline-simulation-por-optd-full.json"|jq
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
+```
+```javascript
+{
+```
 
 * Create the full POR index:
 ```bash
@@ -492,6 +574,20 @@ $ curl -XPUT "http://localhost:9200/optd-qa-por-full-v1" -H "Content-Type: appli
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  2361  100    78  100  2283     16    485  0:00:04  0:00:04 --:--:--    22
+```
+```javascript
+{
+  "acknowledged": true,
+  "shards_acknowledged": true,
+  "index": "optd-qa-por-full-v1"
+}
+```
+```bash
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XPUT "http://localhost:9400/optd-qa-por-full-v1" -H "Content-Type: application/json" --data "@elastic/optd-qa-index-por-optd-full.json" | jq
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
 ```
 ```javascript
 {
@@ -526,6 +622,31 @@ $ curl -XGET "http://localhost:9200/optd-qa-por-full-v1/_settings"|jq
   }
 }
 ```
+```bash
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XGET "http://localhost:9400/optd-qa-por-full-v1/_settings"|jq
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
+```
+```javascript
+{
+  "optd-qa-por-full-v1": {
+    "settings": {
+      "index": {
+        "creation_date": "1586650616710",
+        "number_of_shards": "1",
+        "number_of_replicas": "1",
+        "uuid": "PaseFEBWSRuKhWNjxKNqtg",
+        "version": {
+          "created": "7060299"
+        },
+        "provided_name": "optd-qa-por-full-v1"
+      }
+    }
+  }
+}
+```
 
 * By default, the number of replicas is 1, _i.e._, the index is replicated once.
   That is not possible on single-node clusters. Hence, the health of the index
@@ -548,6 +669,17 @@ $ curl -XDELETE "http://localhost:9200/optd-qa-por-full-v1" | jq
   "acknowledged": true
 }
 ```
+```bash
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XDELETE "http://localhost:9400/optd-qa-por-full-v1" | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
+```
+```javascript
+{
+  "acknowledged": true
+}
+```
 
 * Create the pipeline for the full POR index:
 ```bash
@@ -555,6 +687,17 @@ $ curl -XPUT "http://localhost:9200/_ingest/pipeline/parse_optd_por_full_csv" -H
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  1906  100    21  100  1885     26   2413 --:--:-- --:--:-- --:--:--  2437
+```
+```javascript
+{
+  "acknowledged": true
+}
+```
+```bash
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XPUT "http://localhost:9400/_ingest/pipeline/parse_optd_por_full_csv" -H "Content-Type: application/json" --data "@elastic/optd-qa-pipeline-por-optd-full.json"|jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
 ```
 ```javascript
 {
@@ -607,10 +750,32 @@ $ curl -XGET "http://localhost:9200/_ingest/pipeline/parse_optd_por_full_csv"|jq
   }
 }
 ```
+```bash
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XGET "http://localhost:9400/_ingest/pipeline/parse_optd_por_full_csv"|jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
+```
+```javascript
+{
+  ...
+}
+```
 
 * If the pipeline needs to be changed, it can be deleted and then re-created:
 ```bash
 $ curl -XDELETE "http://localhost:9200/_ingest/pipeline/parse_optd_por_full_csv"|jq
+```
+```javascript
+{
+  "acknowledged": true
+}
+```
+```bash
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XDELETE "http://localhost:9400/_ingest/pipeline/parse_optd_por_full_csv"|jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
 ```
 ```javascript
 {
@@ -622,7 +787,7 @@ $ curl -XDELETE "http://localhost:9200/_ingest/pipeline/parse_optd_por_full_csv"
 * Ingest the data:
 ```bash
 $ export TIMESTP="$(date -u +'%Y-%m-%d %H:%M:%S')"
-$ tail -n +2 results/optd-qa-por-cmp-geo-id.csv | while IFS=, read -r -a arr; do curl -XPOST "http://localhost:9200/optd-qa-por-full-v1/_doc?pipeline=parse_optd_por_full_csv" -H "Content-Type: application/json" -d "{ \"tag\": [\"optd\", \"por\", \"cmp-geo-id\"], \"timestamp\": \"${TIMESTP}\", \"optd_qa_por_full\": \"${arr[@]}\" }"; done | jq
+$ tail -n +2 results/optd-qa-por-best-not-in-geo.csv | while IFS=; read -r -a arr; do curl -XPOST "http://localhost:9200/optd-qa-por-full-v1/_doc?pipeline=parse_optd_por_full_csv" -H "Content-Type: application/json" -d "{ \"tag\": [\"optd\", \"por\", \"cmp-geo-id\"], \"timestamp\": \"${TIMESTP}\", \"optd_qa_por_full\": \"${arr[@]}\" }"; done | jq
 ```
 ```javascript
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -658,6 +823,21 @@ $ tail -n +2 results/optd-qa-por-cmp-geo-id.csv | while IFS=, read -r -a arr; do
   },
   "_seq_no": 2,
   "_primary_term": 1
+}
+```
+```bash
+$ export TIMESTP="$(date -u +'%Y-%m-%d %H:%M:%S')"
+$ wc -l results/optd-qa-por-best-not-in-geo.csv
+     616 results/optd-qa-por-best-not-in-geo.csv
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 500
+$ tail -n +2 results/optd-qa-por-best-not-in-geo.csv | while IFS=; read -r -a arr; do curl -XPOST "http://localhost:9400/optd-qa-por-full-v1/_doc?pipeline=parse_optd_por_full_csv" -H "Content-Type: application/json" -d "{ \"tag\": [\"optd\", \"por\", \"cmp-geo-id\"], \"timestamp\": \"${TIMESTP}\", \"optd_qa_por_full\": \"${arr[@]}\" }"; done | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
+```
+```javascript
+{
+  ...
 }
 ```
 

@@ -65,6 +65,13 @@
 				}
 			},
 			{
+				"set": {
+					"field": "page_rank",
+					"if": "ctx.page_rank == ''",
+					"value": 0.0
+				}
+			},
+			{
 				"date" : {
 					"field" : "timestamp",
 					"target_field" : "timestamp",
@@ -133,6 +140,16 @@
 			"_source": {
 				"timestamp": "2020-03-29 15:12:23",
 				"optd_qa_por_full": "^MLH^LFSB^^Y^6299466^^EuroAirport Basel–Mulhouse–Freiburg^EuroAirport Basel-Mulhouse-Freiburg^47.58958^7.52991^S^AIRP^0.013945526285525285^^^^FR^^France^Europe^44^Grand Est^Grand Est^68^Haut-Rhin^Haut-Rhin^684^68135^0^269^263^Europe/Paris^1.0^2.0^1.0^2020-03-15^MLH^Mulhouse^MLH|2991214|Mulhouse|Mulhouse^^GES^A^https://en.wikipedia.org/wiki/EuroAirport_Basel_Mulhouse_Freiburg^es|Aeropuerto de Basilea-Mulhouse-Friburgo|=de|Flughafen Basel-Mülhausen|=it|Aeroporto di Basilea-Mulhouse-Friburgo|=ca|Aeroport de Basilea-Mulhouse-Friburg|=en|EuroAirport Basel–Mulhouse–Freiburg|p=fr|Aéroport de Bâle-Mulhouse-Fribourg|=wuu|巴塞尔-米卢斯-弗赖堡欧洲机场|=ru|Международный аэропорт Базель-Мюлуз-Фрайбург|=ja|ユーロエアポート|=fa|فرودگاه بازل-مولوز-فرایبورگ اروپا|^427^France^EUR^CHBSL|=FRMLH|^^^^^"
+			}
+		},
+		{
+			"_index": "optd-qa-por-full",
+			"_type": "optd_qa_por_full",
+			"_id": "NSX",
+			"_score": 1,
+			"_source": {
+				"timestamp": "2020-03-29 15:12:23",
+				"optd_qa_por_full": "^NSX^^^N^0^^Virgin Gorda VG North Sound La^Virgin Gorda VG North Sound La^18.5^-64.37^S^PRT^^^^^VG^^British Virgin Islands^North America^^^^^^^^^^^^America/Tortola^^^^-1^VIJ^Virgin Gorda^VIJ|3577325|Virgin Gorda|Virgin Gorda|VG|^NSX,VIJ^^CP^^^282^British Virgin Islands^USD^^^^^^"
 			}
 		}
 	]
