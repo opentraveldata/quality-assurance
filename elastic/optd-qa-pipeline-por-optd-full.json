@@ -71,6 +71,27 @@
 			}
 		},
 		{
+			"set": {
+				"field": "date_from",
+				"if": "ctx.date_from == '-1'",
+				"value": "1970-01-01"
+			}
+		},
+		{
+			"set": {
+				"field": "date_until",
+				"if": "ctx.date_until == '-1'",
+				"value": "2099-12-31"
+			}
+		},
+		{
+			"set": {
+				"field": "moddate",
+				"if": "ctx.moddate == '-1'",
+				"value": "1970-01-01"
+			}
+		},
+		{
 			"date" : {
 				"field" : "timestamp",
 				"target_field" : "timestamp",

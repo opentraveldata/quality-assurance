@@ -1,0 +1,61 @@
+{
+  "aggs": {
+    "3": {
+      "terms": {
+        "field": "country_code",
+        "order": {
+          "_count": "desc"
+        },
+        "size": 20
+      }
+    }
+  },
+  "size": 0,
+  "stored_fields": [
+    "*"
+  ],
+  "script_fields": {},
+  "docvalue_fields": [
+    {
+      "field": "date_from",
+      "format": "date_time"
+    },
+    {
+      "field": "date_until",
+      "format": "date_time"
+    },
+    {
+      "field": "moddate",
+      "format": "date_time"
+    },
+    {
+      "field": "timestamp",
+      "format": "date_time"
+    }
+  ],
+  "_source": {
+    "excludes": []
+  },
+  "query": {
+    "bool": {
+      "must": [],
+      "filter": [
+        {
+          "match_all": {}
+        },
+        {
+          "range": {
+            "timestamp": {
+              "gte": "2020-04-11T19:30:40.531Z",
+              "lte": "2020-04-12T19:30:40.532Z",
+              "format": "strict_date_optional_time"
+            }
+          }
+        }
+      ],
+      "should": [],
+      "must_not": []
+    }
+  }
+}
+

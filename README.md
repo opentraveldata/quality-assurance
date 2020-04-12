@@ -44,9 +44,13 @@ Quality Assurance (QA) for OpenTravelData (OPTD)
     + [Airport Bases / Hubs](#airport-bases---hubs)
     + [Airline networks](#airline-networks)
     + [Airline appearing in schedules but not in OPTD](#airline-appearing-in-schedules-but-not-in-optd)
+- [Publishing to ElasticSearch (ES)](#publishing-to-elasticsearch--es-)
+  * [Example - OPTD consistency and Geonames](#example---optd-consistency-and-geonames)
+- [Querying ElasticSearch (ES) and Kibana](#querying-elasticsearch--es--and-kibana)
+  * [Histograms](#histograms)
+  * [Maps](#maps)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 
 # Overview
 [That repository](http://github.com/opentraveldata/quality-assurance)
@@ -163,14 +167,46 @@ $ popd
 ```
 
 ## Launch the Python checkers
-* Use the `Makefile` to launch all the checkers:
+* Use the `Makefile` to launch all the checkers (previous content may first
+  be removed, for instance if they have been generated another day):
 ```bash
-$ make checkers
+$ rm -f to_be_checked/* && rm -f results/*
+$ make
 ```
 
 * Use `pipenv` to launch specific Python scripts. For instance:
 ```bash
-$ pipenv run checkers/check-por-cmp-optd-unlc.py
+$ pipenv run python checkers/check-por-cmp-optd-unlc.py
+$ pipenv run python checkers/check-por-geo-id-in-optd.py
+```
+
+* Or use a convenient shortcut provided by the `Makefile` approach:
+```bash
+$ make results/optd-qa-por-optd-not-in-unlc.csv
+pipenv run python checkers/check-por-cmp-optd-unlc.py && \
+	wc -l results/optd-qa-por-unlc-not-in-optd.csv results/optd-qa-por-optd-not-in-unlc.csv && head -3 results/optd-qa-por-unlc-not-in-optd.csv results/optd-qa-por-optd-not-in-unlc.csv
+   10324 results/optd-qa-por-unlc-not-in-optd.csv
+     124 results/optd-qa-por-optd-not-in-unlc.csv
+   10448 total
+==> results/optd-qa-por-unlc-not-in-optd.csv <==
+por_code^unlc_iata_code^unlc_ctry_code^unlc_state_code^unlc_short_code^unlc_name_utf8^unlc_name_ascii^unlc_coord_lat^unlc_coord_lon^unlc_change_code^unlc_status^unlc_is_port^unlc_is_rail^unlc_is_road^unlc_is_apt^unlc_is_postoff^unlc_is_icd^unlc_is_fxtpt^unlc_is_brdxing^unlc_is_unkwn
+ADFMO^^AD^^FMO^La Farga de Moles^La Farga de Moles^^^^RQ^0^0^1^0^0^0^0^1^0
+AEABU^^AE^^ABU^Abu al Bukhoosh^Abu al Bukhoosh^25.29^53.08^^RL^1^0^0^0^0^0^0^0^0
+
+==> results/optd-qa-por-optd-not-in-unlc.csv <==
+unlc_code^geo_id^fclass^fcode^geo_lat^geo_lon^iso31662_code^iso31662_name
+AROBE^3430340^P^PPLA2^-27.48706^-55.11994^N^Misiones
+AUREN^2155718^P^PPLX^-38.03333^145.3^VIC^Victoria
+
+$ make results/optd-qa-por-best-not-in-geo.csv 
+pipenv run python checkers/check-por-geo-id-in-optd.py && \
+	wc -l results/optd-qa-por-best-not-in-geo.csv results/optd-qa-por-best-incst-code.csv results/optd-qa-por-dup-geo-id.csv results/optd-qa-por-cmp-geo-id.csv && head -3 results/optd-qa-por-best-not-in-geo.csv results/optd-qa-por-best-incst-code.csv results/optd-qa-por-dup-geo-id.csv results/optd-qa-por-cmp-geo-id.csv
+     616 results/optd-qa-por-best-not-in-geo.csv
+       1 results/optd-qa-por-best-incst-code.csv
+       1 results/optd-qa-por-dup-geo-id.csv
+       1 results/optd-qa-por-cmp-geo-id.csv
+     619 total
+...
 ```
 
 ## Elasticsearch
@@ -203,7 +239,7 @@ $ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XPUT -H "Content-T
 ```
 
 ### Simplified pipeline and index
-* Simulate a simplified targetted pipeline:
+* [Simulate a simplified targetted pipeline](elastic/optd-qa-pipeline-simulation-por-optd-geo-diff.json):
 ```bash
 $ curl -XPOST "http://localhost:9200/_ingest/pipeline/_simulate" -H "Content-Type: application/json" --data "@elastic/optd-qa-pipeline-simulation-por-optd-geo-diff.json"|jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -258,7 +294,7 @@ $ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XPOST "http://loca
 ```
 
 ### POR full index and pipeline
-* Simulate the full POR index pipeline:
+* [Simulate the full POR index pipeline](elastic/optd-qa-pipeline-simulation-por-optd-full.json):
 ```bash
 $ curl -XPOST "http://localhost:9200/_ingest/pipeline/_simulate" -H "Content-Type: application/json" --data "@elastic/optd-qa-pipeline-simulation-por-optd-full.json"|jq
 
@@ -568,7 +604,7 @@ $ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XPOST "http://loca
 {
 ```
 
-* Create the full POR index:
+* Create the [full POR index](elastic/optd-qa-index-por-optd-full.json):
 ```bash
 $ curl -XPUT "http://localhost:9200/optd-qa-por-full-v1" -H "Content-Type: application/json" --data "@elastic/optd-qa-index-por-optd-full.json" | jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -681,7 +717,8 @@ $ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XDELETE "http://lo
 }
 ```
 
-* Create the pipeline for the full POR index:
+* Create the
+  [pipeline for the full POR index](elastic/optd-qa-pipeline-por-optd-full.json):
 ```bash
 $ curl -XPUT "http://localhost:9200/_ingest/pipeline/parse_optd_por_full_csv" -H "Content-Type: application/json" --data "@elastic/optd-qa-pipeline-por-optd-full.json"|jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -783,68 +820,10 @@ $ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XDELETE "http://lo
 }
 ```
 
-
-* Ingest the data:
-```bash
-$ export TIMESTP="$(date -u +'%Y-%m-%d %H:%M:%S')"
-$ tail -n +2 results/optd-qa-por-best-not-in-geo.csv | while IFS=; read -r -a arr; do curl -XPOST "http://localhost:9200/optd-qa-por-full-v1/_doc?pipeline=parse_optd_por_full_csv" -H "Content-Type: application/json" -d "{ \"tag\": [\"optd\", \"por\", \"cmp-geo-id\"], \"timestamp\": \"${TIMESTP}\", \"optd_qa_por_full\": \"${arr[@]}\" }"; done | jq
-```
-```javascript
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   660  100   186  100   474   1430   3646 --:--:-- --:--:-- --:--:--  5076
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   835  100   186  100   649    712   2486 --:--:-- --:--:-- --:--:--  3199
-{
-  "_index": "optd-qa-por-full-v1",
-  "_type": "_doc",
-  "_id": "8cSoKHEBu3P1TMMtzG4v",
-  "_version": 1,
-  "result": "created",
-  "_shards": {
-    "total": 1,
-    "successful": 1,
-    "failed": 0
-  },
-  "_seq_no": 1,
-  "_primary_term": 1
-}
-{
-  "_index": "optd-qa-por-full-v1",
-  "_type": "_doc",
-  "_id": "8sSoKHEBu3P1TMMtzG6f",
-  "_version": 1,
-  "result": "created",
-  "_shards": {
-    "total": 1,
-    "successful": 1,
-    "failed": 0
-  },
-  "_seq_no": 2,
-  "_primary_term": 1
-}
-```
-```bash
-$ export TIMESTP="$(date -u +'%Y-%m-%d %H:%M:%S')"
-$ wc -l results/optd-qa-por-best-not-in-geo.csv
-     616 results/optd-qa-por-best-not-in-geo.csv
-$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 500
-$ tail -n +2 results/optd-qa-por-best-not-in-geo.csv | while IFS=; read -r -a arr; do curl -XPOST "http://localhost:9400/optd-qa-por-full-v1/_doc?pipeline=parse_optd_por_full_csv" -H "Content-Type: application/json" -d "{ \"tag\": [\"optd\", \"por\", \"cmp-geo-id\"], \"timestamp\": \"${TIMESTP}\", \"optd_qa_por_full\": \"${arr[@]}\" }"; done | jq
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
-```
-```javascript
-{
-  ...
-}
-```
-
 ### Todo
 * [Issue #1](https://github.com/opentraveldata/quality-assurance/issues/1)
 
-As of March 2020, the resulting CSV data files have various formats. Dumping
+As of April 2020, the resulting CSV data files have various formats. Dumping
 the corresponding content into Elasticsearch (ES) would force to have almost
 an index per CSV file type, which would slightly defeat the interest of
 using ES. Rather, it seems better to merge all the CSV file types into a
@@ -902,11 +881,11 @@ $ popd
   considered as empty.
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
-$ pipenv run checkers/check-por-optd-no-geocoord.py
-$ wc -l results/optd-qa-por-optd-no-geocoord.csv
- 1 results/optd-qa-por-optd-no-geocoord.csv
-$ ls -lFh results/optd-qa-por-optd-no-geocoord.csv
--rw-r--r--  1 user staff 27B Apr 24 08:20 results/optd-qa-por-optd-no-geocoord.csv
+$ make results/optd-qa-por-optd-no-geocoord.csv
+pipenv run python checkers/check-por-optd-no-geocoord.py && \
+	wc -l results/optd-qa-por-optd-no-geocoord.csv && head -3 results/optd-qa-por-optd-no-geocoord.csv
+       1 results/optd-qa-por-optd-no-geocoord.csv
+iata_code^geo_id^loc_type
 $ popd
 ```
 
@@ -926,11 +905,11 @@ $ popd
   considered as empty.
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
-$ pipenv run checkers/check-por-city-not-in-optd.py
-$ wc -l results/optd-qa-por-city-not-in-optd.csv
- 3 results/optd-qa-por-city-not-in-optd.csv
-$ ls -lFh results/optd-qa-por-city-not-in-optd.csv
--rw-r--r--  1 user staff 113B Jan 10 15:54 results/optd-qa-por-city-not-in-optd.csv
+$ make results/optd-qa-por-city-not-in-optd.csv
+pipenv run python checkers/check-por-city-not-in-optd.py && \
+	wc -l results/optd-qa-por-city-not-in-optd.csv && head -3 results/optd-qa-por-city-not-in-optd.csv
+       1 results/optd-qa-por-city-not-in-optd.csv
+iata_code^optd_pk^loc_type^geo_id^city_code
 $ popd
 ```
 
@@ -949,13 +928,21 @@ $ popd
   considered as empty.
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
-$ pipenv run checkers/check-por-multiple-cities.py
-$ wc -l results/optd-qa-por-multi-city.csv results/optd-qa-por-multi-city-not-std.csv
-91 results/optd-qa-por-multi-city.csv
-30 results/optd-qa-por-multi-city-not-std.csv
-$ ls -lFh results/optd-qa-por-multi-city.csv results/optd-qa-por-multi-city-not-std.csv
--rw-r--r--  1 user staff 2.2K Jan 10 15:54 results/optd-qa-por-multi-city-not-std.csv
--rw-r--r--  1 user staff 6.1K Jan 10 15:54 results/optd-qa-por-multi-city.csv
+$ make results/optd-qa-por-multi-city.csv
+pipenv run python checkers/check-por-multiple-cities.py && \
+	wc -l results/optd-qa-por-multi-city.csv results/optd-qa-por-multi-city-not-std.csv && head -3 results/optd-qa-por-multi-city.csv results/optd-qa-por-multi-city-not-std.csv
+     111 results/optd-qa-por-multi-city.csv
+      30 results/optd-qa-por-multi-city-not-std.csv
+     141 total
+==> results/optd-qa-por-multi-city.csv <==
+iata_code^optd_pk^loc_type^geo_id^city_code_list^page_rank
+ADJ^ADJ-A-250437^A^250437^AMM,ADJ^0.09819215728644931,0.0
+AGY^AGY-R-10377026^R^10377026^MUC,AGY^0.35785165780444,0.0
+
+==> results/optd-qa-por-multi-city-not-std.csv <==
+iata_code^optd_pk^loc_type^geo_id^city_code_list^page_rank
+BQC^BQC-B-11279243^B^11279243^BQC,YQB^0.006501240960634933,0.05835677851287664
+BVV^BVV-A-8030061^A^8030061^BVV,ITU^0.0,0.006116247321847354
 $ popd
 ```
 
@@ -987,29 +974,34 @@ $ popd
   considered as empty.
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
-$ pipenv run checkers/check-por-cmp-optd-it.py
-$ wc -l results/optd-qa-por-optd-no-it.csv
-66 results/optd-qa-por-optd-no-it.csv
-$ head -3 results/optd-qa-por-optd-no-it.csv
+$ make results/optd-qa-por-optd-no-it.csv
+pipenv run python checkers/check-por-cmp-optd-it.py && \
+	wc -l results/optd-qa-state-optd-it-diff.csv results/optd-qa-por-optd-no-it.csv results/optd-qa-por-it-not-optd.csv results/optd-qa-por-it-no-valid-in-optd.csv results/optd-qa-por-it-in-optd-as-city-only.csv && head -3 results/optd-qa-state-optd-it-diff.csv results/optd-qa-por-optd-no-it.csv results/optd-qa-por-it-not-optd.csv results/optd-qa-por-it-no-valid-in-optd.csv results/optd-qa-por-it-in-optd-as-city-only.csv
+!!!!! Remaining entry of the file of state-related known exceptions: {'full_state_code': 'RU-PRI', 'wrong_state_code': '25'}. Please, remove that from the 'https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_state_exceptions.csv?raw=true' file.
+      24 results/optd-qa-state-optd-it-diff.csv
+      68 results/optd-qa-por-optd-no-it.csv
+       1 results/optd-qa-por-it-not-optd.csv
+       1 results/optd-qa-por-it-no-valid-in-optd.csv
+       1 results/optd-qa-por-it-in-optd-as-city-only.csv
+      95 total
+==> results/optd-qa-state-optd-it-diff.csv <==
+por_code^in_optd^in_iata^env_id^date_from^date_until^it_state_code^it_ctry_code^it_cty_code^it_loc_type^optd_geo_id^optd_state_code^optd_city_state_list^optd_ctry_code^optd_cty_list^optd_loc_type^optd_feat_class^optd_feat_code^optd_page_rank
+CQW^1^1^^2019-12-10^^320^CN^CQW^A^12110887^CQ^CQ^CN^CQW^A^S^AIRP^
+DBD^1^1^^^^JH^IN^DBD^A^7730214^BR^BR^IN^DBD^CA^S^AIRP^
+
+==> results/optd-qa-por-optd-no-it.csv <==
 iata_code^geoname_id^iso31662^country_code^city_code_list^location_type^fclass^fcode^page_rank
-AED^5879155^AK^US^AED^CA^P^PPL^
-AYE^7257567^MA^US^AYE^CH^P^PPL^
-$ wc -l results/optd-qa-por-it-no-valid-in-optd.csv
-5 results/optd-qa-por-it-no-valid-in-optd.csv
-$ head -3 results/optd-qa-por-it-no-valid-in-optd.csv
-iata_code^envelope_id^date_from^date_until^it_state_code^it_country_code^it_city_code^it_location_type^geoname_id^iso31662^country_code^city_code_list^location_type^fclass^fcode^page_rank
-LLM^1^^2013-03-01^^SB^LLM^A^1737957^^MY^LLM^C^P^PPL^
-QDL^1^^2014-07-01^^CH^LUG^R^3461888^ES^BR^QDL^C^P^PPL^
-$ wc -l results/optd-qa-por-it-not-optd.csv
-1 results/optd-qa-por-it-not-optd.csv
-$ head -3 results/optd-qa-por-it-not-optd.csv
+DDP^4564133^^PR^DDP^CA^P^PPLA^
+DGB^8693083^AK^US^DGB^A^S^AIRP^
+
+==> results/optd-qa-por-it-not-optd.csv <==
 iata_code^iata_name^iata_loc_type^iata_ctry_code^iata_state_code^it_tz_code^it_cty_code^it_cty_name
-$ head -3 results/optd-qa-por-it-in-optd-as-city-only.csv
+
+==> results/optd-qa-por-it-no-valid-in-optd.csv <==
+iata_code^envelope_id^date_from^date_until^it_state_code^it_country_code^it_city_code^it_location_type^geoname_id^iso31662^country_code^city_code_list^location_type^fclass^fcode^page_rank
+
+==> results/optd-qa-por-it-in-optd-as-city-only.csv <==
 por_code^in_optd^in_iata^env_id^date_from^date_until^it_state_code^it_ctry_code^it_cty_code^it_loc_type^optd_geo_id^optd_state_code^optd_ctry_code^optd_cty_list^optd_loc_type^optd_feat_class^optd_feat_code^optd_page_rank
-$ head -3 results/optd-qa-state-optd-it-diff.csv
-por_code^in_optd^in_iata^env_id^date_from^date_until^it_state_code^it_ctry_code^it_cty_code^it_loc_type^optd_geo_id^optd_state_code^optd_ctry_code^optd_cty_list^optd_loc_type^optd_feat_class^optd_feat_code^optd_page_rank
-AGE^1^1^^^^^DE^AGE^A^3208531^NI^DE^AGE^A^S^AIRF^
-AGF^1^1^^^^^FR^AGF^A^6299365^NAQ^FR^AGF^A^S^AIRP^
 $ popd
 ```
 
@@ -1166,4 +1158,118 @@ AJA
 $ popd
 ```
 
+# Publishing to ElasticSearch (ES)
+
+## Example - OPTD consistency and Geonames
+
+* Ingest the data:
+```bash
+$ export TIMESTP="$(date -u +'%Y-%m-%d %H:%M:%S')"
+$ tail -n +2 results/optd-qa-por-best-not-in-geo.csv | while IFS=; read -r -a arr; do curl -XPOST "http://localhost:9200/optd-qa-por-full-v1/_doc?pipeline=parse_optd_por_full_csv" -H "Content-Type: application/json" -d "{ \"tag\": [\"optd\", \"qa\", \"checker\", \"por\", \"geonames\", \"check-por-geo-id-in-optd.py\", \"optd-qa-por-best-not-in-geo.csv\"], \"timestamp\": \"${TIMESTP}\", \"optd_qa_por_full\": \"${arr[@]}\" }"; done
+```
+```javascript
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   660  100   186  100   474   1430   3646 --:--:-- --:--:-- --:--:--  5076
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   835  100   186  100   649    712   2486 --:--:-- --:--:-- --:--:--  3199
+{
+  "_index": "optd-qa-por-full-v1",
+  "_type": "_doc",
+  "_id": "8cSoKHEBu3P1TMMtzG4v",
+  "_version": 1,
+  "result": "created",
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "failed": 0
+  },
+  "_seq_no": 1,
+  "_primary_term": 1
+}
+{
+  "_index": "optd-qa-por-full-v1",
+  "_type": "_doc",
+  "_id": "8sSoKHEBu3P1TMMtzG6f",
+  "_version": 1,
+  "result": "created",
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "failed": 0
+  },
+  "_seq_no": 2,
+  "_primary_term": 1
+}
+```
+```bash
+$ export TIMESTP="$(date -u +'%Y-%m-%d %H:%M:%S')"
+$ wc -l results/optd-qa-por-best-not-in-geo.csv
+     616 results/optd-qa-por-best-not-in-geo.csv
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 600
+$ tail -n +2 results/optd-qa-por-best-not-in-geo.csv | while IFS=; read -r -a arr; do curl -XPOST "http://localhost:9400/optd-qa-por-full-v1/_doc?pipeline=parse_optd_por_full_csv" -H "Content-Type: application/json" -d "{ \"tag\": [\"optd\", \"qa\", \"checker\", \"por\", \"geonames\", \"check-por-geo-id-in-optd.py\", \"optd-qa-por-best-not-in-geo.csv\"], \"timestamp\": \"${TIMESTP}\", \"optd_qa_por_full\": \"${arr[@]}\" }"; done
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15053  100  8583  100  6470   128k  99538 --:--:-- --:--:-- --:--:--  226k
+```
+```javascript
+{
+  ...
+}
+```
+
+# Querying ElasticSearch (ES) and Kibana
+
+The ElasticSearch (ES) REST API is also the one to use for Kibana queries.
+
+## Histograms
+* Query:
+  [`optd-qa-kibana-request-por-non-geo-hist-ctry.json` query](elastic/optd-qa-kibana-request-por-non-geo-hist-ctry.json)
+* Response:
+  [`optd-qa-kibana-response-por-non-geo-hist-ctry.json` query](elastic/optd-qa-kibana-response-por-non-geo-hist-ctry.json)
+
+![Histogram featuring, per country, the OPTD POR not in Geonames](img/es-kibana-viz-por-non-geo-hist-ctry.jpg)
+
+* Launch on the command-line the
+ [`optd-qa-kibana-response-por-non-geo-map.json` query](elastic/optd-qa-kibana-response-por-non-geo-map.json):
+```bash
+$ curl -XGET "http://localhost:9200/optd-qa-por-full-v1/_search" \
+	-H "Content-Type: application/json" \
+	--data "@elastic/optd-qa-kibana-request-por-non-geo-hist-ctry.json" | jq \
+	> elastic/optd-qa-kibana-response-por-non-geo-hist-ctry.json
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; \
+	curl -XGET "http://localhost:9400/optd-qa-por-full-v1/_search" \
+	-H "Content-Type: application/json" \
+	--data "@elastic/optd-qa-kibana-request-por-non-geo-hist-ctry.json" | jq \
+	> elastic/optd-qa-kibana-response-por-non-geo-hist-ctry.json
+```
+
+* It generates the [`optd-qa-kibana-response-por-non-geo-hist-ctry.json`
+  response](elastic/optd-qa-kibana-response-por-non-geo-hist-ctry.json)
+
+## Maps
+* Query:
+  [`optd-qa-kibana-request-por-non-geo-map.json` query](elastic/optd-qa-kibana-request-por-non-geo-map.json)
+* Response: [`optd-qa-kibana-response-por-non-geo-map.json`
+  response](elastic/optd-qa-kibana-response-por-non-geo-map.json)
+
+![Map featuring the OPTD POR not in Geonames](img/es-kibana-viz-por-non-geo-map.jpg)
+
+* Launch on the command-line the
+ [`optd-qa-kibana-response-por-non-geo-map.json` query](elastic/optd-qa-kibana-response-por-non-geo-map.json):
+```bash
+$ curl -XGET "http://localhost:9200/optd-qa-por-full-v1/_search" \
+	-H "Content-Type: application/json" \
+	--data "@elastic/optd-qa-kibana-request-por-non-geo.json" | jq \
+	> elastic/optd-qa-kibana-response-por-non-geo-map.json
+$ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; \
+	curl -XGET "http://localhost:9400/optd-qa-por-full-v1/_search" \
+	-H "Content-Type: application/json" \
+	--data "@elastic/optd-qa-kibana-request-por-non-geo.json" | jq \
+	> elastic/optd-qa-kibana-response-por-non-geo-map.json
+```
+
+* It generates the [`optd-qa-kibana-response-por-non-geo-map.json`
+  response](elastic/optd-qa-kibana-response-por-non-geo-map.json)
 

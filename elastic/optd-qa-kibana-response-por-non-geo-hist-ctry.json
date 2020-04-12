@@ -1,0 +1,106 @@
+{
+  "took": 6,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 616,
+      "relation": "eq"
+    },
+    "max_score": null,
+    "hits": []
+  },
+  "aggregations": {
+    "3": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 111,
+      "buckets": [
+        {
+          "key": "US",
+          "doc_count": 79
+        },
+        {
+          "key": "DE",
+          "doc_count": 73
+        },
+        {
+          "key": "BR",
+          "doc_count": 48
+        },
+        {
+          "key": "NO",
+          "doc_count": 40
+        },
+        {
+          "key": "FR",
+          "doc_count": 39
+        },
+        {
+          "key": "NL",
+          "doc_count": 30
+        },
+        {
+          "key": "AU",
+          "doc_count": 24
+        },
+        {
+          "key": "CH",
+          "doc_count": 23
+        },
+        {
+          "key": "DK",
+          "doc_count": 20
+        },
+        {
+          "key": "GB",
+          "doc_count": 17
+        },
+        {
+          "key": "SE",
+          "doc_count": 17
+        },
+        {
+          "key": "CA",
+          "doc_count": 14
+        },
+        {
+          "key": "IT",
+          "doc_count": 14
+        },
+        {
+          "key": "JP",
+          "doc_count": 12
+        },
+        {
+          "key": "FI",
+          "doc_count": 11
+        },
+        {
+          "key": "PL",
+          "doc_count": 11
+        },
+        {
+          "key": "KR",
+          "doc_count": 10
+        },
+        {
+          "key": "EG",
+          "doc_count": 9
+        },
+        {
+          "key": "AT",
+          "doc_count": 7
+        },
+        {
+          "key": "ES",
+          "doc_count": 7
+        }
+      ]
+    }
+  }
+}

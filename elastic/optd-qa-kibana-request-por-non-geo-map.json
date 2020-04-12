@@ -1,0 +1,99 @@
+{
+  "size": 0,
+  "aggs": {
+    "totalEntities": {
+      "cardinality": {
+        "precision_threshold": 1,
+        "field": "country_code"
+      }
+    },
+    "entitySplit": {
+      "terms": {
+        "size": 10000,
+        "shard_size": 10000,
+        "field": "country_code"
+      },
+      "aggs": {
+        "entityHits": {
+          "top_hits": {
+            "size": 5,
+            "script_fields": {},
+            "docvalue_fields": [
+              "coord",
+              "page_rank"
+            ],
+            "sort": [
+              {
+                "page_rank": {
+                  "order": "desc"
+                }
+              }
+            ],
+            "_source": false
+          }
+        }
+      }
+    }
+  },
+  "stored_fields": [
+    "*"
+  ],
+  "script_fields": {},
+  "docvalue_fields": [
+    {
+      "field": "date_from",
+      "format": "date_time"
+    },
+    {
+      "field": "date_until",
+      "format": "date_time"
+    },
+    {
+      "field": "moddate",
+      "format": "date_time"
+    },
+    {
+      "field": "timestamp",
+      "format": "date_time"
+    }
+  ],
+  "_source": {
+    "excludes": []
+  },
+  "query": {
+    "bool": {
+      "must": [],
+      "filter": [
+        {
+          "match_all": {}
+        },
+        {
+          "geo_bounding_box": {
+            "coord": {
+              "top_left": [
+                -86.08973499999999,
+                76.14533
+              ],
+              "bottom_right": [
+                110.05720500000001,
+                17.684290000000004
+              ]
+            }
+          }
+        },
+        {
+          "range": {
+            "timestamp": {
+              "gte": "2020-04-11T18:50:38.712Z",
+              "lte": "2020-04-12T18:50:38.712Z",
+              "format": "strict_date_optional_time"
+            }
+          }
+        }
+      ],
+      "should": [],
+      "must_not": []
+    }
+  }
+}
+

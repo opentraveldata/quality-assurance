@@ -1,0 +1,3459 @@
+{
+  "took": 20,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 421,
+      "relation": "eq"
+    },
+    "max_score": null,
+    "hits": []
+  },
+  "aggregations": {
+    "entitySplit": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "DE",
+          "doc_count": 70,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 70,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "j2a0b3EBU7b25TEt4wJn",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "51.12999998498708, 13.76999999396503"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "8ma1b3EBU7b25TEtQgIP",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "50.579999992623925, 12.699999930337071"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "6Ga1b3EBU7b25TEtOQKS",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "49.99999999534339, 9.999999990686774"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "4Ga1b3EBU7b25TEtMQL6",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "52.41669998969883, -13.06670006364584"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "E2a1b3EBU7b25TEtXANS",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "52.0699999993667, 11.969999950379133"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "NO",
+          "doc_count": 40,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 40,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "ima0b3EBU7b25TEt3wJn",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "60.419999971054494, 5.463999984785914"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "l2a0b3EBU7b25TEt6gKs",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "58.849999979138374, 5.7339999452233315"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "qGa0b3EBU7b25TEt-wIX",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "60.739999995566905, 7.122999988496304"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "h2a0b3EBU7b25TEt3AKk",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "58.659999961964786, 8.62899991683662"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "mGa0b3EBU7b25TEt6wKE",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "59.949999963864684, 11.039999965578318"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "FR",
+          "doc_count": 39,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 39,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "m2a0b3EBU7b25TEt7gK-",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "42.78329996857792, 0.5999999307096004"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "nGa0b3EBU7b25TEt7wLy",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "47.58329995907843, 7.566669965162873"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "vGa1b3EBU7b25TEtDQJ_",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "50.683299992233515, 2.8833299316465855"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "tGa1b3EBU7b25TEtBwIO",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "43.19999999832362, 6.482999939471483"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "uGa1b3EBU7b25TEtCgIQ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "48.79999996628612, 2.1329999808222055"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "US",
+          "doc_count": 31,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 31,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "o2a0b3EBU7b25TEt9QJd",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "40.74999995995313, -74.00000003166497"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "DWa1b3EBU7b25TEtVwNy",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "40.64999999944121, -75.43000007048249"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "CGa1b3EBU7b25TEtUwM4",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "42.92999999597669, -78.73000002466142"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Q2a1b3EBU7b25TEthgMs",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "42.72999999113381, -73.80000002682209"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "ama1b3EBU7b25TEtqQOV",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "31.52999997138977, -84.20000002719462"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "NL",
+          "doc_count": 29,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 29,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "h2a1b3EBU7b25TEtwQNR",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "52.31999998446554, 4.782999940216541"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "iGa1b3EBU7b25TEtwgMe",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "52.31999998446554, 4.782999940216541"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "iWa1b3EBU7b25TEtwgO4",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "52.31999998446554, 4.782999940216541"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "ima1b3EBU7b25TEtxANY",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "52.31999998446554, 4.782999940216541"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "i2a1b3EBU7b25TEtxQNT",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "52.31999998446554, 4.782999940216541"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "CH",
+          "doc_count": 23,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 23,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "AWa1b3EBU7b25TEtTgNO",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "46.46669999230653, 7.13332992978394"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "A2a1b3EBU7b25TEtTwOf",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "47.36669997218996, 7.333329934626818"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "DGa1b3EBU7b25TEtVgPJ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "46.81999997701496, 8.416999960318208"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Dma1b3EBU7b25TEtWAMH",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "46.8999999621883, 8.633329924196005"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "D2a1b3EBU7b25TEtWAPZ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "47.41669999435544, 9.249999951571226"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "DK",
+          "doc_count": 18,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 18,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "k2a0b3EBU7b25TEt5wKG",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "57.09999999962747, 9.849999966099858"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "pWa0b3EBU7b25TEt9wKN",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "57.59999996982515, 10.419999975711107"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "uWa1b3EBU7b25TEtCgLI",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "54.919999963603914, 9.68299993313849"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "z2a1b3EBU7b25TEtHQJ-",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "55.74999998789281, 9.332999987527728"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "82a1b3EBU7b25TEtQgLL",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "55.619999980553985, 12.64999995008111"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "GB",
+          "doc_count": 17,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 17,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "jGa0b3EBU7b25TEt4AL2",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "50.99999997764826, 0.016666660085320473"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "oGa0b3EBU7b25TEt8wJi",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "51.579999974928796, -0.050000064074993134"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "oWa0b3EBU7b25TEt8wLt",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "51.87999998219311, 0.2332999650388956"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "tWa1b3EBU7b25TEtBwLV",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "55.949999992735684, -3.3500000182539225"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "zma1b3EBU7b25TEtHALW",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "54.7799999685958, -1.5670000668615103"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "SE",
+          "doc_count": 17,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 17,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "0Ga1b3EBU7b25TEtHwIt",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "57.649999991990626, 12.279999945312738"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "0ma1b3EBU7b25TEtIQKP",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "59.63999996893108, 17.089999923482537"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "5ma1b3EBU7b25TEtNwK9",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "56.04999999515712, 14.579999959096313"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "62a1b3EBU7b25TEtPAJZ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "59.34999999124557, 18.07999991811812"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "42a1b3EBU7b25TEtNQIn",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "59.34999999124557, 17.949999952688813"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "IT",
+          "doc_count": 14,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 14,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "n2a0b3EBU7b25TEt8gKM",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "45.6299999775365, 8.732999972999096"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Fma1b3EBU7b25TEtXgOE",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "38.4099999954924, 14.959999993443489"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "I2a1b3EBU7b25TEtaQOt",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "38.63999996334314, 15.069999983534217"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "-Ga1b3EBU7b25TEtRwI-",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "46.51999996975064, 11.369999935850501"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "HWa1b3EBU7b25TEtZAOD",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "38.46999996341765, 14.959999993443489"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "CA",
+          "doc_count": 11,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 11,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "jma0b3EBU7b25TEt4gKY",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "43.11999997124076, -80.77000002376735"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "nWa0b3EBU7b25TEt8ALP",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "47.979999971576035, -66.97000002488494"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "nma0b3EBU7b25TEt8QKy",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "46.47999997716397, -84.50000007636845"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "qma0b3EBU7b25TEt_QI6",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "48.12999999616295, -66.17000000551343"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "52a1b3EBU7b25TEtOAKG",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "42.74999996647239, -81.73000001348555"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "FI",
+          "doc_count": 11,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 11,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "s2a1b3EBU7b25TEtBgId",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "61.01999998558313, 27.149999924004078"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "OWa1b3EBU7b25TEtfgMV",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "61.349999997764826, 26.07999994419515"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Mma0b3EBU7b25TEtlAKP",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "60.37999997846782, 23.169999970123172"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "NWa0b3EBU7b25TEtlwKQ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "60.99999996833503, 24.419999979436398"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "OGa0b3EBU7b25TEtmgIa",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "60.749999983236194, 24.74999994970858"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "PL",
+          "doc_count": 11,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 11,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "B2a1b3EBU7b25TEtUgOK",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "50.249999980442226, 18.99999995715916"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Oma1b3EBU7b25TEtfgPa",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "53.92999996896833, 14.429999934509397"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "sma0b3EBU7b25TEtJAFX",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "49.81999996583909, 19.05699991621077"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "5Ga0b3EBU7b25TEtUgGy",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "54.16999996639788, 15.5799999833107"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "52a0b3EBU7b25TEtVQEa",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "53.833299963735044, -22.350000059232116"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "EG",
+          "doc_count": 9,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 9,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "r2a0b3EBU7b25TEtIgE0",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "30.99999999627471, -31.00000008009374"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "sWa0b3EBU7b25TEtIwF8",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "31.154999993741512, -31.935500018298626"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "uGa0b3EBU7b25TEtKQF8",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "30.699999989010394, 31.269999956712127"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "wGa0b3EBU7b25TEtLwH3",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "37.11669999640435, 2.549999998882413"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "HWa0b3EBU7b25TEtgwJd",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "30.969999991357327, 31.432999977841973"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "AT",
+          "doc_count": 7,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 7,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "lma0b3EBU7b25TEt6QLZ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "47.78999999631196, 13.079999964684248"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "q2a0b3EBU7b25TEt_gIS",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "46.96999995969236, 11.009999960660934"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "p2a0b3EBU7b25TEt-gIB",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "47.449999996460974, 12.389999935403466"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "rWa0b3EBU7b25TEt_wKg",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "47.129999971948564, 10.269999951124191"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "02a1b3EBU7b25TEtIwJB",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "48.20719996467233, 16.386099932715297"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "ES",
+          "doc_count": 7,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 7,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "kWa0b3EBU7b25TEt5gIa",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "41.2999999942258, 2.0829999167472124"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "8Ga1b3EBU7b25TEtQAJd",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "42.23439997527748, -8.713060012087226"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "aGa1b3EBU7b25TEtqAMg",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "36.479999986477196, -5.000000037252903"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "lma0b3EBU7b25TEtDAFQ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "37.65999999828637, -4.100000057369471"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "4ma0b3EBU7b25TEtUQEm",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "42.41669999901205, -2.883330015465617"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "DZ",
+          "doc_count": 6,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 6,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "qWa0b3EBU7b25TEtHAEj",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "36.11669997218996, -7.516670068725944"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "q2a0b3EBU7b25TEtHgH3",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "34.83329996466637, -0.18333300948143005"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "rma0b3EBU7b25TEtIQGN",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "36.199999996460974, -2.8333300352096558"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "vWa0b3EBU7b25TEtLQGZ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "36.16669999435544, -6.166670015081763"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "0Ga0b3EBU7b25TEtQAGx",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "36.03329999372363, -6.583330063149333"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "IR",
+          "doc_count": 6,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 6,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "t2a1b3EBU7b25TEtCQJP",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "34.640499972738326, -50.87520006112754"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "kma1b3EBU7b25TEtygNr",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "30.81999996677041, 56.56999994069338"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "kma0b3EBU7b25TEtCAEp",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "35.19999997224659, 48.6699999589473"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "9ma0b3EBU7b25TEtYAHL",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "32.002371973358095, 49.27036399953067"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "TGa0b3EBU7b25TEtqgJO",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "30.70047796703875, 51.545093916356564"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "RU",
+          "doc_count": 5,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 5,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "u2a1b3EBU7b25TEtDAJ6",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "55.71999998297542, 37.62999999336898"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Nma1b3EBU7b25TEtewOg",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "59.949999963864684, 30.049999952316284"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "K2a1b3EBU7b25TEtcQMJ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "55.96999996807426, 37.4199999589473"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "gWazb3EBU7b25TEt-gE_",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "55.794199984520674, 37.58809994906187"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "gmazb3EBU7b25TEt-wEw",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "55.776399965398014, 37.5802999176085"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "AE",
+          "doc_count": 3,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 3,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "1Wa0b3EBU7b25TEtRQGF",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "25.26999997906387, 55.49999996088445"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "dWa0b3EBU7b25TEtzQLh",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "59.649999998509884, 0.298599936068058"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "tma1b3EBU7b25TEt6ANz",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "55.469999997876585, 25.419999919831753"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "CZ",
+          "doc_count": 3,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 3,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "kma0b3EBU7b25TEt5gLR",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "49.58999999798834, 17.27999998256564"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "lWa0b3EBU7b25TEt6ALt",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "50.029999958351254, 15.749999983236194"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Gma1b3EBU7b25TEtYQPJ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "50.21999997552484, 12.869999930262566"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "GR",
+          "doc_count": 3,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 3,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "L2a1b3EBU7b25TEtdQMx",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "37.7902999939397, 26.70439993031323"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "MGa1b3EBU7b25TEtdQPy",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "41.12279998138547, 25.396399917081"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "6Ga0b3EBU7b25TEtVQHS",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "37.749999971129, 21.749999960884452"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "HU",
+          "doc_count": 3,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 3,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "3Wa1b3EBU7b25TEtLgLQ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "47.499999976716936, 19.01999993249774"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "NGa1b3EBU7b25TEtegM6",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "20.84999998100102, -17.080000061541796"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "DWa0b3EBU7b25TEtdAJl",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "46.06999997980893, 18.249999918043613"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "LY",
+          "doc_count": 3,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 3,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "rWa0b3EBU7b25TEtIAG1",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "32.499999990686774, -20.826500058174133"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "6ma0b3EBU7b25TEtVwFI",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "32.649999973364174, 14.265999952331185"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "U2a0b3EBU7b25TEtsAKf",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "32.169999978505075, 22.28299998678267"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "PT",
+          "doc_count": 3,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 3,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "uWa1b3EBU7b25TEt6gPW",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "38.69999997317791, -0.1522000227123499"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "u2a1b3EBU7b25TEt7ANg",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "37.01999999117106, -0.13280002400279045"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "vWa1b3EBU7b25TEt7gMZ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "41.129999994300306, -0.14360002242028713"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "SA",
+          "doc_count": 3,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 3,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "oGa0b3EBU7b25TEtFQEn",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "21.499999975785613, 39.19999994337559"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "2Ga0b3EBU7b25TEtSAHc",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "27.03902796842158, 49.405082976445556"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "IGa0b3EBU7b25TEthQKS",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "26.799999978393316, -49.90000007674098"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "SY",
+          "doc_count": 3,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 3,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "p2a0b3EBU7b25TEtGgFF",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "32.62179998215288, -36.10370001755655"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "yGa0b3EBU7b25TEtOAFz",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "35.13329997193068, -36.07500004582107"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "JWa0b3EBU7b25TEtigIS",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "34.93999999947846, 36.04199999012053"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "TR",
+          "doc_count": 3,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 3,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "mma0b3EBU7b25TEt7QI_",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "37.86669999361038, -27.250000052154064"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "0Wa0b3EBU7b25TEtQQFi",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "36.84999999124557, -34.6000000834465"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "HGa0b3EBU7b25TEtggKG",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "40.73502799496055, 30.08333595469594"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "GL",
+          "doc_count": 2,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 2,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "vma0b3EBU7b25TEtLgFu",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "69.49999996460974, -53.920000065118074"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "2ma0b3EBU7b25TEtSgE1",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "66.57999996095896, -53.420000011101365"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "IQ",
+          "doc_count": 2,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 2,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "jWa0b3EBU7b25TEt4QK1",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "34.99999996740371, -43.00000003539026"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "wWa1b3EBU7b25TEtEQK-",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "34.99999996740371, -43.00000003539026"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "LB",
+          "doc_count": 2,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 2,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "3ma0b3EBU7b25TEtTQE2",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "33.966699982993305, -35.63330006785691"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "4Wa0b3EBU7b25TEtTwH5",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "33.9049999974668, -35.575500056147575"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "PK",
+          "doc_count": 2,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 2,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "BGa1b3EBU7b25TEtUAMc",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "33.57999995816499, 73.04999998770654"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "6Wa0b3EBU7b25TEtVgGR",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "32.866699998266995, -73.866700027138"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "RO",
+          "doc_count": 2,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 2,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Dma0b3EBU7b25TEtdQIM",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "44.939999990165234, 26.02999996393919"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "EGa0b3EBU7b25TEtdgL5",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "46.93329996429384, -26.350000072270632"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "VG",
+          "doc_count": 2,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 2,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Xmavb3EBU7b25TEtNAFj",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "18.499999986961484, -64.37000004574656"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                },
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "kWa0b3EBU7b25TEtBwFZ",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "18.499999986961484, -64.37000004574656"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "BE",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "t2a1b3EBU7b25TEt6QM8",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "50.89999997522682, 4.482999974861741"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "BH",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "a2azb3EBU7b25TEt5wGW",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "26.24999998603016, 50.649999948218465"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "CN",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "wma1b3EBU7b25TEtEgKC",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "30.754699995741248, 103.93799998797476"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "CO",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "DGa0b3EBU7b25TEtcwKM",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "25.41999996174127, -49.25000008195639"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "GE",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "g2a1b3EBU7b25TEtvgMv",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "41.519999974407256, 41.54999993741512"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "GP",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "rGa0b3EBU7b25TEt_gLa",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "48.449999978765845, -4.417000031098723"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "IE",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "cma1b3EBU7b25TEtrwPk",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "54.579999963752925, -5.917000025510788"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "JO",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "9Ga0b3EBU7b25TEtXwFA",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "31.7332999734208, -35.800000028684735"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "NA",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "dma1b3EBU7b25TEtsgPr",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "46.67999998200685, 7.649999996647239"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "SK",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "aWa1b3EBU7b25TEtqAPO",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "48.16999998874962, 17.219999972730875"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "UA",
+          "doc_count": 1,
+          "entityHits": {
+            "hits": {
+              "total": {
+                "value": 1,
+                "relation": "eq"
+              },
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "optd-qa-por-full-v1",
+                  "_type": "_doc",
+                  "_id": "Ama0b3EBU7b25TEtagLv",
+                  "_score": null,
+                  "_ignored": [
+                    "moddate",
+                    "date_until",
+                    "date_from"
+                  ],
+                  "fields": {
+                    "coord": [
+                      "50.399999963119626, 30.469999937340617"
+                    ]
+                  },
+                  "sort": [
+                    "-Infinity"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "totalEntities": {
+      "value": 53
+    }
+  }
+}
