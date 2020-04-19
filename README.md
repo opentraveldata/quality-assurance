@@ -692,6 +692,29 @@ $ ssh root@tiproxy8 -f -L9400:10.30.2.191:9200 sleep 5; curl -XGET "http://local
   (http://localhost:5601/app/kibana#/management/elasticsearch/index_management/indices)
   and set the `number_of_replicas` parameter to 0 (instead of 1).
   Save the setiings. The health parameter should now be green.
+  Or, with the command-line:
+```bash
+$ curl -XPUT "http://localhost:9200/optd-qa-por-full-v1/_settings" -H "Content-Type: application/json" -d "{ \"index\": { \"blocks\": { \"read_only_allow_delete\": \"false\" } } }" | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    85  100    21  100    64     12     37  0:00:01  0:00:01 --:--:--    49
+```
+```javascript
+{
+  "acknowledged": true
+}
+```
+```bash
+$ curl -XPUT "http://localhost:9200/optd-qa-por-full-v1/_settings" -H "Content-Type: application/json" -d "{ \"index\" : { \"number_of_replicas\" : 0 } }" | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    63  100    21  100    42     25     50 --:--:-- --:--:-- --:--:--    75
+```
+```javascript
+{
+  "acknowledged": true
+}
+```
 
 * If, for any reason, the index must be re-created, it can be deleted as follows:
 ```bash
