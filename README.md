@@ -163,6 +163,11 @@ $ popd
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv update
+$ git add Pipfile.lock
+$ pipenv lock -r > requirements.txt
+$ git add requirements.txt
+$ git commit -m "[Python] Upgraded the Python dependencies"
+$ git push
 $ popd
 ```
 
