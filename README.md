@@ -153,7 +153,7 @@ Then all the Python scripts will be run thanks to `pipenv`.
 ```bash
 $ if [ ! -d ${HOME}/.pyenv ]; then pushd ${HOME} && git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv && popd; else pushd ${HOME}/.pyenv && git pull && popd; fi
 $ export PYENV_ROOT="${HOME}/.pyenv"; export PATH="${PYENV_ROOT}/.pyenv/shims:${PATH}"; if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
-$ pyenv install 3.8.2 && pyenv global 3.8.2 && pip install -U pip pipenv && pyenv global system
+$ pyenv install 3.8.5 && pyenv global 3.8.5 && pip install -U pip pipenv && pyenv global system
 $ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv install
 $ popd
