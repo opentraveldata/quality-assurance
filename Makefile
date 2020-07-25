@@ -145,6 +145,7 @@ $(air_bases): tmpdir
 	wc -l $(air_bases) && head -3 $(air_bases)
 
 $(air_net): tmpdir
+	GDAL_DATA=`$(PY_EXEC) -mpip show fiona|grep "^Location"|cut -d' ' -f2,2`/fiona/gdal_data \
 	$(PY_EXEC) checkers/check-airline-networks.py && \
 	wc -l $(air_net) && head -3 $(air_net)
 
