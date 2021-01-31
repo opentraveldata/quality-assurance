@@ -1,7 +1,7 @@
-dist: bionic
+dist: focal
 os: linux
 language: python
-python: 3.8
+python: 3.9
 addons:
   ssh_known_hosts:
   - proxy8.transport-intelligence.com:9022
