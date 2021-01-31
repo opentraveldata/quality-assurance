@@ -50,19 +50,19 @@ Quality Assurance (QA) for OpenTravelData (OPTD)
   * [Histograms](#histograms)
   * [Maps](#maps)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+<small><i><a href='https://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 # Overview
-[That repository](http://github.com/opentraveldata/quality-assurance)
+[That repository](https://github.com/opentraveldata/quality-assurance)
 features scripts to check the quality of the data files
 produced by the Open Travel Data (OPTD) project.
 
 Though it is not there yet, that project should produce
 a Quality Assurance (QA) dashboard, much like
-[Geonames' one](http://qa.geonames.org/qa/).
+[Geonames' one](https://qa.geonames.org/qa/).
 
 And, hopefully, that dashboard will be powered by
-[Docker images](http://github.com/opentraveldata/quality-assurance/blob/master/docker/)
+[Docker images](https://github.com/opentraveldata/quality-assurance/blob/master/docker/)
 generated thanks to that repository as well.
 
 [Travis CI](https://travis-ci.com) builds are partially covering the tests
@@ -87,7 +87,7 @@ cluster.
 ## See also
 * [Service Delivery Quality (SDQ) GitHub organization](https://github.com/service-delivery-quality)
   + [Quality Assurance samples](https://github.com/service-delivery-quality/quality-assurance)
-* [Geonames' QA dashboard](http://qa.geonames.org/qa/)
+* [Geonames' QA dashboard](https://qa.geonames.org/qa/)
 * [Quality Assurance (QA) images on Docker Cloud](https://cloud.docker.com/u/opentraveldata/repository/docker/opentraveldata/quality-assurance)
 * [Induction on monitoring with Elasticsearch](https://github.com/infra-helpers/induction-monitoring)
 * [How to set up a Python virtual environment](https://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
@@ -127,7 +127,7 @@ $ docker run --rm -it opentraveldata/quality-assurance:base bash
 
 ## With a manually built Docker image
 * See
-  [the Docker section for more details](http://github.com/opentraveldata/quality-assurance/blob/master/docker/)
+  [the Docker section for more details](https://github.com/opentraveldata/quality-assurance/blob/master/docker/)
 
 ## Through a local cloned Git repository (without Docker)
 * Clone the [OpenTravelData (OPTD) Quality Assurance (QA) Git repository](https://github.com/opentraveldata/quality-assurance):
@@ -141,19 +141,19 @@ $ popd
 
 ## On the local environment (without Docker)
 As detailed in the
-[online guide on how to set up a Python virtual environment](http://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env),
+[online guide on how to set up a Python virtual environment](https://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env),
 [Pyenv](https://github.com/pyenv/pyenv) and
-[`pipenv`](http://pypi.org/project/pipenv) should be installed,
-and Python 3.8 installed thanks to Pyenv.
+[`pipenv`](https://pypi.org/project/pipenv) should be installed,
+and Python 3.9 installed thanks to Pyenv.
 Then all the Python scripts will be run thanks to `pipenv`.
 
 ### Pyenv and `pipenv`
 * As a summary of what has been detailed in above-mentioned how-to (and which
-  only be done once and for all):
+  needs only to be done once and for all):
 ```bash
 $ if [ ! -d ${HOME}/.pyenv ]; then pushd ${HOME} && git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv && popd; else pushd ${HOME}/.pyenv && git pull && popd; fi
 $ export PYENV_ROOT="${HOME}/.pyenv"; export PATH="${PYENV_ROOT}/.pyenv/shims:${PATH}"; if command -v pyenv 1>/dev/null 2>&1; then eval "$(pyenv init -)"; fi
-$ pyenv install 3.8.5 && pyenv global 3.8.5 && pip install -U pip pipenv && pyenv global system
+$ pyenv install 3.9.1 && pyenv global 3.9.1 && pip install -U pip pipenv && pyenv global system
 $ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv install
 $ popd
@@ -170,6 +170,11 @@ $ git commit -m "[Python] Upgraded the Python dependencies"
 $ git push
 $ popd
 ```
+
+* See then the
+  [`ci-scripts/` directory of OPTD](https://github.com/opentraveldata/opentraveldata/blob/master/ci-scripts/README.md),
+  as the [`requirements.txt` file there](https://github.com/opentraveldata/opentraveldata/blob/master/ci-scripts/requirements.txt)
+  needs to upgraded accordingly ([cloned from this repository](https://github.com/opentraveldata/quality-assurance/blob/master/requirements.txt))
 
 ## Launch the Python checkers
 * Use the `Makefile` to launch all the checkers (previous content may first
@@ -865,9 +870,9 @@ So, the next step is to merge all the formats of the CSF files.
 ## Points of Reference (POR)
 
 ### OPTD consistency and Geonames ID
-* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-geo-id-in-optd.py)
+* [That script](https://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-geo-id-in-optd.py)
   compares the
-  [OPTD public POR file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
+  [OPTD public POR file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
   with the
   [curated file of best known POR](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_best_known_so_far.csv).
   It generates two CSV files:
@@ -875,13 +880,13 @@ So, the next step is to merge all the formats of the CSF files.
     curated in the 
 	[file of best known POR](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_best_known_so_far.csv)
 	but not present in the
-    [generated OPTD public file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
+    [generated OPTD public file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
   + `results/optd-qa-por-cmp-geo-id.csv`, reporting POR having a
-    [Geonames](http://github.com/opentraveldata/opentraveldata/blob/master/data/geonames)
+    [Geonames](https://github.com/opentraveldata/opentraveldata/blob/master/data/geonames)
 	ID inconsistent among the
 	[curated file of best known POR](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_best_known_so_far.csv)
 	and the
-    [generated OPTD public file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
+    [generated OPTD public file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
 
 * Note that a CSV file has a single row, it is the header. So, it can be
   considered as empty.
@@ -898,9 +903,9 @@ $ popd
 ```
 
 ### POR having no geo-location in OPTD
-* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-optd-no-geocoord.py)
+* [That script](https://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-optd-no-geocoord.py)
   spots POR missing geo-location in the
-  [OPTD public POR file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv).
+  [OPTD public POR file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv).
   It generates a CSV file:
   + `results/optd-qa-por-optd-no-geocoord.csv`, reporting the POR having no
   geo-location (geo-coordinates)
@@ -918,16 +923,16 @@ $ popd
 ```
 
 ### City POR not in OPTD
-* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-city-not-in-optd.py)
+* [That script](https://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-city-not-in-optd.py)
   compares the
-  [OPTD public POR file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
+  [OPTD public POR file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
   with the
   [curated file of best known POR](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_best_known_so_far.csv).
   It generates a CSV file:
   + `results/optd-qa-por-city-not-in-optd.csv`, reporting the POR in the curated 
   [file of best known POR](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_best_known_so_far.csv)
   with cities not referenced as a city in the
-  [generated OPTD public file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
+  [generated OPTD public file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
 
 * Note that if a CSV file has a single row, it is the header. So, it can be
   considered as empty.
@@ -942,9 +947,9 @@ $ popd
 ```
 
 ### Multi-city POR in OPTD
-* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-multiple-cities.py)
+* [That script](https://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-multiple-cities.py)
   compares the
-  [OPTD public POR file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
+  [OPTD public POR file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_public.csv)
   with the
   [curated file of best known POR](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_best_known_so_far.csv).
   It generates two CSV files:
@@ -975,16 +980,16 @@ $ popd
 ```
 
 ### OPTD vs IATA
-* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-cmp-optd-it.py)
+* [That script](https://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-cmp-optd-it.py)
   compares the
-  [OPTD-referenced POR having a UN/LOCODE code](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_unlc.csv)
+  [OPTD-referenced POR having a UN/LOCODE code](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_unlc.csv)
   with the
-  [ones referenced by IATA](http://github.com/opentraveldata/opentraveldata/blob/master/data/IATA).
+  [ones referenced by IATA](https://github.com/opentraveldata/opentraveldata/blob/master/data/IATA).
   It has to be noted that the Python script first downloads the
-  [`iata_airport_list_latest.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/data/IATA/iata_airport_list_latest.csv),
+  [`iata_airport_list_latest.csv` file](https://github.com/opentraveldata/opentraveldata/blob/master/data/IATA/iata_airport_list_latest.csv),
   which is actually a symbolic link. Then, the Python script downloads
   the actual data file, say for instance
-  [`archives/iata_airport_list_20190418.csv`](http://github.com/opentraveldata/opentraveldata/blob/master/data/IATA/archives/iata_airport_list_20190418.csv).
+  [`archives/iata_airport_list_20190418.csv`](https://github.com/opentraveldata/opentraveldata/blob/master/data/IATA/archives/iata_airport_list_20190418.csv).
   The script then generates a few CSV files:
   + `results/optd-qa-por-optd-no-it.csv`, exhibiting the POR
     referenced by OPTD but not by IATA
@@ -1059,7 +1064,7 @@ $ awk -F'^' '{if ($8 == "CN") {print $8 "^" $7 "^" $12}}' results/optd-qa-state-
 ```
 
 * Add some exception rules in the
-  [`optd_state_exceptions.csv` CSV file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_state_exceptions.csv):
+  [`optd_state_exceptions.csv` CSV file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_state_exceptions.csv):
 ```bash
 $ head -3 to_be_checked/optd_state_exceptions.csv
 pk^state_code^geo_id^source^env_id^date_from^date_to^wrong_state_code^comment
@@ -1068,11 +1073,11 @@ AR-H^H^3861887^IR^^^^CH^State code in source does not reflect any of the known s
 ```
 
 ### OPTD vs UN/LOCODE
-* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-cmp-optd-unlc.py)
+* [That script](https://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-por-cmp-optd-unlc.py)
   compares the
-  [OPTD-referenced POR having a UN/LOCODE code](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_unlc.csv)
+  [OPTD-referenced POR having a UN/LOCODE code](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_por_unlc.csv)
   with the
-  [ones referenced by UN/LOCODE](http://github.com/opentraveldata/opentraveldata/blob/master/data/unlocode).
+  [ones referenced by UN/LOCODE](https://github.com/opentraveldata/opentraveldata/blob/master/data/unlocode).
   It generates two CSV files:
   + `results/optd-qa-por-optd-not-in-unlc.csv`, exhibiting the POR
     referenced by OPTD but not by UN/LOCODE
@@ -1103,17 +1108,17 @@ $ popd
 ## Airlines
 
 ### Airport Bases / Hubs
-* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-airline-bases.py)
+* [That script](https://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-airline-bases.py)
   checks, for every airline of the
-  [`optd_airlines.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
+  [`optd_airlines.csv` file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
   that the airport bases/hubs are appearing in the
-  [`optd_airline_por_rcld.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv).
+  [`optd_airline_por_rcld.csv` file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv).
 
 * Note that both files
-  ([`optd_airlines.csv`](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv)
-  and [`optd_airline_por_rcld.csv`](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv))
+  ([`optd_airlines.csv`](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv)
+  and [`optd_airline_por_rcld.csv`](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airline_por_rcld.csv))
   will be downloaded from the
-  [OpenTravelData project](http://github.com/opentraveldata/opentraveldata)
+  [OpenTravelData project](https://github.com/opentraveldata/opentraveldata)
   and stored within the `to_be_checked` directory. If those files are too old,
   they should be removed (a newer version will then be automatically downloaded
   and stored again).
@@ -1138,9 +1143,9 @@ $ popd
 If the script does not return anything, then the check (successfully) passes.
 
 ### Airline networks
-* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-airline-networks.py)
+* [That script](https://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-airline-networks.py)
   performs, for every airline of the
-  [`optd_airlines.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
+  [`optd_airlines.csv` file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv),
   some basic statistics on their network, modelled as graph (where
   POR are nodes and flight segments/legs are edges):
 ```bash
@@ -1169,11 +1174,11 @@ $ popd
 ```
 
 ### Airline appearing in schedules but not in OPTD
-* [That script](http://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-airline-sched-in-optd.py)
+* [That script](https://github.com/opentraveldata/quality-assurance/blob/master/checkers/check-airline-sched-in-optd.py)
   checks, for every airline appearing in the
-  [`optd_airline_por_rcld.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/optd_airline_por_rcld.csv),
+  [`optd_airline_por_rcld.csv` file](https://github.com/opentraveldata/opentraveldata/blob/master/optd_airline_por_rcld.csv),
   whether they are also referenced by OpenTravelData (OPTD) in the
-  [`optd_airlines.csv` file](http://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv):
+  [`optd_airlines.csv` file](https://github.com/opentraveldata/opentraveldata/blob/master/opentraveldata/optd_airlines.csv):
 ```bash
 $ pushd ~/dev/geo/opentraveldata-qa
 $ pipenv run check-airline-sched-in-optd.py
