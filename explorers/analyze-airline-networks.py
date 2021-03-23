@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
 import csv, re
+import numpy as np
 import networkx as nx
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-from mpl_toolkits.basemap import Basemap
+#from mpl_toolkits.basemap import Basemap
+import cartopy.feature as cfeature
+import cartopy.crs as ccrs
 import DeliveryQuality as dq
 
 #
@@ -70,7 +73,16 @@ if __name__ == '__main__':
     dq.displayFileHead (optd_airline_por_file)
 
   #
-  basemap = Basemap(projection='robin',lon_0=0,resolution='l')
+  #basemap = Basemap(projection='robin',lon_0=0,resolution='l')
+  rrc = ccrs.Robinson()
+  lons = np.array([-180, 180])
+  lats = np.array([-90, 90])
+  width = 4
+  height = 4
+  projected_corners = rrc.transform_points(ccrs.PlateCarree(), lons, lats)
+  xs = np.linspace(projected_corners[0, 0], projected_corners[1, 0], width)
+  ys = np.linspace(projected_corners[0, 1], projected_corners[1, 1], height)
+  x2d, y2d = np.meshgrid(xs, ys)  
 
   #
   # OpenTravelData (OPTD) file of the POR details (optd_por_public.csv)
@@ -113,7 +125,7 @@ if __name__ == '__main__':
       # Register the POR coordinates, if it is seen for the first time
       if not optd_por_code in optd_por_map_dict:
         optd_por_coord_dict[optd_por_code] = (optd_por_coord_lat, optd_por_coord_lon)
-        optd_por_map_dict[optd_por_code] = basemap(optd_por_coord_lon, optd_por_coord_lat)
+        optd_por_map_dict[optd_por_code] = (optd_por_coord_lon, optd_por_coord_lat)
 
 
   #
@@ -203,7 +215,7 @@ if __name__ == '__main__':
 
 
   # http://stackoverflow.com/questions/19915266/drawing-a-graph-with-networkx-on-a-basemap
-# Networks on Maps: http://www.sociology-hacks.org/?p=67
+  # Networks on Maps: http://www.sociology-hacks.org/?p=67
   # Creating a route planner for road network: http://ipython-books.github.io/featured-03/
   
   # Decompose the airline network into independent sub-networks
@@ -212,7 +224,7 @@ if __name__ == '__main__':
   for airline_code in airline_sched_dict:
       graph_comp_idx = 1
       current_network = schedule_dict[airline_code]
-      graphs = list(nx.connected_component_subgraphs(current_network))
+      graphs = list(current_network.subgraph(c) for c in nx.connected_components(current_network))
 
       for graph_comp in graphs:
           # Find the center of the sub-network
@@ -250,9 +262,11 @@ if __name__ == '__main__':
               nx.draw_networkx (graph_comp, optd_por_map_dict,
                                 node_color = 'green', label = labelStr)
               # Draw the geographical features
-              basemap.drawcountries (linewidth = 0.5)
-              basemap.fillcontinents (color = 'white', lake_color = 'white')
-              basemap.drawcoastlines (linewidth = 0.5)
+              ax = plt.axes(projection = rrc)
+              ax.coastlines()
+              ax.scatter(x2d, y2d)
+              ax.gridlines(draw_labels=True)
+              plt.show()
 
           #
           center_node = graph_comp_center[0]
