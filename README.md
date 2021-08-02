@@ -2,9 +2,9 @@ Quality Assurance (QA) for OpenTravelData (OPTD)
 ================================================
 
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/opentraveldata/quality-assurance?color=green)
-[![Build Status](https://travis-ci.com/opentraveldata/quality-assurance.svg?branch=master)](https://travis-ci.com/opentraveldata/quality-assurance)
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/opentraveldata/quality-assurance)](https://hub.docker.com/repository/docker/opentraveldata/quality-assurance)
-[![Docker Repository on Quay](https://quay.io/repository/opentraveldata/quality-assurance/status "Docker Repository on Quay")](https://quay.io/repository/opentraveldata/quality-assurance)
+[![CI build Status](https://travis-ci.com/opentraveldata/quality-assurance.svg?branch=master)](https://travis-ci.com/opentraveldata/quality-assurance)
+[![Docker Cloud build status](https://img.shields.io/docker/cloud/build/infrahelpers/cpppython)](https://hub.docker.com/repository/docker/infrahelpers/optd-qa/general)
+[![Container repository on Quay](https://quay.io/repository/opentraveldata/quality-assurance/status "Container repository on Quay")](https://quay.io/repository/opentraveldata/quality-assurance)
 [![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/opentraveldata/quality-assurance?color=green)](https://docs.python.org/3/)
 [![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/opentraveldata/quality-assurance/networkx)](https://pypi.org/project/networkx/)
 [![GitHub Pipenv locked dependency version](https://img.shields.io/github/pipenv/locked/dependency-version/opentraveldata/quality-assurance/pandas)](https://pypi.org/project/pandas/)
@@ -62,7 +62,7 @@ a Quality Assurance (QA) dashboard, much like
 [Geonames' one](https://qa.geonames.org/qa/).
 
 And, hopefully, that dashboard will be powered by
-[Docker images](https://github.com/opentraveldata/quality-assurance/blob/master/docker/)
+[container images](https://github.com/opentraveldata/quality-assurance/blob/master/docker/)
 generated thanks to that repository as well.
 
 [Travis CI](https://travis-ci.com) builds are partially covering the tests
@@ -88,7 +88,7 @@ cluster.
 * [Service Delivery Quality (SDQ) GitHub organization](https://github.com/service-delivery-quality)
   + [Quality Assurance samples](https://github.com/service-delivery-quality/quality-assurance)
 * [Geonames' QA dashboard](https://qa.geonames.org/qa/)
-* [Quality Assurance (QA) images on Docker Cloud](https://cloud.docker.com/u/opentraveldata/repository/docker/opentraveldata/quality-assurance)
+* [Quality Assurance (QA) images on Docker Cloud](https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/optd-qa)
 * [Induction on monitoring with Elasticsearch](https://github.com/infra-helpers/induction-monitoring)
 * [How to set up a Python virtual environment](https://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
 
@@ -112,25 +112,25 @@ cluster.
 ## Through a pre-built Docker image
 * Retrieve the Docker image:
 ```bash
-$ docker pull opentraveldata/quality-assurance:base
+$ docker pull infrahelpers/optd-qa:latest
 ```
 
 * Launch the Docker-powered scripts:
 ```bash
-$ docker run --rm -it opentraveldata/quality-assurance:base bash
+$ docker run --rm -it infrahelpers/optd-qa:latest bash
 [build@8ce25cc20a10 opentraveldata-qa (master)] make checkers
 [build@8ce25cc20a10 opentraveldata-qa (master)] exit
 ```
-
 
 # Installation
 
 ## With a manually built Docker image
 * See
-  [the Docker section for more details](https://github.com/opentraveldata/quality-assurance/blob/master/docker/)
+  [the Dockerfile for more details](https://github.com/opentraveldata/quality-assurance/blob/master/docker/run-checkers/Dockerfile)
 
 ## Through a local cloned Git repository (without Docker)
-* Clone the [OpenTravelData (OPTD) Quality Assurance (QA) Git repository](https://github.com/opentraveldata/quality-assurance):
+* Clone the
+  [OpenTravelData (OPTD) Quality Assurance (QA) Git repository](https://github.com/opentraveldata/quality-assurance):
 ```bash
 $ mkdir -p ~/dev/geo
 $ git clone https://github.com/opentraveldata/quality-assurance.git ~/dev/geo/opentraveldata-qa

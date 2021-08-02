@@ -1,15 +1,16 @@
 # Quality Assurance (QA) dashboard for Open Travel Data (OPTD)
 # References:
 # * C++/Python base image:
-#   + https://cloud.docker.com/u/cpppythondevelopment/repository/docker/cpppythondevelopment/base
+#   + https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/cpppython
 #   + https://github.com/cpp-projects-showcase/docker-images
 # * Docker images for this project:
-#   + https://cloud.docker.com/u/opentraveldata/repository/docker/opentraveldata/quality-assurance
+#   + https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/optd-qa
 #   + https://github.com/opentraveldata/quality-assurance/tree/master/docker
 
 #
-FROM cpppythondevelopment/base:centos8
-MAINTAINER Denis Arnaud <denis.arnaud_github at m4x dot org>
+FROM infrahelpers/cpppython:centos8
+
+LABEL authors="Denis Arnaud <denis.arnaud_github at m4x dot org>"
 LABEL version="0.2"
 
 # Docker build time environment variables
