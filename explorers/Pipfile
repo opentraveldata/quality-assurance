@@ -8,7 +8,6 @@ networkx = "*"
 matplotlib = "*"
 numpy = "*"
 #cartopy = "*"
-elasticsearch-opentracing = "*"
 geopandas = "*"
 cartopy = "*"
 
