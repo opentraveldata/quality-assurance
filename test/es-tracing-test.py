@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# OpenTracing has been merged into OpenTelemetry, and Elasticsearch has now
+# native support for OpenTelemetry. Migration documentation:
+# https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/elasticexporter#migration
+#
+# Deprecated:
 # https://github.com/opentracing-contrib/python-elasticsearch
 # Note: opentracing apparently requires futures, which does not work
 # on Python 3 (it is a backport on Python 2). A way to make it work is
