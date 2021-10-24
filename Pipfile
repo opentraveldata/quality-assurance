@@ -6,11 +6,10 @@ name = "pypi"
 [packages]
 numpy = "*"
 networkx = "*"
-elasticsearch-opentracing = "*"
 fiona = "*"
 geopandas = "*"
-Shapely = "*"
-NeoBase = "*"
+shapely = "*"
+neobase = "*"
 
 [dev-packages]
 
