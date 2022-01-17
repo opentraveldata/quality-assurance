@@ -36,8 +36,9 @@ RUN mkdir -p ${HOME}/dev/geo && \
 WORKDIR ${OPTDQA_DIR}
 RUN ./mkLocalDir.sh
 RUN source ${HOME}/.bashrc && \
-	pip install -U pip && \
-	pip install -U pipenv && \
+	pyenv global 3.9.9 && \
+	python -mpip install -U pip && \
+	python -mpip install -U pipenv && \
 	pipenv install
 
 # Add a Shell alias for the OPTD QA project
