@@ -35,7 +35,10 @@ RUN mkdir -p ${HOME}/dev/geo && \
   git clone https://github.com/opentraveldata/quality-assurance.git ${OPTDQA_DIR}
 WORKDIR ${OPTDQA_DIR}
 RUN ./mkLocalDir.sh
-RUN source ${HOME}/.bashrc && pipenv install
+RUN source ${HOME}/.bashrc && \
+	pip install -U pip && \
+	pip install -U pipenv && \
+	pipenv install
 
 # Add a Shell alias for the OPTD QA project
 RUN cat >> ${HOME}/.bashrc < ${HOME}/.bash_aliases
