@@ -253,7 +253,14 @@ if __name__ == '__main__':
 
     for city_detail_str in city_detail_list:
       city_details = city_detail_str.split('|')
-      city_geo_id = city_details[1]
+      try:
+        city_geo_id = city_details[1]
+      except:
+        print(f"optd_por_code: {optd_por_code}")
+        print(f"city_details: {city_details}")
+        print(f"city_detail_list: {city_detail_list}")
+        print(f"city_detail_list_str: {city_detail_list_str}")
+        raise Exception
 
       if city_geo_id in optd_por_by_geo_dict:
         city_record = optd_por_by_geo_dict[city_geo_id]
