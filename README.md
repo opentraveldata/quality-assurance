@@ -59,7 +59,9 @@ produced by the Open Travel Data (OPTD) project.
 
 Though it is not there yet, that project should produce
 a Quality Assurance (QA) dashboard, much like
-[Geonames' one](https://qa.geonames.org/qa/).
+[Geonames' one](https://qa.geonames.org/qa/). See the
+[Geonames use case on the Data Quality reference page](https://github.com/data-engineering-helpers/data-quality/blob/main/README.md#geonames)
+for more details.
 
 And, hopefully, that dashboard will be powered by
 [container images](https://github.com/opentraveldata/quality-assurance/blob/master/docker/)
