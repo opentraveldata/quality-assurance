@@ -51,13 +51,25 @@ Quality Assurance (QA) for OpenTravelData (OPTD)
 features scripts to check the quality of the data files
 produced by the Open Travel Data (OPTD) project.
 
-Though it is not there yet, that project should produce
+Though it is not well maintained, that project should produce
 a Quality Assurance (QA) dashboard, much like
 [Geonames' one](https://qa.geonames.org/qa/). See the
 [Geonames use case on the Data Quality reference page](https://github.com/data-engineering-helpers/data-quality/blob/main/README.md#geonames)
 for more details.
 
-And, hopefully, that dashboard will be powered by
+For now, the results of the data quality checks are available on the
+[Transport Search data QA page](https://transport-search.org/data/optd/qa/).
+For instance, for the 2 June 2021 snapshots:
+* Results of the validation checks are published on:
+  https://transport-search.org/data/optd/qa/2021-06-02/results/
+* Corresponding reference data sets (which have been checked):
+  https://transport-search.org/data/optd/qa/2021-06-02/to_be_checked/
+
+The corresponding checkers are scripts, maintained in a
+[dedicated `checkers/` directory](checkers/) of this repository. Most of them are
+written in Python, but any other programmation language may be used.
+
+And, hopefully, the QA dashboard will be powered by
 [container images](https://github.com/opentraveldata/quality-assurance/blob/master/docker/)
 generated thanks to that repository as well.
 
@@ -82,6 +94,7 @@ cluster.
 
 ## See also
 * [GitHub repository dedicated to Data Quality](https://github.com/data-engineering-helpers/data-quality)
+* [Transport Search data QA page](https://transport-search.org/data/optd/qa/)
 * [Geonames' QA dashboard](https://qa.geonames.org/qa/)
   + [Geonames use case on the Data Quality reference page](https://github.com/data-engineering-helpers/data-quality/blob/main/README.md#geonames)
 * [Quality Assurance (QA) images on Docker Cloud](https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/optd-qa)
