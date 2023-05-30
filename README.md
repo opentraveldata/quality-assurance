@@ -81,9 +81,9 @@ single-node installation (_e.g._, on a laptop) and on on the above-mentioned
 cluster.
 
 ## See also
-* [Service Delivery Quality (SDQ) GitHub organization](https://github.com/service-delivery-quality)
-  + [Quality Assurance samples](https://github.com/service-delivery-quality/quality-assurance)
+* [GitHub repository dedicated to Data Quality](https://github.com/data-engineering-helpers/data-quality)
 * [Geonames' QA dashboard](https://qa.geonames.org/qa/)
+  + [Geonames use case on the Data Quality reference page](https://github.com/data-engineering-helpers/data-quality/blob/main/README.md#geonames)
 * [Quality Assurance (QA) images on Docker Cloud](https://cloud.docker.com/u/infrahelpers/repository/docker/infrahelpers/optd-qa)
 * [Induction on monitoring with Elasticsearch](https://github.com/infra-helpers/induction-monitoring)
 * [How to set up a Python virtual environment](https://github.com/machine-learning-helpers/induction-python/tree/master/installation/virtual-env)
